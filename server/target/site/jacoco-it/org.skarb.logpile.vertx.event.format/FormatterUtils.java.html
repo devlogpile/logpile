@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FormatterUtils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.html" class="el_package">org.skarb.logpile.vertx.event.format</a> &gt; <span class="el_source">FormatterUtils.java</span></div><h1>FormatterUtils.java</h1><pre class="source lang-java linenums">package org.skarb.logpile.vertx.event.format;
+
+import org.skarb.logpile.vertx.event.Event;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
+/**
+ * User: skarb
+ * Date: 10/01/13
+ */
+<span class="nc" id="L13">public class FormatterUtils {</span>
+    public static final String DEFAULT_FORMAT = &quot;yyyy/MM/dd HH:mm:ss SSS&quot;;
+    public static final String DEFAULT_SEPARATOR = &quot; - &quot;;
+
+    static String formatDate(final String format, final Date date) {
+<span class="fc" id="L18">        String string = null;</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (date != null) {</span>
+<span class="fc" id="L20">            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);</span>
+<span class="fc" id="L21">            string = simpleDateFormat.format(date);</span>
+        }
+<span class="fc" id="L23">        return Objects.toString(string, &quot;&quot;);</span>
+    }
+
+    static StringBuilder format(final String separator, final String format, final Event event) {
+<span class="fc" id="L27">        final String application = Objects.toString(event.getApplication(), &quot;&quot;);</span>
+<span class="fc" id="L28">        final String component = Objects.toString(event.getComponent(), &quot;&quot;);</span>
+<span class="fc" id="L29">        final String message = Objects.toString(event.getMessage(), &quot;&quot;);</span>
+<span class="fc" id="L30">        final String stacktrace = Objects.toString(event.getStackTrace(), &quot;&quot;);</span>
+
+
+<span class="fc" id="L33">        final StringBuilder line = new StringBuilder(formatDate(format, event.toDate())).append(separator).append(application)</span>
+                .append(separator).append(component).append(separator).append(message);
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (!&quot;&quot;.equals(stacktrace)) {</span>
+<span class="fc" id="L36">            line.append(&quot;\n&quot;).append(stacktrace);</span>
+        }
+<span class="fc" id="L38">        return line;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span></div></body></html>

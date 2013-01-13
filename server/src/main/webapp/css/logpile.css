@@ -1,0 +1,48 @@
+body {
+	background-color: #BCBCBC;
+}
+
+.alignercell {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.borderRadius{
+	 border-radius: 10px;
+}
+
+.titleStatus {
+	text-align: center;
+	background-color: #92A7D1;
+	
+}
+
+#table-server>td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.eventFocusIn{
+	/* background-color: #0088CC; */
+	font-weight: bold;
+	color:red;
+}
+
+.mess-tm {
+	text-align: center; background-image : linear-gradient( bottom, rgb( 254
+	, 115, 23) 6%, rgb( 254, 115, 23) 53%, rgb( 247, 160, 102) 77%);
+	background-image: -o-linear-gradient(bottom, rgb(254, 115, 23) 6%,
+		rgb(254, 115, 23) 53%, rgb(247, 160, 102) 77% );
+	background-image: -moz-linear-gradient(bottom, rgb(254, 115, 23) 6%,
+		rgb(254, 115, 23) 53%, rgb(247, 160, 102) 77% );
+	background-image: -webkit-linear-gradient(bottom, rgb(254, 115, 23) 6%,
+		rgb(254, 115, 23) 53%, rgb(247, 160, 102) 77% );
+	background-image: -ms-linear-gradient(bottom, rgb(254, 115, 23) 6%,
+		rgb(254, 115, 23) 53%, rgb(247, 160, 102) 77% );
+	border-radius: 15px;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.06, rgb(254
+		, 115, 23) ), color-stop(0.53, rgb(254, 115, 23) ),
+		color-stop(0.77, rgb(247, 160, 102) ) );
+	background-image: linear-gradient(bottom, rgb(254, 115, 23) 6%,
+		rgb(254, 115, 23) 53%, rgb(247, 160, 102) 77% );
+}

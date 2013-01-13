@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Log4JAppender.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.html" class="el_package">org.skarb.log.pile.client.post.log4j</a> &gt; <span class="el_source">Log4JAppender.java</span></div><h1>Log4JAppender.java</h1><pre class="source lang-java linenums">package org.skarb.log.pile.client.post.log4j;
+
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.ErrorCode;
+import org.apache.log4j.spi.LoggingEvent;
+import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.post.engine.Engine;
+import org.skarb.log.pile.client.util.JavaUtilLogData;
+
+import java.util.Date;
+
+<span class="fc" id="L12">public class Log4JAppender extends AppenderSkeleton {</span>
+    /**
+     * Method which format the stackTrace.
+     * @param throwableStrRep the stack of the exception.
+     * @return  the formatted stack
+     */
+    private static String formatStackTrace(final String[] throwableStrRep) {
+
+<span class="fc" id="L20">        final StringBuilder retour = new StringBuilder();</span>
+<span class="pc bpc" id="L21" title="1 of 4 branches missed.">        if (throwableStrRep != null &amp;&amp; throwableStrRep.length &gt; 0) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            for (String string : throwableStrRep) {</span>
+<span class="fc" id="L23">                retour.append(string).append(&quot;\n&quot;);</span>
+            }
+        }
+<span class="fc" id="L26">        return retour.toString();</span>
+    }
+
+    /**
+     * Null implementation.
+     */
+    @Override
+    public void close() {
+
+<span class="fc" id="L35">    }</span>
+
+    /**
+     *
+     */
+    @Override
+    public boolean requiresLayout() {
+        // TODO Auto-generated method stub
+<span class="fc" id="L43">        return false;</span>
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void append(LoggingEvent loggingEvent) {
+
+<span class="fc" id="L52">        JavaUtilLogData logData = JavaUtilLogData.getInstance();</span>
+
+        try {
+<span class="fc" id="L55">            final Engine engine = logData.getEngine();</span>
+<span class="fc" id="L56">            final Event event = new Event();</span>
+<span class="fc" id="L57">            event.setApplication(logData.getApplication());</span>
+<span class="fc" id="L58">            event.setDate(new Date(loggingEvent.timeStamp));</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (loggingEvent.getMessage() != null) {</span>
+<span class="fc" id="L60">                event.setMessage(String.valueOf(loggingEvent.getMessage()));</span>
+            }
+<span class="fc" id="L62">            event.setComponent(loggingEvent.getLoggerName());</span>
+<span class="fc" id="L63">            event.setStacktrace(formatStackTrace(loggingEvent</span>
+                    .getThrowableStrRep()));
+
+<span class="fc" id="L66">            engine.post(event);</span>
+<span class="fc" id="L67">        } catch (Exception e) {</span>
+<span class="fc" id="L68">            getErrorHandler().error(&quot;error in logpile&quot;, e,</span>
+                    ErrorCode.GENERIC_FAILURE);
+<span class="fc" id="L70">        }</span>
+
+
+<span class="fc" id="L73">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span></div></body></html>

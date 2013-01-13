@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html ng-app>
+    
+    <head>
+        <title>
+            Logpile Web Console.
+        </title>
+        <link href="wro/all.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body>
+        <div class="navbar " ng-controller="LoginCtrl">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+
+                        <span class="i-bar"></span> <span class="i-bar"></span> <span class="i-bar"></span>
+                    </a>
+                    <a href="#" class="brand">Logpile : </a>
+                    <a id="state" href="#" class="brand">{{statusinfos }}</a>
+                    <div class="nav-collapse pull-right">
+                        <ul class="nav">
+                            <li>
+                                <a href="#" ng-click="logout();">Disconnect</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <div class="well" class="titleStatus">
+                        <h1>
+                            Web Console -Logpile
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row notconnected">
+                <div class="alert alert-error">
+                    <h4>Not connected !</h4>
+                    You must to login. <a href="index.html">Click on this link.</a>
+                </div>
+            </div>
+            <div class="row connected" >
+                <div class="span12">
+                    <div class="well">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#status-1">Configuration</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#status-2">Resume state</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#events-tab">Events list</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div id="status-1" ng-controller="ServerState" class="tab-pane fade in active">
+                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                                                <h2>
+                                                    Event Listener : {{addressEvent}}
+                                                </h2>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center; vertical-align: middle;">
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Context :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    /event
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Port :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.event_json.port}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Number of instances :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.event_json.instance}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                                                <h2>
+                                                    Logpile Handlers
+                                                </h2>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center; vertical-align: middle;">
+                                        <tr ng-repeat="service in datas.services">
+                                          
+                                            <td>
+                                                <h4>
+                                                    <a href="#" rel="tooltip" data-placement="bottom" data-original-title="{{service.describe}}">{{service.name}}</a>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <img width="30" height="30" src="img/logpile/{{service.active}}.png">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                    <thead>
+                                        <tr>
+                                            <!-- style="text-align: center;background-color: #92A7D1;" -->
+                                            <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                                                <h2>
+                                                    Web
+                                                </h2>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center; vertical-align: middle;">
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Port :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.web_server.port}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Number of instances :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.web_server.instance}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        Root directory :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.web_server.web_root}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-info">
+                                                <h4>
+                                                    <strong>
+                                                        EventBus active :
+                                                    </strong>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    {{datas.config.web_server.bridge}}
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="status-2" ng-controller="Resume" class="tab-pane fade">
+                                
+                                <div class="alert alert-info" ng-show="notinitialized">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <h4>Datas not up to date.</h4>
+                                    Wait a few minutes for the update.
+                                </div>                                
+                                <div class="alert  alert-success" ng-show="notinitialized == false && datas.totalError ==0" >
+                                    <h4>
+                                        No Errors detected                                       
+                                    </h4>
+                                     Errors count : 0
+                                </div>
+                                <div class="alert alert-error" ng-show="datas.totalError > 0" >
+                                    <h4>
+                                        Errors detected                                       
+                                    </h4>
+                                     <p>Errors count : <strong>{{datas.totalError}}</strong></p>
+                                     <p>The list of the applications in error is below.</p>
+                                </div>
+                                <div class="alert alert-block" ng-show="newdatas.totalError >=0">
+                                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                  <h4>Warning!</h4>
+                                  New datas received from server. click on the button to refresh the datas.
+                                  <button class="btn btn-danger" type="button" 
+                                ng-click="refresh();">
+                                    <i class="icon-refresh icon-white">
+                                    </i>
+                                    Refresh
+                                </button>
+                                </div>
+                                
+                                <div class="accordion" id="accordionApplications">
+                                    <div ng-repeat="application in datas.applications" class="accordion-group ">
+                                        <!--  titleStatus -->
+                                        <div class="accordion-heading mess-tm">
+                                            <div data-toggle="collapse" data-parent="#accordionApplications" data-target="#{{application.indexName}}" class=" accordion-toggle">
+                                                   <h4>{{application.name}}</h4>
+                                            </div>
+                                        </div>
+                                        <div id="{{application.indexName}}" class="accordion-body collapse" style="padding : 5px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;background-color: #EEE;">
+                                            <p>
+                                                <h5>
+                                                    <strong>
+                                                        Errors :
+                                                    </strong>
+                                                    {{application.count}}
+                                                </h5>
+                                            </p>
+                                            <p>
+                                                <h5>
+                                                    <strong>
+                                                        Last components in error :
+                                                    </strong>
+                                                </h5>
+                                            </p>
+                                            <h4>
+                                                <ul>
+                                                    <li ng-repeat="component in application.components">
+                                                        {{component}}
+                                                    </li>
+                                                </ul>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="events-tab" class="tab-pane fade">
+                               
+                                    <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center; vertical-align: middle;">
+                                                    <div>
+                                                        <h4>
+                                                            +
+                                                        </h4>
+                                                    </div>
+                                                </th>
+                                                <th style="text-align: center; vertical-align: middle;">
+                                                    <h4>
+                                                        Date
+                                                    </h4>
+                                                </th>
+                                                <th style="text-align: center; vertical-align: middle;">
+                                                    <h4>
+                                                        Application
+                                                    </h4>
+                                                </th>
+                                                <th style="text-align: center; vertical-align: middle;">
+                                                    <h4>
+                                                        Message
+                                                    </h4>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rootnewevents">
+                                        </tbody>
+                                    </table>
+                                
+                                <div class="well" style="height: 50px;border: 0px;box-shadow: 0 0 0 rgba(0, 0, 0, 0.05) inset;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal hide" id="stackTraceModal">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h3>
+                        StackTrace view
+                    </h3>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                    
+                </div>
+            </div>
+        </div>
+        <script src="wro/all.js" type="text/javascript">
+                                    
+        </script>
+        <script src="index.js" type="text/javascript">
+                        
+        </script>
+    </body>
+
+</html>

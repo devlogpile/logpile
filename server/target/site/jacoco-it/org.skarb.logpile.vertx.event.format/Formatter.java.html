@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Formatter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.html" class="el_package">org.skarb.logpile.vertx.event.format</a> &gt; <span class="el_source">Formatter.java</span></div><h1>Formatter.java</h1><pre class="source lang-java linenums">package org.skarb.logpile.vertx.event.format;
+
+import org.skarb.logpile.vertx.event.Event;
+
+import java.util.Objects;
+
+/**
+ * User: skarb
+ * Date: 10/01/13
+ */
+public class Formatter {
+
+    private String separator;
+    private String formatDate;
+
+<span class="fc" id="L16">    protected Formatter(String separator, String formatDate) {</span>
+<span class="fc" id="L17">        this.separator = separator;</span>
+<span class="fc" id="L18">        this.formatDate = formatDate;</span>
+<span class="fc" id="L19">    }</span>
+
+    protected void setSeparator(final String separator) {
+<span class="nc" id="L22">        this.separator = Objects.toString(separator, FormatterUtils.DEFAULT_SEPARATOR);</span>
+<span class="nc" id="L23">    }</span>
+
+    protected void setFormatDate(String formatDate) {
+<span class="nc" id="L26">        this.formatDate = Objects.toString(formatDate, FormatterUtils.DEFAULT_FORMAT);</span>
+<span class="nc" id="L27">    }</span>
+
+    public String format(final Event event) {
+<span class="fc" id="L30">        return FormatterUtils.format(separator, formatDate, event).toString();</span>
+    }
+
+    public static class Builder {
+
+        private Formatter formatter;
+
+
+<span class="fc" id="L38">        private Builder() {</span>
+<span class="fc" id="L39">            formatter = new Formatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);</span>
+<span class="fc" id="L40">        }</span>
+
+        public Builder defaultValues()
+
+        {
+<span class="fc" id="L45">            formatter = new Formatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);</span>
+<span class="fc" id="L46">            return this;</span>
+        }
+
+        public static Builder init() {
+<span class="fc" id="L50">            return new Builder();</span>
+        }
+
+        public Builder addSeparator(final String separator) {
+<span class="nc" id="L54">            formatter.setSeparator(separator);</span>
+<span class="nc" id="L55">            return this;</span>
+        }
+
+        public Builder addFormatDate(final String format) {
+<span class="nc" id="L59">            formatter.setFormatDate(format);</span>
+<span class="nc" id="L60">            return this;</span>
+        }
+
+        public Formatter build() {
+<span class="fc" id="L64">            return formatter;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span></div></body></html>

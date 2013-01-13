@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JavaUtilLogData.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.html" class="el_package">org.skarb.log.pile.client.util</a> &gt; <span class="el_source">JavaUtilLogData.java</span></div><h1>JavaUtilLogData.java</h1><pre class="source lang-java linenums">package org.skarb.log.pile.client.util;
+
+import org.skarb.log.pile.client.post.engine.Engine;
+
+import java.io.Serializable;
+import java.util.Random;
+
+/**
+ * Utils for the properties management.
+ */
+public class JavaUtilLogData implements Serializable {
+
+    /**
+     * Serial Number.
+     */
+    private static final long serialVersionUID = 2938442916558043005L;
+    /**
+     * Singleton.
+     */
+<span class="fc" id="L20">    private static final JavaUtilLogData instance = new JavaUtilLogData();</span>
+    /**
+     * Current Application ID.
+     */
+    private String application;
+    /**
+     * Current Engine implementation.
+     */
+    private Engine engine;
+
+    /**
+     * Constructor.
+     */
+<span class="fc" id="L33">    private JavaUtilLogData() {</span>
+
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Factory for the singleton.
+     *
+     * @return the singleton.
+     */
+    public static JavaUtilLogData getInstance() {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (instance.isNotConfigure()) {</span>
+<span class="fc" id="L44">            synchronized (instance) {</span>
+<span class="fc" id="L45">                instance.configure();</span>
+<span class="pc" id="L46">            }</span>
+
+        }
+<span class="fc" id="L49">        return instance;</span>
+    }
+
+
+    /**
+     * init the datas.
+     */
+    private void configure() {
+        try {
+<span class="fc" id="L58">            final String property = System.getProperty(ClientConstantes.PROPERTIES_APPLICATION);</span>
+<span class="pc bpc" id="L59" title="3 of 4 branches missed.">            if (property != null &amp;&amp; property.length() &gt; 0) {</span>
+<span class="nc" id="L60">                application = property;</span>
+            } else {
+<span class="fc" id="L62">                final Random randomNumberGenerator = new Random();</span>
+<span class="fc" id="L63">                application = String.valueOf(randomNumberGenerator.nextLong()) + &quot;/generated&quot;;</span>
+
+            }
+
+<span class="fc" id="L67">            String engineClass = System.getProperty(ClientConstantes.PROPERTIES_TYPE);</span>
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if (engineClass == null) {</span>
+<span class="fc" id="L70">                engineClass = ClientConstantes.DEFAULT_ENGINE;</span>
+            }
+
+<span class="fc" id="L73">            engine = (Engine) Class.forName(engineClass).newInstance();</span>
+
+<span class="nc" id="L75">        } catch (Exception e) {</span>
+<span class="nc" id="L76">            throw new IllegalStateException(e);</span>
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+
+    /**
+     * Test if the singleton is configured.
+     *
+     * @return true if it is configired.
+     */
+    private boolean isNotConfigure() {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        return application == null;</span>
+    }
+
+    public String url() {
+<span class="fc" id="L91">        return System.getProperty(ClientConstantes.PROPERTIES_URL_REST);</span>
+    }
+
+    /**
+     * Getter on application.
+     *
+     * @return the application.
+     */
+    public String getApplication() {
+<span class="fc" id="L100">        return application;</span>
+    }
+
+    /**
+     * Setter on application.
+     *
+     * @param application the application.
+     */
+    public void setApplication(final String application) {
+<span class="fc" id="L109">        this.application = application;</span>
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Getter on Engine.
+     *
+     * @return the engine.
+     */
+    public Engine getEngine() {
+<span class="fc" id="L118">        return engine;</span>
+    }
+
+    /**
+     * Setter on Engine.
+     *
+     * @param engine the engine.
+     */
+    public void setEngine(Engine engine) {
+<span class="fc" id="L127">        this.engine = engine;</span>
+<span class="fc" id="L128">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span></div></body></html>

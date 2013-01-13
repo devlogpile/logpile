@@ -1,0 +1,29 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+server,org.skarb.logpile.vertx.event,AbstractConsoleEvent,0,29,0,0,0,10,0,4,0,4
+server,org.skarb.logpile.vertx.event,MemoryStorage,0,79,0,6,0,22,0,7,0,4
+server,org.skarb.logpile.vertx.event,ConsoleOutEvent,6,0,0,0,3,0,2,0,2,0
+server,org.skarb.logpile.vertx.event,MemoryStorage.ErrorApplication,0,78,0,6,0,14,0,6,0,3
+server,org.skarb.logpile.vertx.event,EventManagerImpl,0,171,0,12,0,37,0,13,0,7
+server,org.skarb.logpile.vertx.event,FileEvent,3,0,0,0,1,0,1,0,1,0
+server,org.skarb.logpile.vertx.event,Event,0,64,0,4,0,17,0,11,0,9
+server,org.skarb.logpile.vertx.event,AbstractEventMessage,3,38,0,0,1,12,1,5,1,5
+server,org.skarb.logpile.vertx.event,EventManagerImpl.new Handler() {...},18,9,0,0,2,1,1,1,1,1
+server,org.skarb.logpile.vertx.event,ConsoleErrEvent,6,0,0,0,3,0,2,0,2,0
+server,org.skarb.logpile.vertx.event,MemoryStorage.new Handler() {...},43,6,2,0,7,1,2,1,1,1
+server,org.skarb.logpile.vertx.event.format,FormatterUtils,3,69,0,4,1,13,1,4,1,2
+server,org.skarb.logpile.vertx.event.format,Formatter.Builder,12,26,0,0,4,7,2,4,2,4
+server,org.skarb.logpile.vertx.event.format,Formatter,12,17,0,0,4,5,2,2,2,2
+server,org.skarb.logpile.vertx,MainVerticle,0,63,0,2,0,9,0,3,0,2
+server,org.skarb.logpile.vertx,EventJsonVerticle,46,70,6,0,9,16,4,4,1,4
+server,org.skarb.logpile.vertx.handler,MessageUtils,3,80,0,4,2,21,1,9,1,7
+server,org.skarb.logpile.vertx.handler,DeployVerticle,0,28,0,0,0,6,0,2,0,2
+server,org.skarb.logpile.vertx.handler,PostParams,0,61,2,4,0,13,2,3,0,2
+server,org.skarb.logpile.vertx.web,AbstractAuthManager.LoginInfo,0,9,0,0,0,4,0,1,0,1
+server,org.skarb.logpile.vertx.web,AbstractAuthManager,0,242,0,20,0,62,0,18,0,8
+server,org.skarb.logpile.vertx.web,LogpileWeb,0,57,0,0,0,8,0,3,0,3
+server,org.skarb.logpile.vertx.web,AuthManagerJSonFile,88,0,8,0,19,0,7,0,3,0
+server,org.skarb.logpile.vertx.web,LogpileWeb.new Handler() {...},18,9,0,0,2,1,1,1,1,1
+server,org.skarb.logpile.vertx.web,AbstractAuthManager.new Handler() {...},15,12,0,0,3,1,1,1,1,1
+server,org.skarb.logpile.vertx.web,AbstractAuthManager.new Handler() {...},0,11,0,0,0,3,0,2,0,2
+server,org.skarb.logpile.vertx.web,AbstractAuthManager.new Handler() {...},0,11,0,0,0,3,0,2,0,2
+server,org.skarb.logpile.vertx.web,AbstractAuthManager.new Handler() {...},0,11,0,0,0,3,0,2,0,2
