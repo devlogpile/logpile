@@ -4,3 +4,4 @@ server/target/
 client/target/
 client/client.iml
 server/server.iml
+server/src/main/webapp/wro/
