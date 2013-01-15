@@ -1,7 +1,9 @@
-#logpile
+#Logpile - Server implementation
 =======
-##description 
+##What does it do?  
 =======
-The purpose of this project is to have one for monitoring application (or server). This project is composed of two sub project :
-* the client : It's a small jar which provide appenders for log framework in java.
-* the server : it's a tiny application which collec errors provided by the appenders.
+This projects provide an server implementation for the errors event registering. 
+
+The clients send event call an ws rest service to register new errors. This server can be configure to treat the errors event ( Exemple : aggregate all the errors of different server to one log file or send an email to warn someone).
+
+This implementation provides also a web console which manage the server treatment or view the current errors.   
