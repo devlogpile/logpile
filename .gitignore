@@ -2,8 +2,8 @@ server/.idea/
 client/.idea/
 server/target/
 client/target/
-client/client.iml
-server/server.iml
+client/*.iml
+server/*.iml
 *.iml
 target/
 .idea/

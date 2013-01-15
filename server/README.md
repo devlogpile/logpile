@@ -8,6 +8,18 @@ The clients send event call an ws rest service to register new errors. This serv
 
 This implementation provides also a web console which manage the server treatment or view the current errors.
 
+##How to install the server
+=======
+
+1. Install the Jdkl 1.7.
+2. Download and install [Vertx](http://vertx.io/).
+3. Download the zip file which is in bin directory.
+4. unzip the file.
+5. In the distribution, run the "run_server" file depending of your operating system.
+6. Try to connect at [http://localhost:8081/](http://localhost:8081/)
+7. log with the email `root@logpile.org` and with the password `gtn`
+8. That's it. Your server is runnning and functionnal.
+
 ##Version
 =======
 ###__0.1.0__ :

@@ -18,7 +18,7 @@
         </fileSet>
         <fileSet>
             <outputDirectory>/config</outputDirectory>
-            <directory>${basedir}/target/classes/</directory>
+            <directory>${basedir}/config/</directory>
             <includes>
                 <include>*.conf</include>
                 <include>*.json</include>
