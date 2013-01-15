@@ -96,11 +96,11 @@ public class EngineRest implements Engine {
      * @param event the event
      * @throws Exception
      */
-    @Override
+
     public void post(final Event event) throws LogpileException {
 
 
-        final Map<String, String> map = new HashMap<>();
+        final Map<String, String> map = new HashMap<String, String>();
         map.put(PROP_APPLICATION, encode(event.getApplication()));
         map.put(PROP_COMPONENT, encode(event.getComponent()));
         map.put(PROP_MESSAGE, encode(event.getMessage()));

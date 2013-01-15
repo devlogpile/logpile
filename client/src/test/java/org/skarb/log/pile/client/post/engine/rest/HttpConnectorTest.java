@@ -23,7 +23,7 @@ public class HttpConnectorTest {
 
         assertEquals("", httpConnector.createParameters(new HashMap<String, String>()));
 
-        HashMap<String, String> parameters = new HashMap<>();
+        HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put("p1", "v1");
 
         assertEquals("?p1=v1", httpConnector.createParameters(parameters));

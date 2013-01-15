@@ -78,14 +78,20 @@ public class HttpConnector {
                 case HttpURLConnection.HTTP_OK:
                     final StringBuilder stringBuilder = new StringBuilder();
                     InputStream inputStream = urlConnection.getInputStream();
-                    if(inputStream != null)
-                    try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(line).append('\n');
+                    if (inputStream != null) {
+                        BufferedReader bufferedReader = null;
+                        try {
+                            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                stringBuilder.append(line).append('\n');
+                            }
+                        } finally {
+                            if (bufferedReader != null) {
+                                bufferedReader.close();
+                            }
                         }
                     }
-
                     if (!RESULT_OK.equals(stringBuilder.toString().trim())) {
                         throw new LogpileException("Errors in calling service : code HTTP :" + HttpURLConnection.HTTP_OK + " - result : " + stringBuilder);
                     }
@@ -95,11 +101,18 @@ public class HttpConnector {
                 case HttpURLConnection.HTTP_INTERNAL_ERROR:
                     final StringBuilder resultError = new StringBuilder();
                     InputStream errorStream = urlConnection.getErrorStream();
-                    if(errorStream != null)
-                    try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(errorStream))) {
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            resultError.append(line).append('\n');
+                    if (errorStream != null) {
+                        BufferedReader bufferedReader =  null;
+                        try {
+                            bufferedReader = new BufferedReader(new InputStreamReader(errorStream))   ;
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                resultError.append(line).append('\n');
+                            }
+                        } finally {
+                            if(bufferedReader!=null){
+                                bufferedReader.close();
+                            }
                         }
                     }
                     throw new LogpileException(resultError.toString());
@@ -135,10 +148,14 @@ public class HttpConnector {
 
                 //urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + CHARSET);
                 if (!params.isEmpty()) {
-
-                    try (OutputStream output = urlConnection.getOutputStream()) {
-
+                    OutputStream output = null;
+                    try {
+                        output = urlConnection.getOutputStream();
                         output.write(params.substring(1).getBytes(CHARSET));
+                    } finally {
+                        if(output!=null){
+                            output.close();
+                        }
                     }
                 }
                 break;

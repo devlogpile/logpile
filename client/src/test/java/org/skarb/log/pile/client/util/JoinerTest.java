@@ -43,8 +43,8 @@ public class JoinerTest {
 
     @Test
     public void testMapJoiner() throws Exception {
-        Joiner.MapJoiner on = Joiner.on('&').withKeyValueSeparator("=");
-        HashMap<String, String> map = new HashMap<>();
+        final Joiner.MapJoiner on = Joiner.on('&').withKeyValueSeparator("=");
+        final HashMap<String, String> map = new HashMap<String, String>();
         map.put("param1", "val1");
         map.put("param2", "val2");
         String result = on.join(map);
