@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Formatter for the events.
- * <p>Transform the EVent in string line.</p>
+ * <p>Transform the EVent in string line with a defined format.</p>
  * User: skarb
  * Date: 10/01/13
  */
@@ -58,7 +58,7 @@ public class Formatter {
         private Formatter formatter;
 
         /**
-         * a ne instance.
+         * a new instance.
          */
         private Builder() {
             formatter = new Formatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);
@@ -85,12 +85,22 @@ public class Formatter {
             return this;
         }
 
-        public Builder addSeparator(final String separator) {
+        /**
+         * change the separator.
+         * @param separator  the ne value.
+         * @return the current object
+         */
+        public Builder changeSeparator(final String separator) {
             formatter.setSeparator(separator);
             return this;
         }
 
-        public Builder addFormatDate(final String format) {
+        /**
+         * change the format date.
+         * @param format the new format.
+         * @return the current object
+         */
+        public Builder changeFormatDate(final String format) {
             formatter.setFormatDate(format);
             return this;
         }
@@ -98,7 +108,7 @@ public class Formatter {
         /**
          * Build the instance.
          *
-         * @return
+         * @return a new instance.
          */
         public Formatter build() {
             return formatter;

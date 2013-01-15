@@ -2,7 +2,8 @@ package org.skarb.logpile.vertx.event;
 
 import org.skarb.logpile.vertx.event.format.Formatter;
 import org.skarb.logpile.vertx.event.format.FormatterUtils;
-import org.skarb.logpile.vertx.field.FileSizeUtils;
+import org.skarb.logpile.vertx.utils.Charsets;
+import org.skarb.logpile.vertx.utils.FileSizeUtils;
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.AsyncResultHandler;
 import org.vertx.java.core.Vertx;
@@ -104,7 +105,7 @@ public class FileEvent extends AbstractEventMessage {
     public boolean handle(final Event event) {
 
         final String newLine = formatter.format(event) + "\n";
-        final int length = newLine.getBytes().length;
+        final int length = newLine.getBytes(Charsets.getDefault()).length;
         final String completePath = createPath();
         if (rolling != DEFAULT_ROLLING) {
             testIfRolling(completePath, newLine, length);
@@ -160,7 +161,7 @@ public class FileEvent extends AbstractEventMessage {
     private void write(final String completePath, final String newLine, final StandardOpenOption openOption) {
         try {
             final Path target = PathAdjuster.adjust(Paths.get(completePath));
-            Files.write(target, newLine.getBytes(), openOption);
+            Files.write(target, newLine.getBytes(Charsets.getDefault()), openOption);
         } catch (Exception ex) {
             log.error("Error in writing file ", ex);
         }

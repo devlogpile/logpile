@@ -3,6 +3,7 @@ package org.skarb.logpile.vertx.event;
 
 import org.junit.Test;
 import org.skarb.logpile.vertx.event.format.Formatter;
+import org.skarb.logpile.vertx.utils.Charsets;
 import org.vertx.java.core.AsyncResultHandler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.file.FileSystem;
@@ -11,7 +12,7 @@ import org.vertx.java.deploy.Container;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.charset.Charset;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -106,7 +107,7 @@ public class FileEventTest {
 
         final String completePath = fileEvent.createPath();
         final Path pPath = new File(completePath).toPath();
-        final List<String> lines = Files.readAllLines(pPath, Charset.defaultCharset());
+        final List<String> lines = Files.readAllLines(pPath, Charsets.getDefault());
         assertTrue(lines.get(lines.size()-1).contains("APP"));
         assertTrue(lines.get(lines.size()-1).contains("message !!"));
     }
@@ -135,7 +136,7 @@ public class FileEventTest {
 
         final String completePath = fileEvent.createPath();
         final Path pPath = new File(completePath).toPath();
-        final List<String> lines = Files.readAllLines(pPath, Charset.defaultCharset());
+        final List<String> lines = Files.readAllLines(pPath,Charsets.getDefault());
         assertTrue(lines.get(lines.size()-1).contains("APP"));
         assertTrue(lines.get(lines.size()-1).contains("message !!"));
 
@@ -144,8 +145,10 @@ public class FileEventTest {
 
     @Test
     public void testlogCreationFile() throws Exception {
-        FileEvent fileEvent = new FileEvent();
-        fileEvent.logCreationFile("TEST");
+        final FileEvent fileEvent = new FileEvent();
+        final AsyncResultHandler<Void> result = fileEvent.logCreationFile("TEST");
+        assertNotNull(result);
+        result.handle(null);
     }
 
     @Test
@@ -185,7 +188,7 @@ public class FileEventTest {
 
         assertFalse(Files.exists(oldFile.toPath()));
 
-        List<String> strings = Files.readAllLines(successFile.toPath(), Charset.defaultCharset());
+        List<String> strings = Files.readAllLines(successFile.toPath(), Charsets.getDefault());
         assertEquals("newLine",strings.get(0));
 
     }

@@ -73,6 +73,10 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
         message.reply(array);
     }
 
+    /**
+     * send the event to all declared receivers.
+     * @param params parameters.
+     */
     @Override
     public void run(final Map<String, String> params) {
 
@@ -86,7 +90,7 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
                 vertx.eventBus().send(name, jsonObject, new Handler<Message<JsonObject>>() {
                     @Override
                     public void handle(final Message<JsonObject> message) {
-                        log.debug(name + " treatment : " + message.body.getBoolean(AbstractEventMessage.RESULT));
+                        log.debug(name + " treatment : " + message.body.getBoolean(AbstractEventMessage.RESULT_FIELD));
                     }
                 });
             }
@@ -102,6 +106,10 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
         return serviceList;
     }
 
+    /**
+     * Used for testing.
+     * @param serviceList the list of the servcie.
+     */
     void setServiceList(List<AbstractEventMessage> serviceList) {
         this.serviceList = serviceList;
     }

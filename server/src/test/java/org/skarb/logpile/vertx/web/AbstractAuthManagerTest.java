@@ -2,7 +2,7 @@ package org.skarb.logpile.vertx.web;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.skarb.logpile.vertx.handler.MessageUtils;
+import org.skarb.logpile.vertx.utils.MessageUtils;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;

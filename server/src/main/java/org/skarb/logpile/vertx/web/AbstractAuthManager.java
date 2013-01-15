@@ -1,6 +1,6 @@
 package org.skarb.logpile.vertx.web;
 
-import org.skarb.logpile.vertx.handler.MessageUtils;
+import org.skarb.logpile.vertx.utils.MessageUtils;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;

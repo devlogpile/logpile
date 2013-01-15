@@ -74,12 +74,27 @@ public class MemoryStorage extends AbstractEventMessage {
         vertx.setPeriodic(5000, handler);
     }
 
+    /**
+     * bean which contains the resume erros for one application.
+     */
     public static class ErrorApplication {
-
+        /**
+         * The last 10 components which are in error for the application.
+         */
         public final List<String> lastComponents = new ArrayList<>();
+        /**
+         * the application id.
+         */
         public String applicationName;
+        /**
+         * the number of error for the application.
+         */
         public int countError = 0;
 
+        /**
+         * add an error.
+         * @param component the service in error
+         */
         public void add(final String component) {
             if (!lastComponents.contains(component)) {
                 if (lastComponents.size() == 10) {
@@ -90,6 +105,10 @@ public class MemoryStorage extends AbstractEventMessage {
             countError++;
         }
 
+        /**
+         * transform the
+         * @return
+         */
         public JsonObject toJson() {
             final JsonArray components = new JsonArray();
             for (final String component : lastComponents) {

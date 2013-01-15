@@ -7,7 +7,8 @@ import org.vertx.java.deploy.Verticle;
 
 
 /**
- * Main verticle of logpile.
+ * Main verticle.
+ * <p>it launchs all verticles.</p>
  * User: skarb
  * Date: 29/12/12
  */

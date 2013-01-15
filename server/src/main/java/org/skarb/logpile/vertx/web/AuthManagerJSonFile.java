@@ -16,6 +16,7 @@
 
 package org.skarb.logpile.vertx.web;
 
+import org.skarb.logpile.vertx.utils.Charsets;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
@@ -23,7 +24,6 @@ import org.vertx.java.core.logging.impl.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class AuthManagerJSonFile extends AbstractAuthManager {
         // load the file
         final String path = config.getObject(getClass().getName()).getString(USERS_FILE_FIELD);
         final File file = new File(path);
-        final List<String> lines = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
+        final List<String> lines = Files.readAllLines(file.toPath(), Charsets.getDefault());
         final StringBuilder allContent = new StringBuilder();
         for (final String line : lines) {
             allContent.append(line).append("\n");
