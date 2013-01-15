@@ -12,9 +12,10 @@ import java.util.Objects;
  */
 public class FormatterUtils {
     public static final String DEFAULT_FORMAT = "yyyy/MM/dd HH:mm:ss SSS";
+    public static final String LOG_FORMAT = "yyyy-MM-dd-HH-mm-ss";
     public static final String DEFAULT_SEPARATOR = " - ";
 
-    static String formatDate(final String format, final Date date) {
+    public static String formatDate(final String format, final Date date) {
         String string = null;
         if (date != null) {
             final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);

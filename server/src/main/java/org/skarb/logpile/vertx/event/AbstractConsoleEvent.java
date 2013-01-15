@@ -2,6 +2,7 @@ package org.skarb.logpile.vertx.event;
 
 import org.skarb.logpile.vertx.event.format.Formatter;
 import org.vertx.java.core.Vertx;
+import org.vertx.java.deploy.Container;
 
 import java.io.PrintStream;
 
@@ -22,8 +23,8 @@ abstract class AbstractConsoleEvent extends AbstractEventMessage {
     }
 
     @Override
-    public void setVertx(Vertx vertx) {
-        super.setVertx(vertx);
+    public void setDatas(final Vertx vertx, final Container container) {
+        super.setDatas(vertx, container);
         formatter = Formatter.Builder.init().defaultValues().build();
     }
 

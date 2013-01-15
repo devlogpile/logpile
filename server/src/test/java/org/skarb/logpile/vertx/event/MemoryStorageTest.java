@@ -5,10 +5,11 @@ import org.junit.Test;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.deploy.Container;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * User: skarb
@@ -49,7 +50,7 @@ public class MemoryStorageTest {
     @Test
     public void testsetVertx() {
         final MemoryStorage memoryStorage = new MemoryStorage();
-        memoryStorage.setVertx(mock(Vertx.class));
+        memoryStorage.setDatas(mock(Vertx.class), mock(Container.class));
     }
 
     @Test

@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.deploy.Container;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -22,7 +23,7 @@ public class AbstractConsoleEventTest {
     @Test
     public void testHandleEmpty() {
         final Mock mock = new Mock();
-        mock.setVertx(mock(Vertx.class));
+        mock.setDatas(mock(Vertx.class), mock(Container.class));
         mock.handle(Event.Builder(new JsonObject()));
         final ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
         verify(mock.getPrintStream(), atLeastOnce()).println(argument.capture());
@@ -32,7 +33,8 @@ public class AbstractConsoleEventTest {
     @Test
     public void testHandleNotEmpty() {
         final Mock mock = new Mock();
-        mock.setVertx(mock(Vertx.class));
+
+        mock.setDatas(mock(Vertx.class),mock(Container.class));
         Date date = new Date();
         final Exception ex = new Exception("except");
         ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -21,10 +21,10 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class EventJsonVerticle extends Verticle implements Handler<HttpServerRequest> {
-
+    /**
+     * Logger.
+     */
     private static final Logger logger = LoggerFactory.getLogger(EventJsonVerticle.class);
-
-
     /**
      * The instance of the manager.
      */
@@ -74,7 +74,7 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
     public void start() throws Exception {
         // configure manager.
         eventmanager = new EventManagerImpl();
-        eventmanager.init(getVertx(), getContainer().getConfig());
+        eventmanager.init(getVertx(), getContainer());
         // configure http server
         final HttpServer httpServer = getVertx().createHttpServer();
         final RouteMatcher routeMatcher = new RouteMatcher();

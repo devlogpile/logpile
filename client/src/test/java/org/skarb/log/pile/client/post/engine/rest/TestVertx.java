@@ -24,7 +24,12 @@ public class TestVertx {
         System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://localhost:8082/event");
         EngineRest engineRest = new EngineRest();
         final Event createInstance = newInstance();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        new NullPointerException().printStackTrace(new PrintStream(out));
 
+
+        createInstance.setStacktrace(new String(out.toByteArray())
+        );
         engineRest.post(createInstance);
 
 

@@ -4,6 +4,7 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.deploy.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +68,8 @@ public class MemoryStorage extends AbstractEventMessage {
     }
 
     @Override
-    public void setVertx(final Vertx vertx) {
-        super.setVertx(vertx);
+    public void setDatas(final Vertx vertx, final Container container) {
+        super.setDatas(vertx, container);
 
         vertx.setPeriodic(5000, handler);
     }

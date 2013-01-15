@@ -8,6 +8,7 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
+import org.vertx.java.deploy.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Map;
  * User: skarb
  * Date: 03/01/13
  */
-public class EventManagerImpl implements EventManager,Handler<Message<JsonArray>> {
+public class EventManagerImpl implements EventManager, Handler<Message<JsonArray>> {
     /**
      * Field name for the events Handler.
      */
@@ -37,8 +38,9 @@ public class EventManagerImpl implements EventManager,Handler<Message<JsonArray>
     private List<AbstractEventMessage> serviceList = new ArrayList<>();
 
     @Override
-    public void init(final Vertx vertx, final JsonObject config) {
+    public void init(final Vertx vertx, final Container container) {
         this.vertx = vertx;
+        final JsonObject config = container.getConfig();
         final JsonArray array = config.getArray(FIELD_SERVICES);
         if (array == null) {
             return;
@@ -48,7 +50,7 @@ public class EventManagerImpl implements EventManager,Handler<Message<JsonArray>
             try {
                 final String clazz = array.get(i).toString();
                 final AbstractEventMessage abstractEventMessage = (AbstractEventMessage) Class.forName(array.get(i).toString()).newInstance();
-                abstractEventMessage.setVertx(vertx);
+                abstractEventMessage.setDatas(vertx, container);
                 vertx.eventBus().registerHandler(clazz, abstractEventMessage);
                 serviceList.add(abstractEventMessage);
             } catch (Exception e) {
@@ -56,19 +58,17 @@ public class EventManagerImpl implements EventManager,Handler<Message<JsonArray>
             }
         }
 
-        vertx.eventBus().registerHandler(SERVICE_STATE,this);
+        vertx.eventBus().registerHandler(SERVICE_STATE, this);
     }
-
-
 
     @Override
     public void handle(final Message<JsonArray> message) {
         final JsonArray array = new JsonArray();
-        for (final AbstractEventMessage evtMessage : serviceList){
+        for (final AbstractEventMessage evtMessage : serviceList) {
             array.addObject(new JsonObject()
-                    .putString("name",evtMessage.getClass().getName())
-                    .putString("describe",evtMessage.describe())
-                    .putBoolean("active",evtMessage.isActive()));
+                    .putString("name", evtMessage.getClass().getName())
+                    .putString("describe", evtMessage.describe())
+                    .putBoolean("active", evtMessage.isActive()));
         }
         message.reply(array);
     }

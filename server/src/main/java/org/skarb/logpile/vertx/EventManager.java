@@ -2,6 +2,7 @@ package org.skarb.logpile.vertx;
 
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.deploy.Container;
 
 import java.util.Map;
 
@@ -15,9 +16,9 @@ public interface EventManager {
     /**
      * initialize the event manager.
      * @param vertx for the acessing in event bus.
-     * @param config the configuration.
+     * @param container the configuration.
      */
-    void init(final Vertx vertx, final JsonObject config);
+    void init(final Vertx vertx, final Container container);
 
     /**
      * send the error events.

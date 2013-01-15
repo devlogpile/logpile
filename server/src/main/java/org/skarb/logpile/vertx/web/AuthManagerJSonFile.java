@@ -22,6 +22,7 @@ import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
@@ -38,23 +39,25 @@ public class AuthManagerJSonFile extends AbstractAuthManager {
      * Logger.
      */
     private static final Logger logger = LoggerFactory.getLogger(AuthManagerJSonFile.class);
+    /**
+     * Field name.
+     */
+    public static final String USERS_FILE_FIELD = "path";
 
-    public AuthManagerJSonFile() {
-    }
 
+    /**
+     * read an json file for authentification.
+     * @param username the name.
+     * @param password the password.
+     * @param config the configuration.
+     * @return
+     */
     @Override
     protected boolean authenticate(final String username, final String password, final JsonObject config) {
 
         try {
-            final String path = config.getObject(getClass().getName()).getString("path");
-            final File file = new File(path);
-            final List<String> lines = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
-            final StringBuilder allContent = new StringBuilder();
-            for (final String line : lines) {
-                allContent.append(line).append("\n");
-            }
-            //C:\skarb\vertx\logpile\src\
-            final JsonArray allusers = new JsonArray(allContent.toString());
+            final JsonArray allusers = loadUsersFile(config);
+
             for (int i = 0; i < allusers.size(); i++) {
                 final JsonObject jsonObject = (JsonObject) allusers.get(i);
                 if (username.equals(jsonObject.getString(USERNAME)) &&
@@ -69,6 +72,25 @@ public class AuthManagerJSonFile extends AbstractAuthManager {
         }
 
         return false;
+    }
+
+    /**
+     * Load users json file.
+     * @param config the configuiration.
+     * @return the list of users
+     * @throws IOException
+     */
+    private JsonArray loadUsersFile(JsonObject config) throws IOException {
+        // load the file
+        final String path = config.getObject(getClass().getName()).getString(USERS_FILE_FIELD);
+        final File file = new File(path);
+        final List<String> lines = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
+        final StringBuilder allContent = new StringBuilder();
+        for (final String line : lines) {
+            allContent.append(line).append("\n");
+        }
+
+        return new JsonArray(allContent.toString());
     }
 
 }

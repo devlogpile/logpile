@@ -9,7 +9,7 @@ import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
-
+import org.vertx.java.deploy.Container;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,7 +54,9 @@ public class EventManagerImplTest {
         final EventManagerImpl eventManager = new EventManagerImpl();
         final Vertx vertx = mock(Vertx.class);
         JsonObject config = new JsonObject();
-        eventManager.init(vertx, config);
+        Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(config);
+        eventManager.init(vertx, container);
         assertTrue(eventManager.getServiceList().isEmpty());
 
     }
@@ -71,7 +73,9 @@ public class EventManagerImplTest {
         JsonArray array = new JsonArray();
         array.addString(TmpTrue.class.getName());
         config.putArray(EventManagerImpl.FIELD_SERVICES, array);
-        eventManager.init(vertx, config);
+        Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(config);
+        eventManager.init(vertx, container);
         assertEquals(1, eventManager.getServiceList().size());
         assertTrue(eventManager.getServiceList().get(0) instanceof TmpTrue);
 
@@ -93,7 +97,9 @@ public class EventManagerImplTest {
         JsonArray array = new JsonArray();
         array.addString("org.sss.Tmp");
         config.putArray(EventManagerImpl.FIELD_SERVICES, array);
-        eventManager.init(vertx, config);
+        Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(config);
+        eventManager.init(vertx, container);
         assertTrue(eventManager.getServiceList().isEmpty());
     }
 
@@ -104,8 +110,9 @@ public class EventManagerImplTest {
 
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
-
-        eventManager.init(vertx, new JsonObject());
+        final Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(new JsonObject());
+        eventManager.init(vertx, container);
 
         eventManager.run(new HashMap<String, String>());
 
@@ -118,8 +125,9 @@ public class EventManagerImplTest {
 
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
-
-        eventManager.init(vertx, new JsonObject());
+        final Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(new JsonObject());
+        eventManager.init(vertx, container);
 
         TmpTrue tmp = new TmpTrue();
         tmp.setActive(false);
@@ -138,8 +146,10 @@ public class EventManagerImplTest {
 
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
+        final Container container = mock(Container.class);
+        when(container.getConfig()).thenReturn(new JsonObject());
 
-        eventManager.init(vertx, new JsonObject());
+        eventManager.init(vertx, container);
 
         TmpTrue tmp = new TmpTrue();
 

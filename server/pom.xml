@@ -7,7 +7,7 @@
     <groupId>org.skarb.logpile</groupId>
 
     <artifactId>server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <properties>
         <jacoco.agent.path>..\..\jacoco\jacocoagent.jar</jacoco.agent.path>
         <jacoco.file.path>target\jacoco.exec</jacoco.file.path>
@@ -37,11 +37,9 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.5.6.201201232323</version>
                 <configuration>
-                    <!-- <includes>org.skarb.*</includes> -->
                     <destFile>jacoco-it.exec</destFile>
                     <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                 </configuration>
-
             </plugin>
             <plugin>
                 <groupId>org.anacoders.plugins</groupId>
