@@ -20,3 +20,4 @@ This implementation provides also a web console which manage the server treatmen
 * Authorisation manager for the web application using an file.
 * Interface which resume the state of the server.
 * Interface which resume the last application in errors.
+* Create an distribution for using vertx.
