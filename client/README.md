@@ -14,4 +14,14 @@ This project provide jar appenders for java application. The common logging impl
 * [Log4j](http://logging.apache.org/log4j/1.2/) 
 * [LogBack](http://logback.qos.ch/)
 
+##Version 
+=======
+###__0.1.0__ :
+* Skeleton implementation client.
+* Implementation for log4j.
+* Implementation for java logging.
+* Implementation for logback.
+* Implementation of calling a ws to register error events.
+
+
 
