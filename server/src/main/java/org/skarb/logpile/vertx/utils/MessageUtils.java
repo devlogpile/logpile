@@ -1,4 +1,4 @@
-package org.skarb.logpile.vertx.handler;
+package org.skarb.logpile.vertx.utils;
 
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;

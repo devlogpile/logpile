@@ -1,4 +1,4 @@
-package org.skarb.logpile.vertx.field;
+package org.skarb.logpile.vertx.utils;
 
 
 import org.junit.Test;
