@@ -60,7 +60,7 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div id="status-1" ng-controller="ServerState" class="tab-pane fade in active">
-                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                <table  class="borderRadius table table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
                                             <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
@@ -115,10 +115,10 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                <table class="borderRadius table table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
-                                            <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                                            <th colspan="3" class="titleStatus" style="text-align: center; vertical-align: middle;">
                                                 <h2>
                                                     Logpile Handlers
                                                 </h2>
@@ -133,13 +133,29 @@
                                                     <a href="#" rel="tooltip" data-placement="bottom" data-original-title="{{service.describe}}">{{service.name}}</a>
                                                 </h4>
                                             </td>
-                                            <td>
+                                            <td style="text-align:center" >
                                                 <img width="30" height="30" src="img/logpile/{{service.active}}.png">
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn"><i class="icon-wrench"></i></button>
+                                                    <button class="btn dropdown-toggle"  data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" >
+                                                        <li>
+                                                            <a  ng-show="!service.active" ng-click="modifyActivate(service.name,true)"><i class="icon-play"></i> Start </a>
+                                                        </li>
+                                                        <li>
+                                                            <a  ng-show="service.active" ng-click="modifyActivate(service.name,false)"><i class="icon-remove-sign"></i> Stop </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+                                <table  class="borderRadius table table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
                                             <!-- style="text-align: center;background-color: #92A7D1;" -->

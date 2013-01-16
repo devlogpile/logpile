@@ -79,14 +79,14 @@ var eventBus = new function() {
                 onclose.push(handler);
             }
         };
-    };
-/**************************************************/
+    }; /**************************************************/
 /* Angular JS COntroller                          */
 /**************************************************/
 
 /**
-* Controller for login state.
-**/
+ * Controller for login state.
+ **/
+
 function LoginCtrl($scope) {
     $scope.email = "";
     $scope.password = "";
@@ -166,8 +166,9 @@ function LoginCtrl($scope) {
 }
 
 /**
-* Controller for Server state.
-**/
+ * Controller for Server state.
+ **/
+
 function ServerState($scope) {
     $scope.datas = {
         config: {
@@ -192,14 +193,9 @@ function ServerState($scope) {
         services: []
 
     };
-    $scope.addressEvent = "";
-
-    eventBus.addIf(
-
-    function(message) {
-        if (message.result) {
-            eventBus.sendEventBus("logpile.server-status", {}, function(message) {
-                console.log(message);
+    var init =function (){
+        eventBus.sendEventBus("logpile.server-status", {}, function(message) {
+               
                 $scope.$apply(function() {
                     $scope.datas = message;
                     var host = window.location.hostname;
@@ -209,14 +205,27 @@ function ServerState($scope) {
                 });
                 $('[rel=tooltip]').tooltip();
             });
+    }
+    $scope.addressEvent = "";
+
+     $scope.modifyActivate = function(name, activate) {
+        eventBus.sendEventBus("logpile.activate", {"name":name,"activate":activate}, function(message) {
+              init(); 
+        });
+     };
+
+    eventBus.addIf(function(message) {
+        if (message.result) {
+           init(); 
         }
     });
 
 };
 
 /**
-* Controller for Resume Panel.
-**/
+ * Controller for Resume Panel.
+ **/
+
 function Resume($scope) {
     $scope.datas = {
         "totalError": 0
