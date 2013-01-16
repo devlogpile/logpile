@@ -1,6 +1,6 @@
 package org.skarb.log.pile.client.post.engine;
 
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.util.LogpileException;
 
 /**

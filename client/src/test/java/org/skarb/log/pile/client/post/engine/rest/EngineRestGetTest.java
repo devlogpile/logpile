@@ -1,7 +1,7 @@
 package org.skarb.log.pile.client.post.engine.rest;
 
 import org.junit.Test;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.util.ClientConstantes;
 
 import java.util.Date;
@@ -10,14 +10,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**
- * Test of the class EngineRest.
+ * Test of the class EngineRestGet.
  */
-public class EngineRestTest {
+public class EngineRestGetTest {
 
     @Test
     public void testGetUrl() throws Exception {
         System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://www.gogole.fr");
-        EngineRest engineRest = new EngineRest();
+        EngineRestGet engineRest = new EngineRestGet();
         assertEquals("http://www.gogole.fr", engineRest.getUrl());
         assertEquals("http://www.gogole.fr", engineRest.getUrl());
         engineRest.reset();
@@ -32,7 +32,7 @@ public class EngineRestTest {
 
     @Test
     public void testencodeString() throws Exception {
-        EngineRest engineRest = new EngineRest();
+        EngineRestGet engineRest = new EngineRestGet();
         assertEquals("", engineRest.encode((String) null));
         assertEquals("", engineRest.encode(""));
 
@@ -43,7 +43,7 @@ public class EngineRestTest {
 
     @Test
     public void testencodeDate() throws Exception {
-        EngineRest engineRest = new EngineRest();
+        EngineRestGet engineRest = new EngineRestGet();
         assertEquals("", engineRest.encode((Date) null));
         Date value = new Date();
         assertEquals("" + value.getTime(), engineRest.encode(value));
@@ -53,7 +53,7 @@ public class EngineRestTest {
     @Test
     public void testpost() throws Exception {
         final HttpConnector mock = mock(HttpConnector.class);
-        final EngineRest engineRest = new EngineRest(mock);
+        final EngineRestGet engineRest = new EngineRestGet(mock);
         Event event = new Event();
         event.setApplication("app1");
         event.setComponent("compo");

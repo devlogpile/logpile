@@ -3,17 +3,13 @@ package org.skarb.log.pile.client.post.logback;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.LoggerContext;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.post.engine.Engine;
-import org.skarb.log.pile.client.util.JavaUtilLogData;
 
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

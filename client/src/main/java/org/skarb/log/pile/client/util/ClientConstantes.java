@@ -12,5 +12,5 @@ public final class ClientConstantes {
     public static final String PROPERTIES_URL_REST = "log.pile.rest.url";
 
 
-    public static final String DEFAULT_ENGINE = "org.skarb.log.pile.client.post.engine.rest.EngineRest";
+    public static final String DEFAULT_ENGINE = "org.skarb.log.pile.client.post.engine.rest.EngineRestGet";
 }

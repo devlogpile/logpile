@@ -26,7 +26,7 @@ public class JavaUtilLogHandlerMyLogManagerTest {
 
         when(mock.getProperty("prop")).thenReturn(null);
 
-        final JavaUtilLogHandler.MyLogManager myLogManager = new JavaUtilLogHandler.MyLogManager(mock);
+        final MyLogManager myLogManager = new MyLogManager(mock);
 
         Level returnValue = myLogManager.getLevelProperty("prop", Level.FINE);
         assertEquals(Level.FINE, returnValue);
@@ -45,7 +45,7 @@ public class JavaUtilLogHandlerMyLogManagerTest {
 
         when(mock.getProperty("prop")).thenReturn("org.skarb.log.pile.client.post.util.log.TestFilter");
 
-        final JavaUtilLogHandler.MyLogManager myLogManager = new JavaUtilLogHandler.MyLogManager(mock);
+        final MyLogManager myLogManager = new MyLogManager(mock);
 
         Filter returnValue = myLogManager.getFilterProperty("prop", null);
         assertTrue(returnValue instanceof TestFilter);
@@ -60,7 +60,7 @@ public class JavaUtilLogHandlerMyLogManagerTest {
 
         when(mock.getProperty("prop")).thenReturn("org.skarb.log.pile.client.post.util.log.TestFormatter");
 
-        final JavaUtilLogHandler.MyLogManager myLogManager = new JavaUtilLogHandler.MyLogManager(mock);
+        final MyLogManager myLogManager = new MyLogManager(mock);
 
         Formatter returnValue = myLogManager.getFormatterProperty("prop", null);
         assertTrue(returnValue instanceof TestFormatter);
@@ -73,7 +73,7 @@ public class JavaUtilLogHandlerMyLogManagerTest {
 
         when(mock.getProperty("prop")).thenReturn("ddd ");
 
-        final JavaUtilLogHandler.MyLogManager myLogManager = new JavaUtilLogHandler.MyLogManager(mock);
+        final MyLogManager myLogManager = new MyLogManager(mock);
 
         String returnValue = myLogManager.getStringProperty("prop", null);
         assertEquals("ddd", returnValue);

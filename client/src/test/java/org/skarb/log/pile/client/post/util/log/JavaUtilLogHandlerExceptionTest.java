@@ -1,7 +1,7 @@
 package org.skarb.log.pile.client.post.util.log;
 
 import org.junit.Test;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.post.engine.Engine;
 import org.skarb.log.pile.client.util.JavaUtilLogData;
 

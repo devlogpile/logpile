@@ -4,7 +4,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.post.engine.Engine;
 import org.skarb.log.pile.client.util.JavaUtilLogData;
 

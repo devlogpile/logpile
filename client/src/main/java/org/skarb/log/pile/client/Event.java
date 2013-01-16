@@ -1,4 +1,4 @@
-package org.skarb.log.pile.client.event;
+package org.skarb.log.pile.client;
 
 import java.util.Date;
 

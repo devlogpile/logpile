@@ -5,7 +5,7 @@ import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.status.ErrorStatus;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.post.engine.Engine;
 import org.skarb.log.pile.client.util.JavaUtilLogData;
 

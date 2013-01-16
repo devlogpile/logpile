@@ -1,6 +1,6 @@
 package org.skarb.log.pile.client.post.engine.rest;
 
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.post.engine.Engine;
 import org.skarb.log.pile.client.util.JavaUtilLogData;
 import org.skarb.log.pile.client.util.LogpileException;
@@ -11,16 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * First implementation for server communication.
- * <p/>
- * Send an html Message to a http server.
+ * Abstract class for calling the ws rest service for registering the errors.
+ * User: skarb
+ * Date: 16/01/13
  */
-public class EngineRest implements Engine {
+abstract class AbstractEngineRest implements Engine {
 
     /**
      * The HttpConnector which call http WS.
      */
     private final HttpConnector connector;
+    private final HttpConnector.Method method;
     /**
      * Cache the url value.
      */
@@ -29,15 +30,9 @@ public class EngineRest implements Engine {
     /**
      * Visible for Test
      */
-    EngineRest(HttpConnector connector) {
+    AbstractEngineRest(final HttpConnector connector, final HttpConnector.Method method) {
         this.connector = connector;
-    }
-
-    /**
-     * Default Constructor.
-     */
-    public EngineRest() {
-        this(new HttpConnector());
+        this.method = method;
     }
 
     /**
@@ -66,15 +61,15 @@ public class EngineRest implements Engine {
      *
      * @param value the val.
      * @return the val encoding or empty string.
-     * @throws Exception
+     * @throws LogpileException
      */
     public String encode(final String value) throws LogpileException {
-        try{
-        if (value != null && !value.trim().isEmpty()) {
-            return URLEncoder.encode(value.trim(), HttpConnector.CHARSET);
-        }
-        return "";
-        }catch (final Exception ex){
+        try {
+            if (value != null && !value.trim().isEmpty()) {
+                return URLEncoder.encode(value.trim(), HttpConnector.CHARSET);
+            }
+            return "";
+        } catch (final Exception ex) {
             throw new LogpileException(ex);
         }
     }
@@ -94,7 +89,7 @@ public class EngineRest implements Engine {
 
     /**
      * @param event the event
-     * @throws Exception
+     * @throws LogpileException
      */
 
     public void post(final Event event) throws LogpileException {
@@ -109,7 +104,8 @@ public class EngineRest implements Engine {
 
 
         if (connector != null) {
-            connector.send(getUrl(), HttpConnector.Method.GET, map);
+
+            connector.send(getUrl(), method, map);
         } else {
             throw new LogpileException("connector null");
         }

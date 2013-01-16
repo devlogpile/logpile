@@ -1,7 +1,6 @@
 package org.skarb.log.pile.client.post.engine.rest;
 
-import org.junit.Test;
-import org.skarb.log.pile.client.event.Event;
+import org.skarb.log.pile.client.Event;
 import org.skarb.log.pile.client.util.ClientConstantes;
 
 import java.io.ByteArrayOutputStream;
@@ -22,7 +21,7 @@ public class TestVertx {
 
         System.setProperty(ClientConstantes.PROPERTIES_APPLICATION, "truc");
         System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://localhost:8082/event");
-        EngineRest engineRest = new EngineRest();
+        EngineRestGet engineRest = new EngineRestGet();
         final Event createInstance = newInstance();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         new NullPointerException().printStackTrace(new PrintStream(out));
@@ -44,7 +43,7 @@ public class TestVertx {
 
             System.setProperty(ClientConstantes.PROPERTIES_APPLICATION, "truc");
             System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://localhost:8082/event");
-            EngineRest engineRest = new EngineRest();
+            EngineRestGet engineRest = new EngineRestGet();
             final Event createInstance = newInstance();
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
