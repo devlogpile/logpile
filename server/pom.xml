@@ -67,11 +67,12 @@
                     </execution>
                 </executions>
                 <configuration>
-
-                    <targetGroups>all</targetGroups>
+                    <destinationFolder>${basedir}/webapp/wro/</destinationFolder>
+                    <contextFolder>${basedir}/webapp/</contextFolder>
+                    <wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
+                    <ignoreMissingResources>false</ignoreMissingResources>
                     <minimize>false</minimize>
-                    <destinationFolder>${basedir}/src/main/webapp/wro/</destinationFolder>
-                    <contextFolder>${basedir}/src/main/webapp/</contextFolder>
+
                 </configuration>
             </plugin>
             <plugin>

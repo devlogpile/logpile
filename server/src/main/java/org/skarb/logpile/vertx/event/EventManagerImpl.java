@@ -1,6 +1,7 @@
 package org.skarb.logpile.vertx.event;
 
 import org.skarb.logpile.vertx.EventManager;
+import org.skarb.logpile.vertx.handler.ChangeStateService;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
@@ -59,6 +60,7 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
         }
 
         vertx.eventBus().registerHandler(SERVICE_STATE, this);
+        vertx.eventBus().registerHandler(ACTIVATE_STATE, new ChangeStateService(this));
     }
 
     @Override
@@ -102,6 +104,7 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
      *
      * @return the current instance.
      */
+    @Override
     public List<AbstractEventMessage> getServiceList() {
         return serviceList;
     }

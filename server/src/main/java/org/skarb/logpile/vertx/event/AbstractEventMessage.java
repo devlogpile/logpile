@@ -12,7 +12,7 @@ import org.vertx.java.deploy.Container;
  * User: skarb
  * Date: 03/01/13
  */
-abstract class AbstractEventMessage implements Handler<Message<JsonObject>> {
+public abstract class AbstractEventMessage implements Handler<Message<JsonObject>> {
 
     /**
      * The result field of the response.

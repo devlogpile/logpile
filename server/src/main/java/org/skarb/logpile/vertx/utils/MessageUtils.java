@@ -99,6 +99,20 @@ public final class MessageUtils {
     }
 
     /**
+     * get a rewquired field from an json object.
+     *
+     * @param field the field to retreive.
+     * @param message the message which contains the  data
+     * @return the value or an exception.
+     */
+    public static Boolean getMandatoryBoolean(final String field, final Message<JsonObject> message) {
+        Boolean val = message.body.getBoolean(field);
+        if (val == null) {
+            sendError(message, field + " must be specified");
+        }
+        return val;
+    }
+    /**
      * send an error message.
      *
      * @param message the message to reply.

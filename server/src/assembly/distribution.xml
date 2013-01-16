@@ -34,11 +34,10 @@
         </fileSet>
         <fileSet>
             <outputDirectory>/webapp</outputDirectory>
-            <directory>${basedir}/src/main/webapp</directory>
+            <directory>${basedir}/webapp</directory>
             <excludes>
                 <exclude>js/**</exclude>
                 <exclude>css/**</exclude>
-                <exclude>WEB-INF/**</exclude>
             </excludes>
         </fileSet>
     </fileSets>
