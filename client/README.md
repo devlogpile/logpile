@@ -44,7 +44,7 @@ The file must be name : 'logpile.client.properties'.
 
     log.pile.application=application.name
     log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
-    log.pile.url=http://localhost:8082/event
+    log.pile.url=http://localhost:8082/event 
 
 ##Version 
 =======
