@@ -1,7 +1,7 @@
 package org.skarb.log.pile.client.post.engine.rest;
 
 import org.skarb.log.pile.client.Event;
-import org.skarb.log.pile.client.util.ClientConstantes;
+import org.skarb.log.pile.client.util.NameOfConfigurationParameters;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -19,8 +19,8 @@ public class TestVertx {
    // @Test
     public void postGood() throws Exception {
 
-        System.setProperty(ClientConstantes.PROPERTIES_APPLICATION, "truc");
-        System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://localhost:8082/event");
+        System.setProperty(NameOfConfigurationParameters.PROPERTIES_APPLICATION, "truc");
+        System.setProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST, "http://localhost:8082/event");
         EngineRestGet engineRest = new EngineRestGet();
         final Event createInstance = newInstance();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -41,8 +41,8 @@ public class TestVertx {
         for (int i = 0; i < 25; i++) {
 
 
-            System.setProperty(ClientConstantes.PROPERTIES_APPLICATION, "truc");
-            System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://localhost:8082/event");
+            System.setProperty(NameOfConfigurationParameters.PROPERTIES_APPLICATION, "truc");
+            System.setProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST, "http://localhost:8082/event");
             EngineRestGet engineRest = new EngineRestGet();
             final Event createInstance = newInstance();
 

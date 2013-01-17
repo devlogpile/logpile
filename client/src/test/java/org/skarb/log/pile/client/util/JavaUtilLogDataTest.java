@@ -11,7 +11,7 @@ public class JavaUtilLogDataTest {
 
     @Test
     public void testGetApplication() {
-        System.setProperty(ClientConstantes.PROPERTIES_APPLICATION, "");
+        System.setProperty(NameOfConfigurationParameters.PROPERTIES_APPLICATION, "");
         JavaUtilLogData instance = JavaUtilLogData.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.getApplication());

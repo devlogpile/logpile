@@ -1,0 +1,6 @@
+<log.pile>
+    <log.pile.application>APP1
+    </log.pile.application>
+    <log.pile.engine >engine.class</log.pile.engine>
+    <log.pile.url>http://www.gogole.fr</log.pile.url>
+</log.pile>

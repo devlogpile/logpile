@@ -46,6 +46,11 @@ public class HttpConnector {
      * @throws Exception
      */
     public void send(final String url, final Method method, final Map<String, String> maps) throws LogpileException {
+        if(url ==null){
+            System.err.println("Logpile : No url configured");
+           return;
+        }
+
         try {
             final String params = createParameters(maps);
             final HttpURLConnection urlConnection = urlConnection(url, method, params);

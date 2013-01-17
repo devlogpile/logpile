@@ -103,7 +103,7 @@ abstract class AbstractEngineRest implements Engine {
         map.put(PROP_DATE, encode(event.getDate()));
 
 
-        if (connector != null) {
+        if (connector != null ) {
 
             connector.send(getUrl(), method, map);
         } else {

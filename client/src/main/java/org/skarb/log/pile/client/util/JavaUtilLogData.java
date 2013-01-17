@@ -1,6 +1,9 @@
 package org.skarb.log.pile.client.util;
 
+import org.skarb.log.pile.client.config.Configuration;
+import org.skarb.log.pile.client.config.ConfigurationUtils;
 import org.skarb.log.pile.client.post.engine.Engine;
+import org.skarb.log.pile.client.post.engine.NullEngine;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -26,6 +29,10 @@ public class JavaUtilLogData implements Serializable {
      * Current Engine implementation.
      */
     private Engine engine;
+    /**
+     * Configuration Object.
+     */
+    private Configuration configuration;
 
     /**
      * Constructor.
@@ -49,34 +56,35 @@ public class JavaUtilLogData implements Serializable {
         return instance;
     }
 
-
     /**
      * init the datas.
      */
     private void configure() {
         try {
-            final String property = System.getProperty(ClientConstantes.PROPERTIES_APPLICATION);
-            if (property != null && property.length() > 0) {
-                application = property;
+            configuration = ConfigurationUtils.retrieveCurrent();
+
+
+            final String propertyApp = configuration.getApplication();
+            if (propertyApp != null && propertyApp.length() > 0) {
+                application = propertyApp;
             } else {
                 final Random randomNumberGenerator = new Random();
                 application = String.valueOf(randomNumberGenerator.nextLong()) + "/generated";
 
             }
 
-            String engineClass = System.getProperty(ClientConstantes.PROPERTIES_TYPE);
+            String engineClass = configuration.getEngineClass();
 
             if (engineClass == null) {
-                engineClass = ClientConstantes.DEFAULT_ENGINE;
+                engine = new NullEngine();
+            } else {
+                engine = (Engine) Class.forName(engineClass).newInstance();
             }
-
-            engine = (Engine) Class.forName(engineClass).newInstance();
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
     }
-
 
     /**
      * Test if the singleton is configured.
@@ -88,7 +96,7 @@ public class JavaUtilLogData implements Serializable {
     }
 
     public String url() {
-        return System.getProperty(ClientConstantes.PROPERTIES_URL_REST);
+        return configuration.getUrl();
     }
 
     /**

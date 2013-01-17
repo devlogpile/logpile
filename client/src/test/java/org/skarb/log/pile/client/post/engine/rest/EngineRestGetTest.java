@@ -2,7 +2,7 @@ package org.skarb.log.pile.client.post.engine.rest;
 
 import org.junit.Test;
 import org.skarb.log.pile.client.Event;
-import org.skarb.log.pile.client.util.ClientConstantes;
+import org.skarb.log.pile.client.util.NameOfConfigurationParameters;
 
 import java.util.Date;
 
@@ -16,13 +16,13 @@ public class EngineRestGetTest {
 
     @Test
     public void testGetUrl() throws Exception {
-        System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://www.gogole.fr");
+        System.setProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST, "http://www.gogole.fr");
         EngineRestGet engineRest = new EngineRestGet();
         assertEquals("http://www.gogole.fr", engineRest.getUrl());
         assertEquals("http://www.gogole.fr", engineRest.getUrl());
         engineRest.reset();
         assertEquals("http://www.gogole.fr", engineRest.getUrl());
-        System.setProperty(ClientConstantes.PROPERTIES_URL_REST, "http://www.toto.fr");
+        System.setProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST, "http://www.toto.fr");
         engineRest.reset();
         assertEquals("http://www.toto.fr", engineRest.getUrl());
 
