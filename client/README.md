@@ -29,6 +29,23 @@ The datas which are used by the loggers are :
 * _the url of the server_ : The address of the logpile server. This parameter is required. If not set, then no error registration is run.
 
 
+###The xml configuration file.
+
+The file must be name : 'logpile.client.xml'.
+
+    <log.pile>
+        <log.pile.application>Mon application</log.pile.application>
+        <log.pile.engine >org.skarb.log.pile.client.post.engine.rest.EngineRestPost</log.pile.engine>
+        <log.pile.url>http://localhost:8082/event</log.pile.url>
+    </log.pile>
+
+###The Properties file.
+
+The file must be name : 'logpile.client.properties'.
+
+    log.pile.application=application.name
+    log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
+    log.pile.url=http://localhost:8082/event 
 
 
 ##Version 
