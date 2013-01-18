@@ -60,6 +60,25 @@ or with the code
     // My code
     Logger.error("my error");
 
+##The specific Handlers
+
+###Java Logging
+
+3 implementations ara availables :
+* __org.skarb.log.pile.client.post.util.log.JavaUtilLogHandler__ : An handler which do only the error registration on the server. 
+* __org.skarb.log.pile.client.post.util.log.ConsoleHandler__ : An handler which do the error registration on the server and the output console. The parameters of the console output are identicals of the class _java.util.logging.ConsoleHandler_.
+* __org.skarb.log.pile.client.post.util.log.FileHandler__ : An handler which do the error registration on the server and write into a file. The parameters of the file parameters are identicals of the class _java.util.logging.FileHandler_.
+
+Use case :
+
+    handlers=org.skarb.log.pile.client.post.util.log.ConsoleHandler
+    java.util.logging.SimpleFormatter.format=%5$s %6$s\n
+    org.skarb.log.pile.client.post.util.log.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+    org.skarb.log.pile.client.post.util.log.ConsoleHandler.level=INFO
+    .level=INFO
+    org.skarb.log.pile.tyty.level=SEVERE
+
+
 ##Version 
 =======
 
