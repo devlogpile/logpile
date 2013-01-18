@@ -31,7 +31,7 @@ The datas which are used by the loggers are :
 
 ###The xml configuration file.
 
-The file must be name : 'logpile.client.xml'.
+The file must be named : 'logpile.client.xml'.
 
     <log.pile>
         <log.pile.application>Mon application</log.pile.application>
@@ -41,7 +41,7 @@ The file must be name : 'logpile.client.xml'.
 
 ###The Properties file.
 
-The file must be name : 'logpile.client.properties'.
+The file must be named : 'logpile.client.properties'.
 
     log.pile.application=application.name
     log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
