@@ -47,6 +47,18 @@ The file must be name : 'logpile.client.properties'.
     log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
     log.pile.url=http://localhost:8082/event 
 
+###The System properties.
+
+You can set the same properties than with a file directly in the System properties of the jvm.
+
+    java -Dlog.pile.url=http://localhost:8082/event ... org.tyty.MyApp
+
+or with the code
+    
+    System.setProperty("log.pile.url","http://localhost:8082/event");
+    System.setProperty("log.pile.application","application.name");
+    // My code
+    Logger.error("my error");
 
 ##Version 
 =======
