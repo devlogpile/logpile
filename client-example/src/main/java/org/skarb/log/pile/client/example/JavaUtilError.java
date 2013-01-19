@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class JavaUtilError extends Error {
 
-    private static final Logger logger = Logger.getLogger(SwingTest.class.getName());
+    private static final Logger logger = Logger.getLogger(SwingMain.class.getName());
 
     public JavaUtilError() {
         super();

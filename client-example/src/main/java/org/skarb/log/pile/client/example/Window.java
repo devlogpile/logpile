@@ -16,7 +16,7 @@ public class Window extends JFrame {
     private JComboBox exception;
     private JTextField messageException;
 
-    public Window(TypeLogger clazz) {
+    public Window(final TypeLogger clazz) {
         super();
         this.logger = clazz;
 

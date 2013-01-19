@@ -23,5 +23,21 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+        <!-- adding example -->
+        <fileSet>
+            <outputDirectory>/example</outputDirectory>
+            <directory>${basedir}/client-example/src/main/assembly</directory>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>/example/classes</outputDirectory>
+            <directory>${basedir}/client-example/src/test/resources</directory>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>/example/lib</outputDirectory>
+            <directory>${basedir}/client-example/target</directory>
+            <includes>
+                <include>*-jar-with-dependencies.jar</include>
+            </includes>
+        </fileSet>
     </fileSets>
 </assembly>
