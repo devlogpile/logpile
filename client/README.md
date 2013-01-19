@@ -24,13 +24,14 @@ This client api require some data to be used. There is 3 ways to pass data to th
 There is an order for datas loading : first the xml file, the properties and the System properties. All files must be in the root of the classpath.
 
 The datas which are used by the loggers are :
-* __the application name__ : An identifier that indicates which server is or what the application. This parameter is optional. if not set, then an identifer is generated.
-* __the engine type class__ : The type of communication used for the server. This parameter is required for the good functioner of the logpile. If not set, then an null implementation is used.
-* __the url of the server__ : The address of the logpile server. This parameter is required. If not set, then no error registration is run.
+* _the application name_ : An identifier that indicates which server is or what the application. This parameter is optional. if not set, then an identifer is generated.
+* _the engine type class_ : The type of communication used for the server. This parameter is required for the good functioner of the logpile. If not set, then an null implementation is used.
+* _the url of the server_ : The address of the logpile server. This parameter is required. If not set, then no error registration is run.
+
 
 ###The xml configuration file.
 
-The file must be name : 'logpile.client.xml'.
+The file must be named : 'logpile.client.xml'.
 
     <log.pile>
         <log.pile.application>Mon application</log.pile.application>
@@ -40,11 +41,43 @@ The file must be name : 'logpile.client.xml'.
 
 ###The Properties file.
 
-The file must be name : 'logpile.client.properties'.
+The file must be named : 'logpile.client.properties'.
 
     log.pile.application=application.name
     log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
     log.pile.url=http://localhost:8082/event 
+
+###The System properties.
+
+You can set the same properties than with a file directly in the System properties of the jvm.
+
+    java -Dlog.pile.url=http://localhost:8082/event ... org.tyty.MyApp
+
+or with the code
+    
+    System.setProperty("log.pile.url","http://localhost:8082/event");
+    System.setProperty("log.pile.application","application.name");
+    // My code
+    Logger.error("my error");
+
+##The specific Handlers
+
+###Java Logging
+
+3 implementations ara availables :
+* __org.skarb.log.pile.client.post.util.log.JavaUtilLogHandler__ : An handler which do only the error registration on the server. 
+* __org.skarb.log.pile.client.post.util.log.ConsoleHandler__ : An handler which do the error registration on the server and the output console. The parameters of the console output are identicals of the class _java.util.logging.ConsoleHandler_.
+* __org.skarb.log.pile.client.post.util.log.FileHandler__ : An handler which do the error registration on the server and write into a file. The parameters of the file parameters are identicals of the class _java.util.logging.FileHandler_.
+
+Use case :
+
+    handlers=org.skarb.log.pile.client.post.util.log.ConsoleHandler
+    java.util.logging.SimpleFormatter.format=%5$s %6$s\n
+    org.skarb.log.pile.client.post.util.log.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+    org.skarb.log.pile.client.post.util.log.ConsoleHandler.level=INFO
+    .level=INFO
+    org.skarb.log.pile.tyty.level=SEVERE
+
 
 ##Version 
 =======
