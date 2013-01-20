@@ -574,9 +574,9 @@ function ServerState($scope) {
         services: []
 
     };
-    var init =function (){
-        eventBus.sendEventBus("logpile.server-status", {}, function(message) {
-               
+    var init = function() {
+            eventBus.sendEventBus("logpile.server-status", {}, function(message) {
+
                 $scope.$apply(function() {
                     $scope.datas = message;
                     var host = window.location.hostname;
@@ -586,18 +586,21 @@ function ServerState($scope) {
                 });
                 $('[rel=tooltip]').tooltip();
             });
-    }
+        }
     $scope.addressEvent = "";
 
-     $scope.modifyActivate = function(name, activate) {
-        eventBus.sendEventBus("logpile.activate", {"name":name,"activate":activate}, function(message) {
-              init(); 
+    $scope.modifyActivate = function(name, activate) {
+        eventBus.sendEventBus("logpile.activate", {
+            "name": name,
+            "activate": activate
+        }, function(message) {
+            init();
         });
-     };
+    };
 
     eventBus.addIf(function(message) {
         if (message.result) {
-           init(); 
+            init();
         }
     });
 
@@ -606,6 +609,7 @@ function ServerState($scope) {
 /**
  * Controller for Resume Panel.
  **/
+
 function Resume($scope) {
     $scope.datas = {
         "totalError": 0
@@ -641,15 +645,32 @@ function Resume($scope) {
 }
 
 function WebOutput($scope) {
-   $scope.active=false;
-    $scope.events=[];
+     $scope.active = false;
+    $scope.events = [];
+    $scope.selectedItem = {};
 
-   eventBus.addIf(function(message) {
-           if (message.result) {
-             eventBus.sendEventBus("logpile.weboutput.status",{}, function(messageWO){
-                 if(messageWO.result){
+    $scope.showDetail = function(pIndex) {
+        $scope.selectedItem = $scope.events[pIndex];
+        $('#detailModal').modal();
+    };
+
+    $scope.delete = function(pIndex) {
+        var newArray = [];
+        for(var i=0;i<$scope.events.length;i++){
+            if(i!=pIndex){
+                newArray.push($scope.events[i]);    
+            }
+        }
+
+        $scope.events = newArray;
+    };
+
+    eventBus.addIf(function(message) {
+        if (message.result) {
+            eventBus.sendEventBus("logpile.weboutput.status", {}, function(messageWO) {
+                if (messageWO.result) {
                     $scope.$apply(function() {
-                        $scope.active=true;
+                        $scope.active = true;
                     });
                     console.log("Web output installed.");
                     eventBus.registerHandler("logpile.weboutput.new.event", function(messageNE) {
@@ -658,11 +679,12 @@ function WebOutput($scope) {
                         });
                     });
 
-                 } else {
+                } else {
                     console.log("Web output not installed.");
-                 }
-             });
-           }
-   });
+                }
+            });
+        }
+    });
+
 }
 ;
