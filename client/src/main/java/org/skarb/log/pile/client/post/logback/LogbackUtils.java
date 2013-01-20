@@ -60,7 +60,7 @@ public final class LogbackUtils {
 
         final IThrowableProxy tp = eventObject.getThrowableProxy();
         if (tp != null) {
-            final StringBuilder stringBuilder = new StringBuilder(tp.getClassName()).append(": ").append(tp.getMessage());
+            final StringBuilder stringBuilder = new StringBuilder(tp.getClassName()).append(": ").append(tp.getMessage()).append("\n");
             for (final StackTraceElementProxy stackTraceLine : tp.getStackTraceElementProxyArray()) {
                 stringBuilder.append(stackTraceLine.toString()).append("\n");
             }
