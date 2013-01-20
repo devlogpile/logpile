@@ -28,7 +28,7 @@ public abstract class Error {
             dolog(message);
         } else {
             Throwable t = null;
-            if (messageException != null && !messageException.trim().isEmpty()) {
+            if (messageException == null || messageException.trim().isEmpty()) {
                 t = (Throwable) Class.forName(exception).newInstance();
             } else {
                 t = (Throwable) Class.forName(exception).getConstructor(String.class).newInstance(messageException);
