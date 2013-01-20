@@ -7,7 +7,7 @@
     <groupId>org.skarb.logpile</groupId>
 
     <artifactId>server</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <properties>
         <jacoco.agent.path>..\..\jacoco\jacocoagent.jar</jacoco.agent.path>
         <jacoco.file.path>target\jacoco.exec</jacoco.file.path>

@@ -2,7 +2,7 @@ package org.skarb.logpile.vertx.event;
 
 
 import org.junit.Test;
-import org.skarb.logpile.vertx.event.format.Formatter;
+import org.skarb.logpile.vertx.event.format.LineFormatter;
 import org.skarb.logpile.vertx.utils.Charsets;
 import org.vertx.java.core.AsyncResultHandler;
 import org.vertx.java.core.Vertx;
@@ -99,7 +99,7 @@ public class FileEventTest {
         fileEvent.formattedDate = "2001-01-01";
         fileEvent.path = createTmpPath();
         fileEvent.rolling = FileEvent.DEFAULT_ROLLING;
-        fileEvent.formatter = Formatter.Builder.init().build();
+        fileEvent.lineFormatter = LineFormatter.Builder.init().build();
 
         reinit(fileEvent);
 
@@ -128,7 +128,7 @@ public class FileEventTest {
         fileEvent.formattedDate = "2001-01-01";
         fileEvent.path = createTmpPath();
         fileEvent.rolling = 10000L;
-        fileEvent.formatter = Formatter.Builder.init().build();
+        fileEvent.lineFormatter = LineFormatter.Builder.init().build();
 
         reinit(fileEvent);
 
@@ -166,7 +166,7 @@ public class FileEventTest {
         fileEvent.formattedDate = "2001-01-01";
         fileEvent.path = createTmpPath();
         fileEvent.rolling = 40L;
-        fileEvent.formatter = Formatter.Builder.init().build();
+        fileEvent.lineFormatter = LineFormatter.Builder.init().build();
 
         reinit(fileEvent);
         setDatas(fileEvent);

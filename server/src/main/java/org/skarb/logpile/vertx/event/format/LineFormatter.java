@@ -5,18 +5,18 @@ import org.skarb.logpile.vertx.event.Event;
 import java.util.Objects;
 
 /**
- * Formatter for the events.
+ * LineFormatter for the events.
  * <p>Transform the EVent in string line with a defined format.</p>
  * User: skarb
  * Date: 10/01/13
  */
-public class Formatter {
+public class LineFormatter {
     /**
      * The separator between the fields.
      */
     private String separator;
     /**
-     * the date formatter.
+     * the date lineFormatter.
      */
     private String formatDate;
 
@@ -26,7 +26,7 @@ public class Formatter {
      * @param separator the separator.
      * @param formatDate the date format.
      */
-    protected Formatter(String separator, String formatDate) {
+    protected LineFormatter(String separator, String formatDate) {
         this.separator = separator;
         this.formatDate = formatDate;
     }
@@ -49,19 +49,19 @@ public class Formatter {
     }
 
     /**
-     * Builder for create a new instance of formatter.
+     * Builder for create a new instance of lineFormatter.
      */
     public static class Builder {
         /**
          * The current instance in build.
          */
-        private Formatter formatter;
+        private LineFormatter lineFormatter;
 
         /**
          * a new instance.
          */
         private Builder() {
-            formatter = new Formatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);
+            lineFormatter = new LineFormatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);
         }
 
         /**
@@ -81,7 +81,7 @@ public class Formatter {
         public Builder defaultValues()
 
         {
-            formatter = new Formatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);
+            lineFormatter = new LineFormatter(FormatterUtils.DEFAULT_SEPARATOR, FormatterUtils.DEFAULT_FORMAT);
             return this;
         }
 
@@ -91,7 +91,7 @@ public class Formatter {
          * @return the current object
          */
         public Builder changeSeparator(final String separator) {
-            formatter.setSeparator(separator);
+            lineFormatter.setSeparator(separator);
             return this;
         }
 
@@ -101,7 +101,7 @@ public class Formatter {
          * @return the current object
          */
         public Builder changeFormatDate(final String format) {
-            formatter.setFormatDate(format);
+            lineFormatter.setFormatDate(format);
             return this;
         }
 
@@ -110,8 +110,8 @@ public class Formatter {
          *
          * @return a new instance.
          */
-        public Formatter build() {
-            return formatter;
+        public LineFormatter build() {
+            return lineFormatter;
         }
     }
 }

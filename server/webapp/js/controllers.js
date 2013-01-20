@@ -225,7 +225,6 @@ function ServerState($scope) {
 /**
  * Controller for Resume Panel.
  **/
-
 function Resume($scope) {
     $scope.datas = {
         "totalError": 0
@@ -258,4 +257,30 @@ function Resume($scope) {
             });
         }
     });
+}
+
+function WebOutput($scope) {
+   $scope.active=false;
+    $scope.events=[];
+
+   eventBus.addIf(function(message) {
+           if (message.result) {
+             eventBus.sendEventBus("logpile.weboutput.status",{}, function(messageWO){
+                 if(messageWO.result){
+                    $scope.$apply(function() {
+                        $scope.active=true;
+                    });
+                    console.log("Web output installed.");
+                    eventBus.registerHandler("logpile.weboutput.new.event", function(messageNE) {
+                        $scope.$apply(function() {
+                            $scope.events.push(messageNE);
+                        });
+                    });
+
+                 } else {
+                    console.log("Web output not installed.");
+                 }
+             });
+           }
+   });
 }

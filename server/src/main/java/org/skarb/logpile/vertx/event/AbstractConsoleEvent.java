@@ -1,6 +1,6 @@
 package org.skarb.logpile.vertx.event;
 
-import org.skarb.logpile.vertx.event.format.Formatter;
+import org.skarb.logpile.vertx.event.format.LineFormatter;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.deploy.Container;
 
@@ -18,9 +18,9 @@ abstract class AbstractConsoleEvent extends AbstractEventMessage {
      */
     private final PrintStream printStream;
     /**
-     * the formatter.
+     * the lineFormatter.
      */
-    private Formatter formatter;
+    private LineFormatter lineFormatter;
 
     /**
      * The constructor.
@@ -31,14 +31,14 @@ abstract class AbstractConsoleEvent extends AbstractEventMessage {
     }
 
     /**
-     * init the default formatter.
+     * init the default lineFormatter.
      * @param vertx    the current instance.
      * @param container the current instance.
      */
     @Override
     public void setDatas(final Vertx vertx, final Container container) {
         super.setDatas(vertx, container);
-        formatter = Formatter.Builder.init().defaultValues().build();
+        lineFormatter = LineFormatter.Builder.init().defaultValues().build();
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class AbstractConsoleEvent extends AbstractEventMessage {
      */
     @Override
     public boolean handle(final Event event) {
-        final String line = formatter.format(event);
+        final String line = lineFormatter.format(event);
         printStream.println(line);
         return true;
     }

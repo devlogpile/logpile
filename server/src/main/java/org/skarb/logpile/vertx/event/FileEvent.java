@@ -1,7 +1,7 @@
 package org.skarb.logpile.vertx.event;
 
-import org.skarb.logpile.vertx.event.format.Formatter;
 import org.skarb.logpile.vertx.event.format.FormatterUtils;
+import org.skarb.logpile.vertx.event.format.LineFormatter;
 import org.skarb.logpile.vertx.utils.Charsets;
 import org.skarb.logpile.vertx.utils.FileSizeUtils;
 import org.vertx.java.core.AsyncResult;
@@ -42,14 +42,14 @@ public class FileEvent extends AbstractEventMessage {
     String name;
     String formattedDate;
     long rolling;
-    Formatter formatter;
+    LineFormatter lineFormatter;
 
     @Override
     public void setDatas(final Vertx vertx, final Container container) {
         super.setDatas(vertx, container);
         final JsonObject objectConfig = getJsonObject(container);
 
-        formatter = Formatter.Builder.init().build();
+        lineFormatter = LineFormatter.Builder.init().build();
         name = Objects.toString(objectConfig.getString(FILE_NAME_FIELD), DEFAULT_NAME);
         formattedDate = FormatterUtils.formatDate(FormatterUtils.LOG_FORMAT, new Date());
         rolling = FileSizeUtils.calculate(objectConfig.getString(ROLLING_FIELD), DEFAULT_ROLLING);
@@ -104,7 +104,7 @@ public class FileEvent extends AbstractEventMessage {
     @Override
     public boolean handle(final Event event) {
 
-        final String newLine = formatter.format(event) + "\n";
+        final String newLine = lineFormatter.format(event) + "\n";
         final int length = newLine.getBytes(Charsets.getDefault()).length;
         final String completePath = createPath();
         if (rolling != DEFAULT_ROLLING) {

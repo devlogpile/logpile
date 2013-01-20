@@ -54,9 +54,9 @@
                             <li>
                                 <a data-toggle="tab" href="#status-2">Resume state</a>
                             </li>
-                            <!--li>
+                            <li  ng-controller="WebOutput" ng-show="active">
                                 <a data-toggle="tab" href="#events-tab">Events list</a>
-                            </li-->
+                            </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div id="status-1" ng-controller="ServerState" class="tab-pane fade in active">
@@ -293,7 +293,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="events-tab" class="tab-pane fade">
+                            <div id="events-tab" class="tab-pane fade" ng-controller="WebOutput" ng-show="active">
                                
                                     <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
                                         <thead>
@@ -322,7 +322,13 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody id="rootnewevents">
+                                        <tbody>
+                                        <tr ng-repeat="event in events">
+                                            <td id="{{$index}}">+</td>
+                                            <td>{{event.formattedDate}}</td>
+                                            <td>{{event.application}}</td>
+                                            <td>{{event.message}}</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 
@@ -351,12 +357,6 @@
                 </div>
             </div>
         </div>
-        <script src="wro/all.js" type="text/javascript">
-                                    
-        </script>
-        <!--script src="index.js" type="text/javascript">
-                        
-        </script-->
+        <script src="wro/all.js" type="text/javascript"></script>
     </body>
-
 </html>

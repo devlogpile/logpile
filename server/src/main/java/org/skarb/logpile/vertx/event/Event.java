@@ -130,4 +130,8 @@ public class Event {
 
         return new Date(aLong);
     }
+
+    public JsonObject toJson(){
+        return jsonObject;
+    }
 }
