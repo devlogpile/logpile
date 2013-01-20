@@ -16,9 +16,7 @@ public class Log4jError extends Error {
     public Log4jError() {
     }
 
-    public Log4jError(String message, String exception, String messageException) {
-        super(message, exception, messageException);
-    }
+
 
     @Override
     protected void init() {
@@ -27,20 +25,15 @@ public class Log4jError extends Error {
     }
 
     @Override
-    void dolog() throws Exception {
-        if (exception == null || exception.trim().isEmpty()) {
-            logger.error(message);
-        } else {
-            Throwable t = null;
-            if (messageException != null && !messageException.trim().isEmpty()) {
-                t = (Throwable) Class.forName(exception).newInstance();
-            } else {
-                t = (Throwable) Class.forName(exception).getConstructor(String.class).newInstance(messageException);
-            }
-
-            logger.error(message, t);
-        }
+    void dolog(String mess) throws Exception {
+        logger.error(mess);
     }
+
+    @Override
+    void dolog(String mess, Throwable throwable) throws Exception {
+        logger.error(mess, throwable);
+    }
+
 
     @Override
     String title() {

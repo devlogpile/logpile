@@ -69,7 +69,11 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Error error = logger.create(message.getText(), exception.getSelectedItem().toString(), messageException.getText());
+                    final Error error = logger.create();
+
+                    error.setException(exception.getSelectedItem().toString());
+                    error.setMessage(message.getText());
+                    error.setMessageException(messageException.getText());
 
                     error.dolog();
                 } catch (Exception ex) {

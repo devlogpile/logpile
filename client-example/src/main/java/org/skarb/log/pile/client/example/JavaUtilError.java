@@ -17,9 +17,7 @@ public class JavaUtilError extends Error {
         super();
     }
 
-    public JavaUtilError(String message, String exception, String messageException) {
-        super(message, exception, messageException);
-    }
+
 
     protected void init() {
         LogManager logMan = LogManager.getLogManager();
@@ -32,19 +30,13 @@ public class JavaUtilError extends Error {
     }
 
     @Override
-    public void dolog() throws Exception {
-        if (exception == null || exception.trim().isEmpty()) {
-            logger.severe(message);
-        } else {
-            Throwable t = null;
-            if (messageException != null && !messageException.trim().isEmpty()) {
-                t = (Throwable) Class.forName(exception).newInstance();
-            } else {
-                t = (Throwable) Class.forName(exception).getConstructor(String.class).newInstance(messageException);
-            }
+    void dolog(String mess) throws Exception {
+        logger.severe(mess);
+    }
 
-            logger.log(Level.SEVERE, message, t);
-        }
+    @Override
+    void dolog(String mess, Throwable throwable) throws Exception {
+        logger.log(Level.SEVERE, mess, throwable);
     }
 
     @Override
