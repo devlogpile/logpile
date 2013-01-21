@@ -8,6 +8,10 @@ The clients send event call an ws rest service to register new errors. This serv
 
 This implementation provides also a web console which manage the server treatment or view the current errors.
 
+##Description of the project
+=======
+* [Server configuration](https://github.com/devlogpile/logpile/wiki/Server-Configuration)
+
 ##How to install the server
 =======
 
