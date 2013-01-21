@@ -25,10 +25,22 @@ public final class LogbackUtils {
 
     }
 
+    /**
+     * Register the current event log on the logpile server.
+     * @param eventObject   the current log.
+     * @param contextAware  the appender which do the treatment.
+     */
     public static void doCallLogPile(final ILoggingEvent eventObject, final ContextAware contextAware) {
         doCallLogPile(eventObject, application(), engine(), contextAware);
     }
 
+    /**
+     * Register the current event log on the logpile server.
+     * @param eventObject   the current log.
+     * @param application   the application name.
+     * @param engine        the current engine implementation.
+     * @param contextAware  the appender which do the treatment.
+     */
     public static void doCallLogPile(final ILoggingEvent eventObject, final String application, final Engine engine, ContextAware contextAware) {
         try {
             final Event event = new Event();
@@ -70,12 +82,20 @@ public final class LogbackUtils {
         return null;
     }
 
+    /**
+     * Getter on the current engine implementation.
+     * @return   the current engine implementation.
+     */
     public static Engine engine() {
         final JavaUtilLogData logData = JavaUtilLogData.getInstance();
         return logData.getEngine();
 
     }
 
+    /**
+     * Getter on the  current application name.
+     * @return   the  current application name.
+     */
     public static String application() {
         final JavaUtilLogData logData = JavaUtilLogData.getInstance();
         return logData.getApplication();
