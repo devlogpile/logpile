@@ -24,8 +24,21 @@ This implementation provides also a web console which manage the server treatmen
 7. log with the email `root@logpile.org` and with the password `gtn`
 8. That's it. Your server is runnning and functionnal.
 
+##Library
+=======
+This implementaion use the open source projects :
+
+* [Vertx](http://vertx.io/)
+* [JQuery](http://jquery.com/)
+* [Twitter bootstrap](http://twitter.github.com/bootstrap/index.html)
+* [Angular Js](http://angularjs.org/)
+
 ##Version
 =======
+
+###__0.2.0__ :
+* The output of the errors in the web console.
+
 ###__0.1.0__ :
 * Skeleton implementation server.
 * Ws Rest service for registering new errors.
