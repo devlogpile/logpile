@@ -21,16 +21,16 @@ This project is composed of two sub project :
 * the client : It's a small jar which provide appenders for log framework in java. The implementation is in [client directory](https://github.com/devlogpile/logpile/tree/master/client)
 * the server : it's a tiny application which collects errors provided by the appenders. The implementation is in [server directory](https://github.com/devlogpile/logpile/tree/master/server)
 
-An example client project is available in the [client-example directory](https://github.com/devlogpile/logpile/tree/master/client-example).
+An example client project is available in the [client-example directory](/client-example).
 
 The bin directory store the installation package distribution and the /doc contains images for the online documentation.
 
 ##Installation Instruction
 =======
 
-The installation for the server is available in the [server directory](https://github.com/devlogpile/logpile/tree/master/server).
+The installation for the server is available in the [server directory](/server).
 
-And the configuration of the appenders are in the [client directory](https://github.com/devlogpile/logpile/tree/master/client).
+And the configuration of the appenders are in the [client directory](/client).
 
 ##How to build the project
 =======
