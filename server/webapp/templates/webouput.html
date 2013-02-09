@@ -1,0 +1,142 @@
+<div id="events-tab" class="tab-pane" ng-controller="WebOutput" ng-show="active">
+    <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+        <thead>
+            <tr>
+                <th style="text-align: center; vertical-align: middle;">
+                    <div>
+                        <h5>
+                            +
+                        </h5>
+                    </div>
+                </th>
+                <th style="text-align: center; vertical-align: middle;">
+                    <h5>
+                        Date
+                    </h5>
+                </th>
+                <th style="text-align: center; vertical-align: middle;">
+                    <h5>
+                        Application
+                    </h5>
+                </th>
+                <th style="text-align: center; vertical-align: middle;">
+                    <h5>
+                        Message
+                    </h5>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="event in events">
+                <td id="{{$index}}">
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+
+
+
+                                                        <li class="icon-asterisk"></li> Actions
+
+
+
+                                                        <span class="caret"></span>
+
+
+
+                                                      </a>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                <a ng-click="showDetail($index);">Detail</a>
+                            </li>
+                            <li>
+                                <a ng-click="delete($index);">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    {{event.formattedDate}}
+                </td>
+                <td>
+                    {{event.application}}
+                </td>
+                <td>
+                    {{event.message}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal hide" id="detailModal">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">
+                x
+            </button>
+            <h3>
+                Detail
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                        href="#collapseOne"> Description </a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div>
+                                <strong>
+                                    Date :
+                                </strong>
+                                {{selectedItem.formattedDate}}
+                            </div>
+                            <div>
+                                <strong>
+                                    Application name :
+                                </strong>
+                                {{selectedItem.application}}
+                            </div>
+                            <div>
+                                <strong>
+                                    Component :
+                                </strong>
+                                {{selectedItem.component}}
+                            </div>
+                            <div>
+                                <strong>
+                                    Message :
+                                </strong>
+                                {{selectedItem.message}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                        href="#collapseTwo">
+
+
+
+                                                    Stack trace.
+
+
+
+                                                  </a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            {{selectedItem.stacktrace}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+    <div class="well" style="height: 50px;border: 0px;box-shadow: 0 0 0 rgba(0, 0, 0, 0.05) inset;">
+        &nbsp;
+    </div>
+</div>

@@ -414,30 +414,49 @@ var eventBus = new function() {
         var eb = null,
             ifauthorized = [],
             onopen = [],
-            onclose = [];
+            onclose = [],
+            oneventregister = [],
+            open = false,
+            authorisationCheck = false,
+            authorzationMessage;
         var privatesendEventBus = function(address, jsonObject, handler) {
                 var newObject = JSON.parse(JSON.stringify(jsonObject));
                 newObject.sessionID = readCookie("sessionID");
                 eb.send(address, newObject, handler);
             };
         return {
+            isConnected: function() {
+                return eb != null;
+            },
             connect: function() {
                 eb = new vertx.EventBus("http://localhost:8081/eventbus");
                 eb.onopen = function() {
-
+                    open = true;
                     for (var i = 0; i < onopen.length; i++) {
                         onopen[i]();
                     }
 
+                    for (var i = oneventregister.length - 1; i >= 0; i--) {
+                       eb.registerHandler(oneventregister[i].address,oneventregister[i].handler); 
+                    };
+
                     privatesendEventBus("auth-logpile.authorise", {
                         "tmp": "initialize"
                     }, function(message) {
+                        authorisationCheck = true;
+                        authorzationMessage = message;
                         for (var i = 0; i < ifauthorized.length; i++) {
                             ifauthorized[i](message);
                         }
 
 
                     });
+                };
+
+                eb.onclose = function(e){
+                    for (var i = onclose.length - 1; i >= 0; i--) {
+                        onclose[i](e);
+                    };
                 }
             },
 
@@ -448,56 +467,91 @@ var eventBus = new function() {
                 return eb;
             },
             registerHandler: function(address, handler) {
-                eb.registerHandler(address, handler);
+                if(eb) {
+                    eb.registerHandler(address, handler);
+                } else {
+                    oneventregister.push({"address":address,"handler":handler});
+                }
+
             },
             addIf: function(handler) {
-                ifauthorized.push(handler);
+                if (authorisationCheck) {
+                    handler(authorzationMessage);
+                } else {
+                    ifauthorized.push(handler);
+                }
             },
             addOnOpen: function(handler) {
-                onopen.push(handler);
+                if (open) {
+                    handler();
+                } else {
+                    onopen.push(handler);
+                }
             },
             addOnClose: function(handler) {
                 onclose.push(handler);
             }
         };
-    }; /**************************************************/
-/* Angular JS COntroller                          */
-/**************************************************/
-
-/**
- * Controller for login state.
- **/
-
-function LoginCtrl($scope) {
-    $scope.email = "";
-    $scope.password = "";
-    $scope.statusinfos = "Wait ...";
-    $scope.error = false;
-
-
-    $scope.login = function() {
-        eventBus.getEb().send('auth-logpile.login', {
-            "username": $scope.email,
-            "password": $scope.password
-        }, function(message) {
-            if (message.result == true) {
-                //alert("connecter");
-                createCookie("sessionID", message.sessionID);
-                document.location = "/welcome.html";
-
-            } else {
-                $scope.$apply(function() {
-                    $scope.error = true;
-                    $scope.password = "";
-
-                });
-            }
-
-        });
-        return false;
     };
 
-    $scope.logout = function() {
+/**************************************************/
+/* Angular JS Application                         */
+/**************************************************/
+
+
+var sharedConnection = ['$rootScope', function(root) {
+    root.statusinfos = "Wait ...";
+
+    var modify = {};
+
+    modify.checkConnect = function() {
+        root.$apply(function() {
+          //  console.log(message);
+            root.statusinfos = "Not Connected";
+
+        });
+        $(".connected").hide();
+        $(".notconnected").show();
+    };
+
+    modify.init = function() {
+        if (!eventBus.isConnected()) {
+            eventBus.addOnOpen(function() {
+                root.$apply(function() {
+                    root.statusinfos = "Server available";
+                });
+            });
+            eventBus.addOnClose(function() {
+                root.$apply(function() {
+                    root.statusinfos = "Server unavailable";
+                    eb = null;
+
+                });
+                $(".connected").hide();
+                $(".notconnected").show();
+            });
+
+
+
+
+            eventBus.addIf(function(message) {
+                if (message.result) {
+                    root.$apply(function() {
+                        console.log(message);
+                        root.statusinfos = "Connected";
+                    });
+                    $(".connected").show();
+                    $(".notconnected").hide();
+                } else {
+                    modify.checkConnect();
+                }
+            });
+            eventBus.connect();
+            modify.checkConnect();
+        }
+    };
+
+    modify.logout = function() {
 
         eventBus.sendEventBus('auth-logpile.logout', {
             "tmp": "test"
@@ -508,49 +562,137 @@ function LoginCtrl($scope) {
         document.location = "/index.html";
         return false;
     };
-    // initialize the globale variable of the event bus
-
-    eventBus.addOnOpen(function() {
-        $scope.$apply(function() {
-            $scope.statusinfos = "Server available";
+    eventBus.registerHandler("logpile.weboutput.new.event", function(messageNE) {
+        root.$apply(function() {
+            root.events.push(messageNE);
         });
     });
 
+    return modify;
+}];
 
+var logpileLogin = angular.module('logpile-login', []).
+config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+    when('/login', {
+        templateUrl: 'templates/login.html',
+        controller: LoginCtrl
+    }).
+    otherwise({
+        redirectTo: '/login'
+    });
+}]);
 
-    eventBus.addIf(function(message) {
-        if (message.result) {
-            $scope.$apply(function() {
-                console.log(message);
-                $scope.statusinfos = "Connected";
-                $(".connected").show();
-                $(".notconnected").hide();
-            });
+logpileLogin.factory('connection', sharedConnection);
 
-        } else {
-            $scope.$apply(function() {
-                console.log(message);
-                $scope.statusinfos = "Not Connected";
-                $(".connected").hide();
-                $(".notconnected").show();
-            });
+var logpilemain = angular.module('logpile-main', []).
+config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+    when('/configuration', {
+        templateUrl: 'templates/configuration.html',
+        controller: ServerState
+    }).
+    when('/resume', {
+        templateUrl: 'templates/resume.html',
+        controller: Resume
+    }).
+    when('/weboutput', {
+        templateUrl: 'templates/webouput.html',
+        controller: WebOutput
+    }).
+    otherwise({
+        redirectTo: '/configuration'
+    });
+}]);
+
+logpilemain.factory('connection', sharedConnection);
+
+logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
+    rootScope.events = [];
+    rootScope.active = false;
+    service = {};
+    service.initialize = true;
+
+    service.delete = function(pIndex) {
+        var newArray = [];
+        for (var i = 0; i < rootScope.events.length; i++) {
+            if (i != pIndex) {
+                newArray.push(rootScope.events[i]);
+            }
         }
-    })
 
-    eventBus.addOnClose(function() {
-        $scope.$apply(function() {
-            $scope.statusinfos = "Server unavailable";
-            eb = null;
+        rootScope.events = newArray;
+    };
+
+    service.init = function() {
+        if (this.initialize) {
+            eventBus.addIf(function(message) {
+                if (message.result) {
+                    eventBus.sendEventBus("logpile.weboutput.status", {}, function(messageWO) {
+                        if (messageWO.result) {
+                            rootScope.$apply(function() {
+                                console.log("Web output installed.");
+                                rootScope.active = true;
+                            });
+
+                        } else {
+                            console.log("Web output not installed.");
+                            rootScope.active = false;
+                        }
+                    });
+                }
+            });
+            this.initialize = false;
+        }
+    };
+    return service;
+}]);
+
+/**************************************************/
+/* Angular JS COntroller                          */
+/**************************************************/
+
+/**
+ * Controller for login state.
+ **/
+
+function LoginCtrl($scope, $rootScope, connection) {
+    $scope.email = "";
+    $scope.password = "";
+    $scope.error = false;
+
+    $scope.login = function() {
+        eventBus.getEb().send('auth-logpile.login', {
+            "username": $scope.email,
+            "password": $scope.password
+        }, function(message) {
+            if (message.result == true) {
+                //alert("connecter");
+                createCookie("sessionID", message.sessionID);
+                document.location = "/welcome.html";
+            } else {
+                $scope.$apply(function() {
+                    $scope.error = true;
+                    $scope.password = "";
+                });
+            }
         });
-    });
-    eventBus.connect();
+        return false;
+    };
+
+    $scope.logout = function() {
+        connection.logout();
+    }
+
+    // initialize the globale variable of the event bus
+    connection.init();
 }
 
 /**
  * Controller for Server state.
  **/
 
-function ServerState($scope) {
+function ServerState($scope, connection) {
     $scope.datas = {
         config: {
             event_json: {
@@ -603,14 +745,14 @@ function ServerState($scope) {
             init();
         }
     });
-
+    connection.init();
 };
 
 /**
  * Controller for Resume Panel.
  **/
 
-function Resume($scope) {
+function Resume($scope, connection) {
     $scope.datas = {
         "totalError": 0
     };
@@ -642,49 +784,26 @@ function Resume($scope) {
             });
         }
     });
+    connection.init();
 }
 
-function WebOutput($scope) {
-     $scope.active = false;
-    $scope.events = [];
+function WebOutput($scope, $rootScope, connection, weboutput) {
+    //$scope.active = false;
+
     $scope.selectedItem = {};
 
     $scope.showDetail = function(pIndex) {
-        $scope.selectedItem = $scope.events[pIndex];
+        $scope.selectedItem = $rootScope.events[pIndex];
         $('#detailModal').modal();
     };
 
+
     $scope.delete = function(pIndex) {
-        var newArray = [];
-        for(var i=0;i<$scope.events.length;i++){
-            if(i!=pIndex){
-                newArray.push($scope.events[i]);    
-            }
-        }
+        weboutput.delete(pIndex);
+    }
 
-        $scope.events = newArray;
-    };
 
-    eventBus.addIf(function(message) {
-        if (message.result) {
-            eventBus.sendEventBus("logpile.weboutput.status", {}, function(messageWO) {
-                if (messageWO.result) {
-                    $scope.$apply(function() {
-                        $scope.active = true;
-                    });
-                    console.log("Web output installed.");
-                    eventBus.registerHandler("logpile.weboutput.new.event", function(messageNE) {
-                        $scope.$apply(function() {
-                            $scope.events.push(messageNE);
-                        });
-                    });
+    connection.init();
+    weboutput.init();
+};
 
-                } else {
-                    console.log("Web output not installed.");
-                }
-            });
-        }
-    });
-
-}
-;

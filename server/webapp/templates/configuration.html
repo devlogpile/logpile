@@ -1,0 +1,170 @@
+<div id="status-1" ng-controller="ServerState">
+    <table class="borderRadius table table-striped table-bordered table-condensed ">
+        <thead>
+            <tr>
+                <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                    <h2>
+                        Event Listener : {{addressEvent}}
+                    </h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle;">
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Context :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        /event
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Port :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.event_json.port}}
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Number of instances :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.event_json.instance}}
+                    </h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="borderRadius table table-striped table-bordered table-condensed ">
+        <thead>
+            <tr>
+                <th colspan="3" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                    <h2>
+                        Logpile Handlers
+                    </h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle;">
+            <tr ng-repeat="service in datas.services">
+                <td>
+                    <h4>
+                        <a href="#" rel="tooltip" data-placement="bottom" data-original-title="{{service.describe}}">{{service.name}}</a>
+                    </h4>
+                </td>
+                <td style="text-align:center">
+                    <img width="30" height="30" ng-src="img/logpile/{{service.active}}.png">
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <i class="icon-wrench">
+                            </i>
+                        </button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret">
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a ng-show="!service.active" ng-click="modifyActivate(service.name,true)"><i class="icon-play"></i> Start </a>
+                            </li>
+                            <li>
+                                <a ng-show="service.active" ng-click="modifyActivate(service.name,false)"><i class="icon-remove-sign"></i> Stop </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="borderRadius table table-striped table-bordered table-condensed ">
+        <thead>
+            <tr>
+                <!-- style="text-align: center;background-color: #92A7D1;" -->
+                <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
+                    <h2>
+                        Web
+                    </h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle;">
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Port :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.web_server.port}}
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Number of instances :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.web_server.instance}}
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            Root directory :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.web_server.web_root}}
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-info">
+                    <h4>
+                        <strong>
+                            EventBus active :
+                        </strong>
+                    </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{datas.config.web_server.bridge}}
+                    </h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
