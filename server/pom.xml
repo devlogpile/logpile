@@ -69,7 +69,7 @@
                 <configuration>
                     <destinationFolder>${basedir}/webapp/wro/</destinationFolder>
                     <contextFolder>${basedir}/webapp/</contextFolder>
-                    <wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
+                    <wroFile>${basedir}/src/wro4j/wro.xml</wroFile>
                     <ignoreMissingResources>false</ignoreMissingResources>
                     <minimize>${wro4j.minimize.files}</minimize>
                     <wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
