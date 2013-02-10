@@ -38,7 +38,7 @@ And the configuration of the appenders are describe in the [client directory](/c
 1. Install the jdk 1.7
 2. Install maven.
 2. Download or fork the project.
-3. Go to the root directory and execute the command : `mvn clean install`.
+3. Go to the root directory and execute the command : `mvn clean install -P release`.
 
 
 ##Version

@@ -24,6 +24,15 @@ This implementation provides also a web console which manage the server treatmen
 7. log with the email `root@logpile.org` and with the password `gtn`
 8. That's it. Your server is runnning and functionnal.
 
+##How to build this module
+=======
+
+1. Install the jdk 1.7
+2. Install maven.
+3. Go to the root directory and execute the command : `mvn clean install`. 
+
+The default profile is the *dev* profile. This profile does not minify the js files. For releasing this module, add the  `-P release` to the command line.
+
 ##Library
 =======
 This implementaion use the open source projects :
@@ -38,6 +47,7 @@ This implementaion use the open source projects :
 
 ###__0.2.0__ :
 * The output of the errors in the web console.
+* Add the minify for releasing the css and the js.
 
 ###__0.1.0__ :
 * Skeleton implementation server.
