@@ -406,6 +406,8 @@ function eraseCookie(name) {
     createCookie(name, "", -1);
 }
 
+
+
 /**************************************************/
 /* Event bus Management                          */
 /**************************************************/
@@ -445,6 +447,7 @@ var eventBus = new function() {
                     }, function(message) {
                         authorisationCheck = true;
                         authorzationMessage = message;
+
                         for (var i = 0; i < ifauthorized.length; i++) {
                             ifauthorized[i](message);
                         }
@@ -459,6 +462,8 @@ var eventBus = new function() {
                     };
                 }
             },
+
+          
 
             sendEventBus: function(address, jsonObject, handler) {
                 privatesendEventBus(address, jsonObject, handler);
@@ -496,20 +501,17 @@ var eventBus = new function() {
             }
         };
     };/**************************************************/
-/* Angular JS Application                         */
+/* Angular JS Modules                             */
 /**************************************************/
-
-
 var sharedConnection = ['$rootScope', function(root) {
     root.statusinfos = "Wait ...";
 
     var modify = {};
 
     modify.checkConnect = function() {
+        //  console.log(message);
         root.$apply(function() {
-            //  console.log(message);
             root.statusinfos = "Not Connected";
-
         });
         $(".connected").hide();
         $(".notconnected").show();
@@ -551,6 +553,9 @@ var sharedConnection = ['$rootScope', function(root) {
             modify.checkConnect();
         }
     };
+    modify.addSession = function(session) {
+        createCookie('sessionID',session);
+    },
 
     modify.logout = function() {
 
@@ -559,7 +564,7 @@ var sharedConnection = ['$rootScope', function(root) {
         }, function(message) {
             console.log(message);
         });
-        eraseCookie("sessionID")
+        createCookie('sessionID', "");
         document.location = "/index.html";
         return false;
     };
@@ -611,50 +616,47 @@ logpilemain.factory('connection', sharedConnection);
 logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
     rootScope.events = [];
     rootScope.active = false;
-    
+
     return {
-    initialize : true,
-    deleteOne : function(pIndex) {
-        var newArray = [];
-        for (var i = 0; i < rootScope.events.length; i++) {
-            if (i != pIndex) {
-                newArray.push(rootScope.events[i]);
+        initialize: true,
+        deleteOne: function(pIndex) {
+            var newArray = [];
+            for (var i = 0; i < rootScope.events.length; i++) {
+                if (i != pIndex) {
+                    newArray.push(rootScope.events[i]);
+                }
+            }
+            rootScope.events = newArray;
+        },
+
+        getEvents: function() {
+            return rootScope.events;
+        },
+
+        init: function() {
+            if (this.initialize) {
+                eventBus.addIf(function(message) {
+                    if (message.result) {
+                        eventBus.sendEventBus("logpile.weboutput.status", {}, function(messageWO) {
+                            if (messageWO.result) {
+                                rootScope.$apply(function() {
+                                    console.log("Web output installed.");
+                                    rootScope.active = true;
+                                });
+
+                            } else {
+                                console.log("Web output not installed.");
+                                rootScope.active = false;
+                            }
+                        });
+                    }
+                });
+                this.initialize = false;
             }
         }
-        rootScope.events = newArray;
-    },
-
-    getEvents : function() {
-        return rootScope.events;
-    },
-
-    init : function() {
-        if (this.initialize) {
-            eventBus.addIf(function(message) {
-                if (message.result) {
-                    eventBus.sendEventBus("logpile.weboutput.status", {}, function(messageWO) {
-                        if (messageWO.result) {
-                            rootScope.$apply(function() {
-                                console.log("Web output installed.");
-                                rootScope.active = true;
-                            });
-
-                        } else {
-                            console.log("Web output not installed.");
-                            rootScope.active = false;
-                        }
-                    });
-                }
-            });
-            this.initialize = false;
-        }
-    }
     };
 
 }]);
-
-
-
 /**************************************************/
 /* Angular JS COntroller                          */
 /**************************************************/
@@ -662,139 +664,137 @@ logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
 /**
  * Controller for login state.
  **/
+var LoginCtrl = function($scope, connection) {
+        $scope.email = "";
+        $scope.password = "";
+        $scope.error = false;
 
-var LoginCtrl = function ($scope, connection) {
-    $scope.email = "";
-    $scope.password = "";
-    $scope.error = false;
+        $scope.login = function() {
+            eventBus.getEb().send('auth-logpile.login', {
+                "username": $scope.email,
+                "password": $scope.password
+            }, function(message) {
+                if (message.result == true) {
+                    connection.addSession(message.sessionID);
+                    document.location = "/welcome.html";
+                } else {
+                    $scope.$apply(function() {
+                        $scope.error = true;
+                        $scope.password = "";
+                    });
+                }
+            });
+            return false;
+        };
 
-    $scope.login = function() {
-        eventBus.getEb().send('auth-logpile.login', {
-            "username": $scope.email,
-            "password": $scope.password
-        }, function(message) {
-            if (message.result == true) {
-               
-                createCookie("sessionID", message.sessionID);
-                document.location = "/welcome.html";
-            } else {
-                $scope.$apply(function() {
-                    $scope.error = true;
-                    $scope.password = "";
-                });
-            }
-        });
-        return false;
-    };
+        $scope.logout = function() {
+            connection.logout();
+        }
 
-    $scope.logout = function() {
-        connection.logout();
+        // initialize the globale variable of the event bus
+        connection.init();
     }
-
-    // initialize the globale variable of the event bus
-    connection.init();
-}
 LoginCtrl.$inject = ['$scope', 'connection'];
 
 /**
  * Controller for Server state.
  **/
 
-var ServerState = function ($scope, connection) {
-    $scope.datas = {
-        config: {
-            event_json: {
-                instance: -1,
-                port: -1
+var ServerState = function($scope, connection) {
+        $scope.datas = {
+            config: {
+                event_json: {
+                    instance: -1,
+                    port: -1
+                },
+                log_pile_web: {
+                    active: false,
+                    instance: -1,
+                    refreshserverstate: -1
+                },
+                web_server: {
+                    auth_address: "",
+                    bridge: true,
+                    instance: -1,
+
+                    port: -1,
+                    web_root: ""
+                }
             },
-            log_pile_web: {
-                active: false,
-                instance: -1,
-                refreshserverstate: -1
-            },
-            web_server: {
-                auth_address: "",
-                bridge: true,
-                instance: -1,
+            services: []
 
-                port: -1,
-                web_root: ""
-            }
-        },
-        services: []
+        };
+        var init = function() {
+                eventBus.sendEventBus("logpile.server-status", {}, function(message) {
 
-    };
-    var init = function() {
-            eventBus.sendEventBus("logpile.server-status", {}, function(message) {
-
-                $scope.$apply(function() {
-                    $scope.datas = message;
-                    var host = window.location.hostname;
-                    $scope.addressEvent = "http://" + host + ":" + message.config.event_json.port + "/" + message.config.event_json.context;
+                    $scope.$apply(function() {
+                        $scope.datas = message;
+                        var host = window.location.hostname;
+                        $scope.addressEvent = "http://" + host + ":" + message.config.event_json.port + "/" + message.config.event_json.context;
 
 
+                    });
+                    $('[rel=tooltip]').tooltip();
                 });
-                $('[rel=tooltip]').tooltip();
+            }
+        $scope.addressEvent = "";
+
+        $scope.modifyActivate = function(name, activate) {
+            eventBus.sendEventBus("logpile.activate", {
+                "name": name,
+                "activate": activate
+            }, function(message) {
+                init();
             });
-        }
-    $scope.addressEvent = "";
+        };
 
-    $scope.modifyActivate = function(name, activate) {
-        eventBus.sendEventBus("logpile.activate", {
-            "name": name,
-            "activate": activate
-        }, function(message) {
-            init();
+        eventBus.addIf(function(message) {
+            if (message.result) {
+                init();
+            }
         });
+        connection.init();
     };
-
-    eventBus.addIf(function(message) {
-        if (message.result) {
-            init();
-        }
-    });
-    connection.init();
-};
 ServerState.$inject = ['$scope', 'connection'];
 
 /**
  * Controller for Resume Panel.
  **/
 
-var Resume = function ($scope, connection) {
-    $scope.datas = {
-        "totalError": 0
-    };
-    $scope.newdatas = {};
-    $scope.notinitialized = true;
-
-    $scope.refresh = function() {
-        $scope.datas = $scope.newdatas;
+var Resume = function($scope, connection) {
+        $scope.datas = {
+            "totalError": 0
+        };
         $scope.newdatas = {};
-    };
+        $scope.notinitialized = true;
 
-    eventBus.addIf(function(message) {
-        if (message.result) {
-            eventBus.registerHandler("logpile.resume", function(message) {
-                console.log(message);
-                $scope.$apply(function() {
-                    $scope.notinitialized = false;
-                    for (var i = 0; i < message.applications.length; i++) {
-                        message.applications[i].indexName = "app-resume-" + i;
-                    }
+        $scope.refresh = function() {
+            $scope.datas = $scope.newdatas;
+            $scope.newdatas = {};
+        };
 
-                    if ($("#status-2").is(":hidden") || ($scope.datas.totalError == 0)) {
-                        $scope.datas = message;
-                        $scope.newdatas = {};
-                    } else if ($scope.datas.totalError < message.totalError) {
-                        $scope.newdatas = message;
-                    }
+        eventBus.addIf(function(message) {
+            if (message.result) {
+                eventBus.registerHandler("logpile.resume", function(message) {
+                    console.log(message);
+                    $scope.$apply(function() {
+                        $scope.notinitialized = false;
+                        for (var i = 0; i < message.applications.length; i++) {
+                            message.applications[i].indexName = "app-resume-" + i;
+                        }
+
+                        if ($("#status-2").is(":hidden") || ($scope.datas.totalError == 0)) {
+                            $scope.datas = message;
+                            $scope.newdatas = {};
+                        } else if ($scope.datas.totalError < message.totalError) {
+                            $scope.newdatas = message;
+                        }
+                    });
                 });
-            });
-        }
-    });
-    connection.init();
-}
+            }
+        });
+        connection.init();
+    }
 
 Resume.$inject = ['$scope', 'connection'];
 
@@ -802,23 +802,23 @@ Resume.$inject = ['$scope', 'connection'];
  *Output for the web console.
  **/
 
-var WebOutput = function ($scope, connection, weboutput) {
+var WebOutput = function($scope, connection, weboutput) {
 
-    $scope.selectedItem = {};
+        $scope.selectedItem = {};
 
-    $scope.showDetail = function(pIndex) {
-        $scope.selectedItem = weboutput.getEvents()[pIndex];
-        $('#detailModal').modal();
+        $scope.showDetail = function(pIndex) {
+            $scope.selectedItem = weboutput.getEvents()[pIndex];
+            $('#detailModal').modal();
+        };
+
+
+        $scope.remove = function(pIndex) {
+            weboutput.deleteOne(pIndex);
+        }
+
+
+        connection.init();
+        weboutput.init();
     };
 
-
-    $scope.remove = function(pIndex) {
-        weboutput.deleteOne(pIndex);
-    }
-
-
-    connection.init();
-    weboutput.init();
-};
-
-WebOutput.$inject = ['$scope', 'connection','weboutput'];
+WebOutput.$inject = ['$scope', 'connection', 'weboutput'];
