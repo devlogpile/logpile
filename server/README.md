@@ -17,7 +17,7 @@ This implementation provides also a web console which manage the server treatmen
 
 1. Install the Jdkl 1.7.
 2. Download and install [Vertx](http://vertx.io/).
-3. Download the zip file which is in bin directory.
+3. Download the zip file which is in [bin directory](../bin).
 4. unzip the file.
 5. In the distribution, run the "run_server" file depending of your operating system.
 6. Try to connect at [http://localhost:8081/](http://localhost:8081/)
