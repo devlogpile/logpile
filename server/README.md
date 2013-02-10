@@ -24,7 +24,10 @@ This implementation provides also a web console which manage the server treatmen
 7. log with the email `root@logpile.org` and with the password `gtn`
 8. That's it. Your server is runnning and functionnal.
 
-##How to build this module
+##For the developpement.
+=======
+
+###How to build this module
 =======
 
 1. Install the jdk 1.7
@@ -32,6 +35,16 @@ This implementation provides also a web console which manage the server treatmen
 3. Go to the root directory and execute the command : `mvn clean install`. 
 
 The default profile is the *dev* profile. This profile does not minify the js files. For releasing this module, add the  `-P release` to the command line.
+
+###How to launch
+=======
+
+For the developpement of this module, you can launch the server with : `mvn vertx:run`. 
+
+###Coverage report
+=======
+
+There is a jacoco plugin in the `pom.xml`. This plugin provide the coverage of the test for this module. You must download the jacoco libraries and set the `jacoco.agent.path` to this library. The coverage report is available in the `target/site/jacoco-it`.The command line for creating the reporting is `mvn clean install jacoco:report`.  
 
 ##Library
 =======

@@ -12,7 +12,7 @@ The workflow is very simple :
 2. The connector of the logpile client catch the error.
 3. The connector send the information on the error to a Logpile server.
 4. This server receives the 'event' and do a configured work on it.
-    Example : send an email for warnong the developpement team, write to a single file the error, etc ...
+    Example : send an email for warning the developpement team, write to a single file the error, etc ...
 
 ##Structure
 =======
