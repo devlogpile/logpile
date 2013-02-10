@@ -495,9 +495,7 @@ var eventBus = new function() {
                 onclose.push(handler);
             }
         };
-    };
-
-/**************************************************/
+    };/**************************************************/
 /* Angular JS Application                         */
 /**************************************************/
 
@@ -655,6 +653,8 @@ logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
 
 }]);
 
+
+
 /**************************************************/
 /* Angular JS COntroller                          */
 /**************************************************/
@@ -674,7 +674,7 @@ var LoginCtrl = function ($scope, connection) {
             "password": $scope.password
         }, function(message) {
             if (message.result == true) {
-                //alert("connecter");
+               
                 createCookie("sessionID", message.sessionID);
                 document.location = "/welcome.html";
             } else {
