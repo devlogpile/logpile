@@ -4,7 +4,7 @@
 =======
 The purpose of this project is to have one for monitoring application. the api aggregate all errors from the application to one instance. This instance can do treatment on error reception. Example : create an unique console log.
 
-![General description](https://raw.github.com/devlogpile/logpile/v0.2.0/doc/image/general_description.png)
+![General description](https://raw.github.com/devlogpile/logpile/master/doc/image/general_description.png)
 
 The workflow is very simple :
 
