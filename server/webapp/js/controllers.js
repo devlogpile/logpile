@@ -56,7 +56,7 @@ var eventBus = new function() {
                     }
 
                     for (var i = oneventregister.length - 1; i >= 0; i--) {
-                       eb.registerHandler(oneventregister[i].address,oneventregister[i].handler); 
+                        eb.registerHandler(oneventregister[i].address, oneventregister[i].handler);
                     };
 
                     privatesendEventBus("auth-logpile.authorise", {
@@ -72,7 +72,7 @@ var eventBus = new function() {
                     });
                 };
 
-                eb.onclose = function(e){
+                eb.onclose = function(e) {
                     for (var i = onclose.length - 1; i >= 0; i--) {
                         onclose[i](e);
                     };
@@ -86,10 +86,13 @@ var eventBus = new function() {
                 return eb;
             },
             registerHandler: function(address, handler) {
-                if(eb) {
+                if (eb) {
                     eb.registerHandler(address, handler);
                 } else {
-                    oneventregister.push({"address":address,"handler":handler});
+                    oneventregister.push({
+                        "address": address,
+                        "handler": handler
+                    });
                 }
 
             },
@@ -125,7 +128,7 @@ var sharedConnection = ['$rootScope', function(root) {
 
     modify.checkConnect = function() {
         root.$apply(function() {
-          //  console.log(message);
+            //  console.log(message);
             root.statusinfos = "Not Connected";
 
         });
@@ -229,21 +232,24 @@ logpilemain.factory('connection', sharedConnection);
 logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
     rootScope.events = [];
     rootScope.active = false;
-    service = {};
-    service.initialize = true;
-
-    service.delete = function(pIndex) {
+    
+    return {
+    initialize : true,
+    deleteOne : function(pIndex) {
         var newArray = [];
         for (var i = 0; i < rootScope.events.length; i++) {
             if (i != pIndex) {
                 newArray.push(rootScope.events[i]);
             }
         }
-
         rootScope.events = newArray;
-    };
+    },
 
-    service.init = function() {
+    getEvents : function() {
+        return rootScope.events;
+    },
+
+    init : function() {
         if (this.initialize) {
             eventBus.addIf(function(message) {
                 if (message.result) {
@@ -263,8 +269,9 @@ logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
             });
             this.initialize = false;
         }
+    }
     };
-    return service;
+
 }]);
 
 /**************************************************/
@@ -275,7 +282,7 @@ logpilemain.factory('weboutput', ["$rootScope", function(rootScope) {
  * Controller for login state.
  **/
 
-function LoginCtrl($scope, $rootScope, connection) {
+var LoginCtrl = function ($scope, connection) {
     $scope.email = "";
     $scope.password = "";
     $scope.error = false;
@@ -306,12 +313,13 @@ function LoginCtrl($scope, $rootScope, connection) {
     // initialize the globale variable of the event bus
     connection.init();
 }
+LoginCtrl.$inject = ['$scope', 'connection'];
 
 /**
  * Controller for Server state.
  **/
 
-function ServerState($scope, connection) {
+var ServerState = function ($scope, connection) {
     $scope.datas = {
         config: {
             event_json: {
@@ -366,12 +374,13 @@ function ServerState($scope, connection) {
     });
     connection.init();
 };
+ServerState.$inject = ['$scope', 'connection'];
 
 /**
  * Controller for Resume Panel.
  **/
 
-function Resume($scope, connection) {
+var Resume = function ($scope, connection) {
     $scope.datas = {
         "totalError": 0
     };
@@ -406,19 +415,24 @@ function Resume($scope, connection) {
     connection.init();
 }
 
-function WebOutput($scope, $rootScope, connection, weboutput) {
-    //$scope.active = false;
+Resume.$inject = ['$scope', 'connection'];
+
+/**
+ *Output for the web console.
+ **/
+
+var WebOutput = function ($scope, connection, weboutput) {
 
     $scope.selectedItem = {};
 
     $scope.showDetail = function(pIndex) {
-        $scope.selectedItem = $rootScope.events[pIndex];
+        $scope.selectedItem = weboutput.getEvents()[pIndex];
         $('#detailModal').modal();
     };
 
 
-    $scope.delete = function(pIndex) {
-        weboutput.delete(pIndex);
+    $scope.remove = function(pIndex) {
+        weboutput.deleteOne(pIndex);
     }
 
 
@@ -426,3 +440,4 @@ function WebOutput($scope, $rootScope, connection, weboutput) {
     weboutput.init();
 };
 
+WebOutput.$inject = ['$scope', 'connection','weboutput'];

@@ -18,8 +18,8 @@ The workflow is very simple :
 =======
 
 This project is composed of two sub project :
-* the client : It's a small jar which provide appenders for log framework in java. The implementation is in [client directory](https://github.com/devlogpile/logpile/tree/master/client)
-* the server : it's a tiny application which collects errors provided by the appenders. The implementation is in [server directory](https://github.com/devlogpile/logpile/tree/master/server)
+* the client : It's a small jar which provide appenders for log framework in java. The implementation is in [client directory](/client)
+* the server : it's a tiny application which collects errors provided by the appenders. The implementation is in [server directory](/server)
 
 An example client project is available in the [client-example directory](/client-example).
 
@@ -30,7 +30,7 @@ The bin directory store the installation package distribution and the /doc conta
 
 The installation for the server is available in the [server directory](/server).
 
-And the configuration of the appenders are in the [client directory](/client).
+And the configuration of the appenders are describe in the [client directory](/client).
 
 ##How to build the project
 =======
