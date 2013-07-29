@@ -3,13 +3,14 @@ package org.skarb.logpile.vertx.event;
 import org.skarb.logpile.vertx.EventManager;
 import org.skarb.logpile.vertx.handler.ChangeStateService;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.MultiMap;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
     @Override
     public void init(final Vertx vertx, final Container container) {
         this.vertx = vertx;
-        final JsonObject config = container.getConfig();
+        final JsonObject config = container.config();
         final JsonArray array = config.getArray(FIELD_SERVICES);
         if (array == null) {
             return;
@@ -80,10 +81,13 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
      * @param params parameters.
      */
     @Override
-    public void run(final Map<String, String> params) {
+    public void run(final MultiMap params) {
 
         final JsonObject jsonObject = new JsonObject();
-        for (final Map.Entry<String, String> entry : params.entrySet()) {
+        //TODO
+
+
+        for (final Map.Entry<String, String> entry : params.entries()) {
             jsonObject.putString(entry.getKey(), entry.getValue());
         }
         for (final AbstractEventMessage adress : serviceList) {
@@ -92,7 +96,7 @@ public class EventManagerImpl implements EventManager, Handler<Message<JsonArray
                 vertx.eventBus().send(name, jsonObject, new Handler<Message<JsonObject>>() {
                     @Override
                     public void handle(final Message<JsonObject> message) {
-                        log.debug(name + " treatment : " + message.body.getBoolean(AbstractEventMessage.RESULT_FIELD));
+                        log.debug(name + " treatment : " + message.body().getBoolean(AbstractEventMessage.RESULT_FIELD));
                     }
                 });
             }

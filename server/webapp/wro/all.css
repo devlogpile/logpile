@@ -7133,6 +7133,12 @@ body {
 	background-color: #BCBCBC;
 }
 
+.tooltip-inner {
+    /*white-space:pre-wrap;   */
+    max-width:450px;
+    text-align: justify;
+}
+
 .alignercell {
 	text-align: center;
 	vertical-align: middle;

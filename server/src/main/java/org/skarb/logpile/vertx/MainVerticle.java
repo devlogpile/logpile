@@ -3,7 +3,7 @@ package org.skarb.logpile.vertx;
 import org.skarb.logpile.vertx.handler.DeployVerticle;
 import org.skarb.logpile.vertx.web.LogpileWeb;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Verticle;
+import org.vertx.java.platform.Verticle;
 
 
 /**
@@ -24,9 +24,9 @@ public class MainVerticle extends Verticle {
      *
      * @throws Exception
      */
-    public void start() throws Exception {
-        final JsonObject config = getContainer().getConfig();
-        getContainer().getLogger().debug("config :" + config);
+    public void start() {
+        final JsonObject config = getContainer().config();
+        getContainer().logger().debug("config :" + config);
 
         final JsonObject configEvents = config.getObject(EVENT_JSON);
         getContainer().deployVerticle(EventJsonVerticle.class.getName(), configEvents, configEvents.getInteger(INSTANCE_FIELD),

@@ -20,10 +20,13 @@ public class AbstractEventMessageTest {
 
 
         final Message message = mock(Message.class);
-        message.body = new JsonObject().putString("application", "test");
+        //message.body = ;
+
+        when(message.body()).thenReturn(new JsonObject().putString("application", "test"));
         mock.handle(message);
         assertTrue(mock.call);
-        verify(message).reply(anyObject());
+        verify(message).reply(any(JsonObject
+                .class));
     }
 
     private static class Mock extends AbstractEventMessage {

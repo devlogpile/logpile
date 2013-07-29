@@ -7,12 +7,12 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;
+import org.vertx.java.core.impl.CaseInsensitiveMultiMap;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -55,7 +55,7 @@ public class EventManagerImplTest {
         final Vertx vertx = mock(Vertx.class);
         JsonObject config = new JsonObject();
         Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(config);
+        when(container.config()).thenReturn(config);
         eventManager.init(vertx, container);
         assertTrue(eventManager.getServiceList().isEmpty());
 
@@ -74,7 +74,7 @@ public class EventManagerImplTest {
         array.addString(TmpTrue.class.getName());
         config.putArray(EventManagerImpl.FIELD_SERVICES, array);
         Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(config);
+        when(container.config()).thenReturn(config);
         eventManager.init(vertx, container);
         assertEquals(1, eventManager.getServiceList().size());
         assertTrue(eventManager.getServiceList().get(0) instanceof TmpTrue);
@@ -98,7 +98,7 @@ public class EventManagerImplTest {
         array.addString("org.sss.Tmp");
         config.putArray(EventManagerImpl.FIELD_SERVICES, array);
         Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(config);
+        when(container.config()).thenReturn(config);
         eventManager.init(vertx, container);
         assertTrue(eventManager.getServiceList().isEmpty());
     }
@@ -111,10 +111,10 @@ public class EventManagerImplTest {
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
         final Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(new JsonObject());
+        when(container.config()).thenReturn(new JsonObject());
         eventManager.init(vertx, container);
 
-        eventManager.run(new HashMap<String, String>());
+        eventManager.run(new CaseInsensitiveMultiMap());
 
     }
 
@@ -126,15 +126,15 @@ public class EventManagerImplTest {
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
         final Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(new JsonObject());
+        when(container.config()).thenReturn(new JsonObject());
         eventManager.init(vertx, container);
 
         TmpTrue tmp = new TmpTrue();
         tmp.setActive(false);
         eventManager.getServiceList().add(tmp);
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put(Event.PROP_APPLICATION, "appli1");
+        CaseInsensitiveMultiMap params = new CaseInsensitiveMultiMap();
+        params.add(Event.PROP_APPLICATION, "appli1");
         eventManager.run(params);
         verify(eventBus, never()).send(anyString(), (JsonObject) any(), (Handler<Message<JsonObject>>) any());
     }
@@ -147,7 +147,7 @@ public class EventManagerImplTest {
         final EventBus eventBus = mock(EventBus.class);
         when(vertx.eventBus()).thenReturn(eventBus);
         final Container container = mock(Container.class);
-        when(container.getConfig()).thenReturn(new JsonObject());
+        when(container.config()).thenReturn(new JsonObject());
 
         eventManager.init(vertx, container);
 
@@ -155,8 +155,8 @@ public class EventManagerImplTest {
 
         eventManager.getServiceList().add(tmp);
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put(Event.PROP_APPLICATION, "appli1");
+        CaseInsensitiveMultiMap params = new CaseInsensitiveMultiMap();
+        params.add(Event.PROP_APPLICATION, "appli1");
         eventManager.run(params);
         ArgumentCaptor<JsonObject> argument = ArgumentCaptor.forClass(JsonObject.class);
 

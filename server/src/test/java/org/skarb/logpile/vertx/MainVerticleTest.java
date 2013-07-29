@@ -5,7 +5,8 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
+
 
 import static org.mockito.Mockito.*;
 
@@ -45,14 +46,14 @@ public class MainVerticleTest {
         private MockMainVerticle() {
             monckcontainer = mock(Container.class);
             logger = mock(Logger.class);
-            when(monckcontainer.getLogger()).thenReturn(logger);
+            when(monckcontainer.logger()).thenReturn(logger);
             config = new JsonObject();
             final JsonObject event = new JsonObject();
             config.putObject(MainVerticle.EVENT_JSON, event);
             configlogPile = new JsonObject();
             config.putObject(MainVerticle.LOG_PILE_WEB, configlogPile);
             event.putNumber(MainVerticle.INSTANCE_FIELD,1);
-            when(monckcontainer.getConfig()).thenReturn(config);
+            when(monckcontainer.config()).thenReturn(config);
             vertx = mock(Vertx.class);
             EventBus mock = mock(EventBus.class);
             when(vertx.eventBus()).thenReturn(mock);

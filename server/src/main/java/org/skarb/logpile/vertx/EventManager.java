@@ -1,9 +1,9 @@
 package org.skarb.logpile.vertx;
 
 import org.skarb.logpile.vertx.event.AbstractEventMessage;
+import org.vertx.java.core.MultiMap;
 import org.vertx.java.core.Vertx;
-import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,6 @@ public interface EventManager {
      * The name of the service for getting the service to treat the events.
      */
     public static final String SERVICE_STATE = "logpile-getState";
-
     /**
      * The name of the evenbus service for activate or desactivate an service.
      */
@@ -27,7 +26,8 @@ public interface EventManager {
 
     /**
      * initialize the event manager.
-     * @param vertx for the accessing in event bus.
+     *
+     * @param vertx     for the accessing in event bus.
      * @param container the configuration.
      */
     void init(final Vertx vertx, final Container container);
@@ -37,7 +37,7 @@ public interface EventManager {
      *
      * @param params parameters.
      */
-    void run(final Map<String, String> params);
+    void run(final MultiMap params);
 
     List<AbstractEventMessage> getServiceList();
 }

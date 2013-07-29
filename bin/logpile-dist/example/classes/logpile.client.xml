@@ -1,0 +1,5 @@
+<log.pile>
+    <log.pile.application>Mon application</log.pile.application>
+    <log.pile.engine >org.skarb.log.pile.client.post.engine.rest.EngineRestPost</log.pile.engine>
+    <log.pile.url>http://localhost:8082/event</log.pile.url>
+</log.pile>

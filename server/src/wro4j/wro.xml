@@ -3,7 +3,7 @@
     <group name='all'>
         <css>/css/*.css</css>
         <js minimize="false" >/js/lib/jquery-1.8.3.min.js</js>
-        <js minimize="false">/js/lib/sockjs-0.2.1.min.js</js>
+        <js minimize="false">/js/lib/sockjs-min-0.3.4.js</js>
         <js >/js/lib/vertxbus.js</js>
         <js minimize="false">/js/lib/bootstrap.min.js</js>
         <js minimize="false">/js/lib/angular.min.js</js>

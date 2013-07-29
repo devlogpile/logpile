@@ -19,12 +19,12 @@ var sharedConnection = ['$rootScope', function(root) {
         if (!eventBus.isConnected()) {
             eventBus.addOnOpen(function() {
                 root.$apply(function() {
-                    root.statusinfos = "Server available";
+                    root.statusinfos = "Server available - open ...";
                 });
             });
             eventBus.addOnClose(function() {
                 root.$apply(function() {
-                    root.statusinfos = "Server unavailable";
+                    root.statusinfos = "Server unavailable - closed";
                     eb = null;
 
                 });

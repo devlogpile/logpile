@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -34,7 +34,7 @@ public class AbstractConsoleEventTest {
     public void testHandleNotEmpty() {
         final Mock mock = new Mock();
 
-        mock.setDatas(mock(Vertx.class),mock(Container.class));
+        mock.setDatas(mock(Vertx.class), mock(Container.class));
         Date date = new Date();
         final Exception ex = new Exception("except");
         ByteArrayOutputStream out = new ByteArrayOutputStream();

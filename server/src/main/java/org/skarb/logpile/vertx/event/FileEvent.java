@@ -6,18 +6,19 @@ import org.skarb.logpile.vertx.utils.Charsets;
 import org.skarb.logpile.vertx.utils.FileSizeUtils;
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.AsyncResultHandler;
+import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
-import org.vertx.java.core.file.impl.PathAdjuster;
+import org.vertx.java.core.buffer.Buffer;
+import org.vertx.java.core.file.FileSystemProps;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 import java.util.Objects;
 
@@ -42,6 +43,7 @@ public class FileEvent extends AbstractEventMessage {
     String name;
     String formattedDate;
     long rolling;
+    String rollingField;
     LineFormatter lineFormatter;
 
     @Override
@@ -52,7 +54,8 @@ public class FileEvent extends AbstractEventMessage {
         lineFormatter = LineFormatter.Builder.init().build();
         name = Objects.toString(objectConfig.getString(FILE_NAME_FIELD), DEFAULT_NAME);
         formattedDate = FormatterUtils.formatDate(FormatterUtils.LOG_FORMAT, new Date());
-        rolling = FileSizeUtils.calculate(objectConfig.getString(ROLLING_FIELD), DEFAULT_ROLLING);
+        rollingField = Objects.toString(objectConfig.getString(ROLLING_FIELD), null);
+        rolling = FileSizeUtils.calculate(rollingField, DEFAULT_ROLLING);
         path = Objects.toString(objectConfig.getString(PATH_FIELD), DEFAULT_PATH);
 
         final String completePath = createPath();
@@ -94,7 +97,7 @@ public class FileEvent extends AbstractEventMessage {
     }
 
     private JsonObject getJsonObject(Container container) {
-        JsonObject objectConfig = container.getConfig().getObject(this.getClass().getName());
+        JsonObject objectConfig = container.config().getObject(this.getClass().getName());
         if (objectConfig == null) {
             objectConfig = new JsonObject();
         }
@@ -117,9 +120,29 @@ public class FileEvent extends AbstractEventMessage {
 
     }
 
-    private void testIfRolling(final String completePath, final String newLine, int length) {
-        final Path target = PathAdjuster.adjust(Paths.get(completePath));
-        long totalSpace = 0L;
+    private void testIfRolling(final String completePath, final String newLine, final int length) {
+        getVertx().fileSystem().fsProps(completePath,new Handler<AsyncResult<FileSystemProps>>() {
+            @Override
+            public void handle(final AsyncResult<FileSystemProps> asyncResult) {
+                long totalSpace = 0L;
+                if(asyncResult.succeeded()){
+                    final FileSystemProps fsProps = asyncResult.result();
+                    totalSpace = fsProps.totalSpace();
+                    if ((totalSpace + length) > rolling) {
+                        final String backupFile = createNextBackupPath();
+                        getVertx().fileSystem().copy(completePath, backupFile, doRolling(completePath, newLine, backupFile));
+                    } else
+                    {
+                        appendToFile(completePath, newLine);
+                    }
+
+                }
+            }
+        });
+
+
+     /*   final Path target = PathAdjuster.adjust(Paths.get(completePath));
+
         try {
             final BasicFileAttributes attrs = Files.readAttributes(target, BasicFileAttributes.class);
             totalSpace = attrs.size();
@@ -132,19 +155,15 @@ public class FileEvent extends AbstractEventMessage {
 
         } else {
             appendToFile(completePath, newLine);
-        }
+        }                 */
     }
 
-    AsyncResultHandler<Void> doRolling(final String completePath, final String newLine, final Path target, final String backupFile) {
+    AsyncResultHandler<Void> doRolling(final String completePath, final String newLine,  final String backupFile) {
         return new AsyncResultHandler<Void>() {
             @Override
             public void handle(AsyncResult<Void> event) {
                 log.info(new StringBuilder("creation of the backup file :").append(backupFile));
-                try {
-                    Files.delete(target);
-                } catch (Exception ex) {
-                    log.error("error in deleting file", ex);
-                }
+                getVertx().fileSystem().deleteSync(completePath);
                 createFile(completePath, newLine);
             }
         };
@@ -160,8 +179,14 @@ public class FileEvent extends AbstractEventMessage {
 
     private void write(final String completePath, final String newLine, final StandardOpenOption openOption) {
         try {
-            final Path target = PathAdjuster.adjust(Paths.get(completePath));
-            Files.write(target, newLine.getBytes(Charsets.getDefault()), openOption);
+            final Buffer buffer = new Buffer(newLine.getBytes(Charsets.getDefault()));
+            getVertx().fileSystem().writeFile(completePath, buffer, new AsyncResultHandler<Void>() {
+                @Override
+                public void handle(AsyncResult<Void> event) {
+                    getContainer().logger().debug("write file");
+                }
+            });
+
         } catch (Exception ex) {
             log.error("Error in writing file ", ex);
         }
@@ -169,7 +194,17 @@ public class FileEvent extends AbstractEventMessage {
 
     @Override
     public String describe() {
-        return "File log.";
+        final boolean rollingOption = rolling != DEFAULT_ROLLING;
+        final StringBuilder message = new StringBuilder("Export all the Errors in a single file.<br>");
+
+        final String absolutePath = Paths.get(createPath()).toAbsolutePath().toString();
+        message.append("Path : ").append(absolutePath).append("<br>");
+        message.append("Rolling option : ").append(rollingOption).append("<br>");
+        if (rollingOption) {
+            message.append("Size max : ").append(rollingField).append("<br>");
+            message.append("Number of rolling files created : ").append(numberFile + 1).append("<br>");
+        }
+        return message.toString();
     }
 
 

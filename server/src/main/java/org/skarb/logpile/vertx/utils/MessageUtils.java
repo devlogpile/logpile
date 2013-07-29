@@ -91,7 +91,7 @@ public final class MessageUtils {
      * @return the value or an exception.
      */
     public static String getMandatoryString(final String field, final Message<JsonObject> message) {
-        String val = message.body.getString(field);
+        String val = message.body().getString(field);
         if (val == null) {
             sendError(message, field + " must be specified");
         }
@@ -106,7 +106,7 @@ public final class MessageUtils {
      * @return the value or an exception.
      */
     public static Boolean getMandatoryBoolean(final String field, final Message<JsonObject> message) {
-        Boolean val = message.body.getBoolean(field);
+        Boolean val = message.body().getBoolean(field);
         if (val == null) {
             sendError(message, field + " must be specified");
         }

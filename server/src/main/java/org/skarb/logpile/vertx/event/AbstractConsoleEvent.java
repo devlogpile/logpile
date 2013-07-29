@@ -2,7 +2,7 @@ package org.skarb.logpile.vertx.event;
 
 import org.skarb.logpile.vertx.event.format.LineFormatter;
 import org.vertx.java.core.Vertx;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.io.PrintStream;
 

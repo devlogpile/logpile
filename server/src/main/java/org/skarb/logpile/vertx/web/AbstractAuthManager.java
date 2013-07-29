@@ -7,7 +7,8 @@ import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
-import org.vertx.java.deploy.Verticle;
+import org.vertx.java.platform.Verticle;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +54,7 @@ abstract class AbstractAuthManager extends Verticle {
      */
     public void start() {
         final EventBus eb = getVertx().eventBus();
-        final JsonObject config = getContainer().getConfig();
+        final JsonObject config = getContainer().config();
 
 
         final Number timeout = config.getNumber(SESSION_TIMEOUT_FIELD);
@@ -79,7 +80,7 @@ abstract class AbstractAuthManager extends Verticle {
         if (password == null) {
             return;
         }
-        boolean resultatAuthent = authenticate(username, password, getContainer().getConfig());
+        boolean resultatAuthent = authenticate(username, password, getContainer().config());
 
 
         if (resultatAuthent) {
@@ -101,7 +102,7 @@ abstract class AbstractAuthManager extends Verticle {
             JsonObject jsonReply = new JsonObject().putString("sessionID", sessionID);
             MessageUtils.sendOK(message, jsonReply);
         } else {
-            logger.error("Failed to execute login query: " + message.body);
+            logger.error("Failed to execute login query: " + message.body());
             MessageUtils.sendStatus("denied", message);
         }
 

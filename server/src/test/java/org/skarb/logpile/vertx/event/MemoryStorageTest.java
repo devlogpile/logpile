@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

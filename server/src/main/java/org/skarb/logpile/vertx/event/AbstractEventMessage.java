@@ -4,7 +4,7 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 
 /**
@@ -84,7 +84,7 @@ public abstract class AbstractEventMessage implements Handler<Message<JsonObject
     @Override
     public void handle(final Message<JsonObject> message) {
         final JsonObject replyMessage = new JsonObject();
-        final boolean result = handle(Event.Builder(message.body));
+        final boolean result = handle(Event.Builder(message.body()));
         replyMessage.putBoolean(RESULT_FIELD, result);
         message.reply(replyMessage);
     }

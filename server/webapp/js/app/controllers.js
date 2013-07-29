@@ -75,7 +75,7 @@ var ServerState = function($scope, connection) {
 
 
                     });
-                    $('[rel=tooltip]').tooltip();
+                    $('[rel=tooltip]').tooltip({html: true});
                 });
             }
         $scope.addressEvent = "";

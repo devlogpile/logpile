@@ -4,7 +4,7 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,11 @@ public class MemoryStorage extends AbstractEventMessage {
     public static final String APP_NAME_FIELD = "name";
     public static final String COMPONENTS_LIST_FIELD = "components";
     public static final String APP_ERRORS_FIELD = "count";
+    public static final int DELAY = 5000;
     final List<ErrorApplication> lastApplications = new ArrayList<>();
+    /**
+     * Refresh service.
+     */
     final Handler<Long> handler = new Handler<Long>() {
         @Override
         public void handle(Long event) {
@@ -38,10 +42,13 @@ public class MemoryStorage extends AbstractEventMessage {
     };
     int totalError = 0;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean handle(final Event event) {
         totalError++;
-
+        // search for the application in error.
         ErrorApplication errorApplication = null;
         for (final ErrorApplication ea : lastApplications) {
             if (event.getApplication().equals(ea.applicationName)) {
@@ -49,29 +56,37 @@ public class MemoryStorage extends AbstractEventMessage {
                 break;
             }
         }
-
+        // If a new application in error
         if (errorApplication == null) {
+            // then create a new Entry
             errorApplication = new ErrorApplication();
             errorApplication.applicationName = event.getApplication();
             lastApplications.add(errorApplication);
         }
-
+        // add event to the applictaion.
         errorApplication.add(event.getComponent());
 
 
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String describe() {
-        return "Memorize the last Events for the web console.";
+        return new StringBuilder("Resume states of the errors since its launch.<br>Delay of the refreshment : ")
+                .append(DELAY).append(" ms <br>").toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDatas(final Vertx vertx, final Container container) {
         super.setDatas(vertx, container);
 
-        vertx.setPeriodic(5000, handler);
+        vertx.setPeriodic(DELAY, handler);
     }
 
     /**
@@ -93,6 +108,7 @@ public class MemoryStorage extends AbstractEventMessage {
 
         /**
          * add an error.
+         *
          * @param component the service in error
          */
         public void add(final String component) {
@@ -106,8 +122,9 @@ public class MemoryStorage extends AbstractEventMessage {
         }
 
         /**
-         * transform the
-         * @return
+         * transform the   object in Json Object.
+         *
+         * @return the json object.
          */
         public JsonObject toJson() {
             final JsonArray components = new JsonArray();

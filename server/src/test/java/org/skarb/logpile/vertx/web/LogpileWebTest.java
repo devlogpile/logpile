@@ -6,9 +6,10 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 import static org.mockito.Mockito.*;
+
 /**
  * User: skarb
  * Date: 10/01/13
@@ -16,12 +17,27 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked ")
 public class LogpileWebTest {
 
+    @Test
+    public void teststart() throws Exception {
+        MockLogPileWeb logpileWeb = new MockLogPileWeb();
+        logpileWeb.start();
+        verify(logpileWeb.vertx.eventBus()).registerHandler(LogpileWeb.SERVER_STATUS, logpileWeb);
+    }
+
+    @Test
+    public void testhandle() throws Exception {
+        final MockLogPileWeb logpileWeb = new MockLogPileWeb();
+        final Message message = mock(Message.class);
+        logpileWeb.handle(message);
+
+    }
+
     public class MockLogPileWeb extends LogpileWeb {
 
         Vertx vertx;
         Container container;
 
-        public MockLogPileWeb(){
+        public MockLogPileWeb() {
             super();
             vertx = mock(Vertx.class);
             final EventBus eventbus = mock(EventBus.class);
@@ -31,9 +47,9 @@ public class LogpileWebTest {
             container = mock(Container.class);
             final JsonObject returnValue = new JsonObject();
             JsonObject value = new JsonObject();
-            value.putNumber(MainVerticle.INSTANCE_FIELD,1);
+            value.putNumber(MainVerticle.INSTANCE_FIELD, 1);
             returnValue.putObject(LogpileWeb.WEB_SERVER, value);
-            when(container.getConfig()).thenReturn(returnValue);
+            when(container.config()).thenReturn(returnValue);
         }
 
         @Override
@@ -45,23 +61,5 @@ public class LogpileWebTest {
         public Container getContainer() {
             return container;
         }
-    }
-
-
-
-    @Test
-    public void teststart() throws Exception {
-        MockLogPileWeb logpileWeb = new MockLogPileWeb();
-        logpileWeb.start();
-        verify(logpileWeb.vertx.eventBus()).registerHandler(LogpileWeb.SERVER_STATUS,logpileWeb);
-    }
-
-
-    @Test
-    public void testhandle() throws Exception {
-        final MockLogPileWeb logpileWeb = new MockLogPileWeb();
-        final Message message = mock(Message.class);
-        logpileWeb.handle(message);
-
     }
 }

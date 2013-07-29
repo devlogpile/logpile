@@ -1,13 +1,17 @@
 package org.skarb.logpile.vertx.handler;
 
-import org.jboss.netty.handler.codec.http.QueryStringDecoder;
+
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import io.netty.handler.codec.http.QueryStringDecoder;
 import org.skarb.logpile.vertx.EventManager;
 import org.skarb.logpile.vertx.utils.Charsets;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.buffer.Buffer;
+import org.vertx.java.core.impl.CaseInsensitiveMultiMap;
+import org.vertx.java.platform.Container;
 
-import java.util.HashMap;
-import java.util.List;
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -23,18 +27,21 @@ public class PostParams implements Handler<Buffer> {
      * <p>For parsing the parameters and use the same class parser than http request parameters ({@link QueryStringDecoder }) </p>
      */
     public static final String DUMB_PREFIXE = "http://localhost:80/event?";
+    public static final Splitter.MapSplitter SPLITTER_ATTRIBUTE = Splitter.on('&').withKeyValueSeparator("=");
     /**
      * The current instance.
      */
     private final EventManager eventManager;
+    private final Container container;
 
     /**
      * Constructor.
      *
      * @param eventManager current instance.
      */
-    public PostParams(final EventManager eventManager) {
+    public PostParams(final EventManager eventManager, final Container container) {
         this.eventManager = eventManager;
+        this.container = container;
     }
 
     /**
@@ -44,21 +51,24 @@ public class PostParams implements Handler<Buffer> {
      */
     @Override
     public void handle(final Buffer buff) {
-        if (buff != null) {
-            final Map<String, String> params = new HashMap<>();
-            // get datas
-            final String string = buff.toString(Charsets.DEFAULT_CHARSET);
-            // parse the request
-            final QueryStringDecoder queryStringDecoder = new QueryStringDecoder(DUMB_PREFIXE + string);
-            // create the return object
-            for (final Map.Entry<String, List<String>> tmp : queryStringDecoder.getParameters().entrySet()) {
-                if (!tmp.getValue().isEmpty()) {
-                    params.put(tmp.getKey(), tmp.getValue().get(0));
+        final CaseInsensitiveMultiMap params = new CaseInsensitiveMultiMap();
+        final String sequence = buff.toString(Charsets.DEFAULT_CHARSET);
+        if (!Strings.isNullOrEmpty(sequence)) {
+            final Map<String, String> attributes = SPLITTER_ATTRIBUTE.split(sequence);
+            //params.add(attributes);
+            for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                try {
+                    final String value = entry.getValue();
+                    final String decode = URLDecoder.decode(value, Charsets.DEFAULT_CHARSET);
+                    params.add(entry.getKey(), decode);
+                } catch (Exception ex) {
+                    container.logger().error("error decoder " + entry);
                 }
             }
-            // treat.
-            eventManager.run(params);
+
         }
+        eventManager.run(params);
+
     }
 
 

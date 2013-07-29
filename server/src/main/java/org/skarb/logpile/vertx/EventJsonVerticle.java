@@ -3,15 +3,18 @@ package org.skarb.logpile.vertx;
 import org.skarb.logpile.vertx.event.EventManagerImpl;
 import org.skarb.logpile.vertx.handler.PostParams;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.MultiMap;
+import org.vertx.java.core.VoidHandler;
+import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.http.RouteMatcher;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
-import org.vertx.java.deploy.Verticle;
+import org.vertx.java.platform.Verticle;
 
-import java.util.Map;
+
 
 /**
  * Event error register verticle.
@@ -38,8 +41,8 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
     static void returnResponse(final HttpServerRequest req) {
         final JsonObject jsonObject = new JsonObject();
         jsonObject.putBoolean("result", true);
-        req.response.statusCode = 200;
-        req.response.end(jsonObject.encode());
+        req.response().setStatusCode(200);
+        req.response().end(jsonObject.encode());
     }
 
     /**
@@ -52,14 +55,23 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
         logger.debug("req : " + req);
 
 
-        switch (req.method) {
+        switch (req.method()) {
             case "GET":
-                final Map<String, String> params = req.params();
+                final MultiMap params = req.params();
                 eventmanager.run(params);
                 break;
             default:
-                final PostParams bodyHandler = new PostParams(eventmanager);
-                req.bodyHandler(bodyHandler);
+                req.bodyHandler( new PostParams(eventmanager,getContainer())
+                );
+               /* req.endHandler(new VoidHandler() {
+                    public void handle() {
+                        req.expectMultiPart(true);
+                        System.out.println("1"+req.params().isEmpty());
+                        System.out.println("2"+req.formAttributes().isEmpty());
+                         final PostParams bodyHandler = new PostParams(eventmanager);
+                            bodyHandler.handle(req);
+                    }
+                });*/
                 break;
         }
         returnResponse(req);
@@ -71,7 +83,7 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
      * @throws Exception
      */
     @Override
-    public void start() throws Exception {
+    public void start() {
         // configure manager.
         eventmanager = new EventManagerImpl();
         eventmanager.init(getVertx(), getContainer());
@@ -83,7 +95,7 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
         httpServer.setClientAuthRequired(false);
 
         // launch rest ws server.
-        httpServer.listen(getContainer().getConfig().getInteger("port"));
+        httpServer.listen(getContainer().config().getInteger("port"));
 
 
     }
