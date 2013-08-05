@@ -14,7 +14,7 @@ import org.vertx.java.core.logging.impl.LoggerFactory;
  * User: skarb
  * Date: 15/01/13
  */
-public class ChangeStateService implements Handler<Message<JsonObject>> {
+public final class ChangeStateService implements Handler<Message<JsonObject>> {
 
     /**
      * Logger.

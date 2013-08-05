@@ -1,0 +1,15 @@
+{
+
+  // Java verticle
+  "main":"org.skarb.vertx.mods.CouchBasePersistor",
+  // If your module is going to be registered in the Vert.x module registry you will also need the following
+  // mandatory fields
+  "description":"An couchbase persistor",
+  "licenses": ["The Apache Software License Version 2.0"],
+  "author": "The skarb",
+
+  // Optional fields
+  "developers": ["Skarb"],
+  "keywords": ["Vertx", "couchbase", "eventbus"],
+  "homepage": "url to your project page"
+}

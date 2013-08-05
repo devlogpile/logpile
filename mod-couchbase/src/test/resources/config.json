@@ -1,0 +1,7 @@
+{
+      "bucket":"beer-sample",
+      "query":{
+         "include-docs" : false,
+         "limit" : 100
+      }
+}

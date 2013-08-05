@@ -2,7 +2,7 @@ package org.skarb.logpile.vertx.web;
 
 import org.skarb.logpile.vertx.EventManager;
 import org.skarb.logpile.vertx.MainVerticle;
-import org.skarb.logpile.vertx.handler.DeployVerticle;
+import org.skarb.logpile.vertx.handler.HandlerUtils;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonArray;
@@ -24,16 +24,17 @@ public class LogpileWeb extends Verticle implements Handler<Message<JsonObject>>
 
     /**
      * start the Veticle.
+     *
      * @throws Exception
      */
     @Override
-    public void start()  {
+    public void start() {
         // launch web server.
         final JsonObject configWebServer = getContainer().config().getObject(WEB_SERVER);
         getContainer().deployModule("io.vertx~mod-web-server~2.0.0-final", configWebServer, configWebServer.getInteger(MainVerticle.INSTANCE_FIELD));
         // Authorization manager.
         getContainer().deployVerticle(AuthManagerJSonFile.class.getName(), getContainer().config(), configWebServer.getInteger(MainVerticle.INSTANCE_FIELD),
-                new DeployVerticle(getContainer(), AuthManagerJSonFile.class));
+                HandlerUtils.deployVerticle(getContainer(), AuthManagerJSonFile.class));
 
         //
         getVertx().eventBus().registerHandler(SERVER_STATUS, this);
@@ -41,19 +42,20 @@ public class LogpileWeb extends Verticle implements Handler<Message<JsonObject>>
 
     /**
      * Method to retrieve server properties.
+     *
      * @param message the return messsage
      */
     @Override
     public void handle(final Message<JsonObject> message) {
-
         getVertx().eventBus().send(EventManager.SERVICE_STATE, new JsonArray(), createResponse(message, getContainer().config()));
     }
 
     /**
      * create an handler for the EventManager datas.
-     * @param message the reply message.
+     *
+     * @param message       the reply message.
      * @param configLogPile the configuration of the web server.
-     * @return  the handler.
+     * @return the handler.
      */
     Handler<Message<JsonArray>> createResponse(final Message<JsonObject> message, final JsonObject configLogPile) {
         return new Handler<Message<JsonArray>>() {

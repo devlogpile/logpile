@@ -2,6 +2,7 @@ package org.skarb.logpile.vertx.event;
 
 import org.skarb.logpile.vertx.event.format.FormatterUtils;
 import org.skarb.logpile.vertx.event.format.LineFormatter;
+import org.skarb.logpile.vertx.handler.HandlerUtils;
 import org.skarb.logpile.vertx.utils.Charsets;
 import org.skarb.logpile.vertx.utils.FileSizeUtils;
 import org.vertx.java.core.AsyncResult;
@@ -9,14 +10,12 @@ import org.vertx.java.core.AsyncResultHandler;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.buffer.Buffer;
-import org.vertx.java.core.file.FileSystemProps;
+import org.vertx.java.core.file.FileProps;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.core.logging.impl.LoggerFactory;
 import org.vertx.java.platform.Container;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Date;
@@ -38,18 +37,43 @@ public class FileEvent extends AbstractEventMessage {
      * Logger.
      */
     private static final Logger log = LoggerFactory.getLogger(FileEvent.class);
+    /**
+     * Path to the log file.
+     */
     String path;
+    /**
+     * Number of current rolling files.
+     */
     int numberFile = -1;
+    /**
+     * prefixe Name of the file.
+     */
     String name;
+    /**
+     * Format date for the file
+     */
     String formattedDate;
+    /**
+     * rolling option in bytes.
+     * <p>if the value is equal to -1, then the rolling option is desactivated.</p>
+     */
     long rolling;
+    /**
+     * rolling option in configuration file.
+     */
     String rollingField;
+    /**
+     * Line formatting option.
+     */
     LineFormatter lineFormatter;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDatas(final Vertx vertx, final Container container) {
         super.setDatas(vertx, container);
-        final JsonObject objectConfig = getJsonObject(container);
+        final JsonObject objectConfig = getJsonObject();
 
         lineFormatter = LineFormatter.Builder.init().build();
         name = Objects.toString(objectConfig.getString(FILE_NAME_FIELD), DEFAULT_NAME);
@@ -61,18 +85,14 @@ public class FileEvent extends AbstractEventMessage {
         final String completePath = createPath();
 
 
-        getVertx().fileSystem().createFile(completePath, logCreationFile(completePath));
+        getVertx().fileSystem().createFile(completePath, HandlerUtils.logCreationFile(container, completePath));
     }
 
-    AsyncResultHandler<Void> logCreationFile(final String completePath) {
-        return new AsyncResultHandler<Void>() {
-            @Override
-            public void handle(AsyncResult<Void> event) {
-                log.info(new StringBuilder("the log file '").append(completePath).append("' is created."));
-            }
-        };
-    }
-
+    /**
+     * Calculate the dir path.
+     *
+     * @return the currentdir path.
+     */
     private StringBuilder createDirPath() {
         final StringBuilder stringBuilder = new StringBuilder(path);
         if (stringBuilder.length() > 0 && stringBuilder.charAt(stringBuilder.length() - 1) != '/') {
@@ -82,12 +102,21 @@ public class FileEvent extends AbstractEventMessage {
         return stringBuilder;
     }
 
+    /**
+     * create the complete path to the current file.
+     *
+     * @return the complete path.
+     */
     String createPath() {
-
         final StringBuilder stringBuilder = createDirPath();
         return stringBuilder.append(name).append("-").append(formattedDate).append(".log").toString();
     }
 
+    /**
+     * create the complete path for the next rolling file.
+     *
+     * @return the complete path
+     */
     String createNextBackupPath() {
         final StringBuilder completePath = createDirPath();
         completePath.append(name).append("-").append(formattedDate);
@@ -96,14 +125,9 @@ public class FileEvent extends AbstractEventMessage {
         return completePath.toString();
     }
 
-    private JsonObject getJsonObject(Container container) {
-        JsonObject objectConfig = container.config().getObject(this.getClass().getName());
-        if (objectConfig == null) {
-            objectConfig = new JsonObject();
-        }
-        return objectConfig;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean handle(final Event event) {
 
@@ -116,82 +140,112 @@ public class FileEvent extends AbstractEventMessage {
             appendToFile(completePath, newLine);
         }
         return true;
-
-
     }
 
-    private void testIfRolling(final String completePath, final String newLine, final int length) {
-        getVertx().fileSystem().fsProps(completePath,new Handler<AsyncResult<FileSystemProps>>() {
+    /**
+     * Method which manage the rolling option.
+     *
+     * @param completePath path to the file
+     * @param datas        data to write
+     * @param length       lenght of the datas.
+     */
+    private void testIfRolling(final String completePath, final String datas, final int length) {
+        getVertx().fileSystem().props(completePath, new Handler<AsyncResult<FileProps>>() {
             @Override
-            public void handle(final AsyncResult<FileSystemProps> asyncResult) {
+            public void handle(final AsyncResult<FileProps> asyncResult) {
                 long totalSpace = 0L;
-                if(asyncResult.succeeded()){
-                    final FileSystemProps fsProps = asyncResult.result();
-                    totalSpace = fsProps.totalSpace();
-                    if ((totalSpace + length) > rolling) {
-                        final String backupFile = createNextBackupPath();
-                        getVertx().fileSystem().copy(completePath, backupFile, doRolling(completePath, newLine, backupFile));
-                    } else
-                    {
-                        appendToFile(completePath, newLine);
-                    }
+                if (asyncResult.succeeded()) {
+                    final FileProps fsProps = asyncResult.result();
+                    totalSpace = fsProps.size();
+                }
 
+                if ((totalSpace + length) > rolling) {
+                    final String backupFile = createNextBackupPath();
+                    getVertx().fileSystem().copy(completePath, backupFile, doRolling(completePath, datas, backupFile));
+                } else {
+                    appendToFile(completePath, datas);
                 }
             }
         });
 
-
-     /*   final Path target = PathAdjuster.adjust(Paths.get(completePath));
-
-        try {
-            final BasicFileAttributes attrs = Files.readAttributes(target, BasicFileAttributes.class);
-            totalSpace = attrs.size();
-        } catch (Exception ex) {
-            log.error("error in calculate space", ex);
-        }
-        if ((totalSpace + length) > rolling) {
-            final String backupFile = createNextBackupPath();
-            getVertx().fileSystem().copy(completePath, backupFile, doRolling(completePath, newLine, target, backupFile));
-
-        } else {
-            appendToFile(completePath, newLine);
-        }                 */
     }
 
-    AsyncResultHandler<Void> doRolling(final String completePath, final String newLine,  final String backupFile) {
+    /**
+     * @param completePath path to the file
+     * @param datas        data to write
+     * @param backupFile   lenght of the datas.
+     * @return the handler.
+     */
+    AsyncResultHandler<Void> doRolling(final String completePath, final String datas, final String backupFile) {
         return new AsyncResultHandler<Void>() {
             @Override
             public void handle(AsyncResult<Void> event) {
                 log.info(new StringBuilder("creation of the backup file :").append(backupFile));
                 getVertx().fileSystem().deleteSync(completePath);
-                createFile(completePath, newLine);
+                createFile(completePath, datas);
             }
         };
     }
 
-    private void createFile(final String completePath, final String newLine) {
-        write(completePath, newLine, StandardOpenOption.CREATE);
+    /**
+     * Method for writing to a file.
+     *
+     * @param completePath the path of the file.
+     * @param datas        the datas to write.
+     */
+    private void createFile(final String completePath, final String datas) {
+        write(completePath, datas, StandardOpenOption.CREATE);
     }
 
-    private void appendToFile(final String completePath, final String newLine) {
-        write(completePath, newLine, StandardOpenOption.APPEND);
+    /**
+     * Method for appending to a file.
+     *
+     * @param completePath the path of the file.
+     * @param datas        the datas to write.
+     */
+    private void appendToFile(final String completePath, final String datas) {
+        write(completePath, datas, StandardOpenOption.APPEND);
     }
 
-    private void write(final String completePath, final String newLine, final StandardOpenOption openOption) {
+    /**
+     * Write to a file
+     *
+     * @param completePath the path of the file.
+     * @param datas        the datas to write.
+     * @param openOption   The option of writing.
+     */
+    private void write(final String completePath, final String datas, final StandardOpenOption openOption) {
         try {
-            final Buffer buffer = new Buffer(newLine.getBytes(Charsets.getDefault()));
-            getVertx().fileSystem().writeFile(completePath, buffer, new AsyncResultHandler<Void>() {
-                @Override
-                public void handle(AsyncResult<Void> event) {
-                    getContainer().logger().debug("write file");
-                }
-            });
+            final Buffer buffer = new Buffer(datas.getBytes(Charsets.getDefault()));
+            if (StandardOpenOption.APPEND.equals(openOption)) {
+                getVertx().fileSystem().readFile(completePath, new Handler<AsyncResult<Buffer>>() {
+                    @Override
+                    public void handle(AsyncResult<Buffer> asyncResult) {
+                        final Buffer internalBuff = new Buffer();
+
+                        if (asyncResult.succeeded()) {
+                            internalBuff.appendBuffer(asyncResult.result());
+                        }
+                        internalBuff.appendBuffer(buffer);
+                        getVertx().fileSystem().
+                                writeFile(completePath, internalBuff, HandlerUtils.logCreationFile(getContainer(), completePath));
+                    }
+                });
+            } else {
+
+                getVertx().fileSystem().
+                        writeFile(completePath, buffer, HandlerUtils.logCreationFile(getContainer(), completePath));
+            }
+
 
         } catch (Exception ex) {
             log.error("Error in writing file ", ex);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String describe() {
         final boolean rollingOption = rolling != DEFAULT_ROLLING;

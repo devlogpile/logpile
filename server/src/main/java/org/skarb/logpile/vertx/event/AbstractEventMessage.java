@@ -107,4 +107,12 @@ public abstract class AbstractEventMessage implements Handler<Message<JsonObject
     public Container getContainer() {
         return container;
     }
+
+    protected JsonObject getJsonObject() {
+        JsonObject objectConfig = container.config().getObject(this.getClass().getName());
+        if (objectConfig == null) {
+            objectConfig = new JsonObject();
+        }
+        return objectConfig;
+    }
 }

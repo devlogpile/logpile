@@ -112,7 +112,7 @@ public class FileEventTest {
         fileEvent.handle(evt);
 
         final String path = fileEvent.createPath();
-        verify(fileSystem).writeFile(eq(path), any(Buffer.class), any(AsyncResultHandler.class));
+        verify(fileSystem).readFile(eq(path),  any(AsyncResultHandler.class));
 
         /*final String completePath = fileEvent.createPath();
         final Path pPath = new File(completePath).toPath();
@@ -151,13 +151,7 @@ public class FileEventTest {
         verify(vertx.fileSystem(), never()).copy(anyString(), anyString(), any(AsyncResultHandler.class));
     }
 
-    @Test
-    public void testlogCreationFile() throws Exception {
-        final FileEvent fileEvent = new FileEvent();
-        final AsyncResultHandler<Void> result = fileEvent.logCreationFile("TEST");
-        assertNotNull(result);
-        result.handle(null);
-    }
+
 
     @Test
     public void testhandleWithRolling() throws Exception {
@@ -181,7 +175,7 @@ public class FileEventTest {
 
         fileEvent.handle(evt);
 
-        verify(vertx.fileSystem(), atLeastOnce()).fsProps(anyString(), any(AsyncResultHandler.class));
+        verify(vertx.fileSystem(), atLeastOnce()).props(anyString(), any(AsyncResultHandler.class));
     }
 
     @Test

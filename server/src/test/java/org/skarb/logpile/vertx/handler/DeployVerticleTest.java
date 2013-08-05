@@ -5,6 +5,7 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.internal.progress.MockingProgress;
 import org.mockito.internal.progress.ThreadSafeMockingProgress;
 import org.vertx.java.core.AsyncResult;
+import org.vertx.java.core.Handler;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Container;
 
@@ -34,7 +35,7 @@ public class DeployVerticleTest {
 
         doThrow(new RuntimeException("bad call")).when(logger).info(notcontains("test"));
 
-        final DeployVerticle deployVerticle = new DeployVerticle(container, A.class);
+        final Handler<AsyncResult<String>> deployVerticle = HandlerUtils.deployVerticle(container, A.class);
 
         final AsyncResult asyncResult = mock(AsyncResult.class);
         when(asyncResult.result()).thenReturn("test");

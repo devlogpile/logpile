@@ -58,6 +58,10 @@ This implementaion use the open source projects :
 ##Version
 =======
 
+###__0.3.0__ :
+* Migration of the vertx 1.3.0 to 2.0.0-final.
+
+
 ###__0.2.0__ :
 * The output of the errors in the web console.
 * Add the minify for releasing the css and the js.

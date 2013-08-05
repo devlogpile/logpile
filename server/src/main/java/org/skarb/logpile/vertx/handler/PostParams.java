@@ -3,7 +3,6 @@ package org.skarb.logpile.vertx.handler;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-import io.netty.handler.codec.http.QueryStringDecoder;
 import org.skarb.logpile.vertx.EventManager;
 import org.skarb.logpile.vertx.utils.Charsets;
 import org.vertx.java.core.Handler;
@@ -22,11 +21,6 @@ import java.util.Map;
  */
 public class PostParams implements Handler<Buffer> {
 
-    /**
-     * Dumb prefixe of an http request;
-     * <p>For parsing the parameters and use the same class parser than http request parameters ({@link QueryStringDecoder }) </p>
-     */
-    public static final String DUMB_PREFIXE = "http://localhost:80/event?";
     public static final Splitter.MapSplitter SPLITTER_ATTRIBUTE = Splitter.on('&').withKeyValueSeparator("=");
     /**
      * The current instance.

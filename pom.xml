@@ -6,9 +6,10 @@
 
     <groupId>org.skarb.logpile</groupId>
     <artifactId>parent</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <packaging>pom</packaging>
     <modules>
+        <module>mod-couchbase</module>
         <module>client</module>
         <module>server</module>
         <module>client-example</module>

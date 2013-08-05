@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * A utils class for calculate the rolling file size.
  * User: skarb
  * Date: 14/01/13
  */

@@ -1,9 +1,13 @@
+mod-couchbase/.idea/
 server/.idea/
 client/.idea/
+mod-couchbase/target/
 server/target/
 client/target/
+mod-couchbase/*.iml
 client/*.iml
 server/*.iml
+server/*.log
 *.iml
 target/
 .idea/

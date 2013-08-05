@@ -63,15 +63,7 @@ public class EventJsonVerticle extends Verticle implements Handler<HttpServerReq
             default:
                 req.bodyHandler( new PostParams(eventmanager,getContainer())
                 );
-               /* req.endHandler(new VoidHandler() {
-                    public void handle() {
-                        req.expectMultiPart(true);
-                        System.out.println("1"+req.params().isEmpty());
-                        System.out.println("2"+req.formAttributes().isEmpty());
-                         final PostParams bodyHandler = new PostParams(eventmanager);
-                            bodyHandler.handle(req);
-                    }
-                });*/
+
                 break;
         }
         returnResponse(req);

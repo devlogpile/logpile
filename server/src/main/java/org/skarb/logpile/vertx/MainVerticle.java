@@ -1,6 +1,6 @@
 package org.skarb.logpile.vertx;
 
-import org.skarb.logpile.vertx.handler.DeployVerticle;
+import org.skarb.logpile.vertx.handler.HandlerUtils;
 import org.skarb.logpile.vertx.web.LogpileWeb;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
@@ -30,13 +30,15 @@ public class MainVerticle extends Verticle {
 
         final JsonObject configEvents = config.getObject(EVENT_JSON);
         getContainer().deployVerticle(EventJsonVerticle.class.getName(), configEvents, configEvents.getInteger(INSTANCE_FIELD),
-                new DeployVerticle(getContainer(), EventJsonVerticle.class));
+                HandlerUtils.deployVerticle(getContainer(), EventJsonVerticle.class));
         final JsonObject configLogpileWeb = config.getObject(LOG_PILE_WEB);
         // TEST if the server must launch the web interface.
         if (Boolean.TRUE.equals(configLogpileWeb.getBoolean(ACTIVE_FIELD))) {
             getContainer().deployVerticle(LogpileWeb.class.getName(), config, 1,
-                    new DeployVerticle(getContainer(), LogpileWeb.class));
+                    HandlerUtils.deployVerticle(getContainer(), LogpileWeb.class));
         }
+
+        //getContainer().deployModule("org.skarb.vertx~mod-couchbase~1.0.0-SNAPSHOT");
 
     }
 }
