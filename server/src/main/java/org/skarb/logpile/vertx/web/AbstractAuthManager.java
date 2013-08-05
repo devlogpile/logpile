@@ -152,11 +152,12 @@ abstract class AbstractAuthManager extends Verticle {
      * @param message the datas to verify.
      */
     void doAuthorise(Message<JsonObject> message) {
-        String sessionID = MessageUtils.getMandatoryString(SESSION_ID, message);
+        final String sessionID = MessageUtils.getMandatoryString(SESSION_ID, message);
         if (sessionID == null) {
+            MessageUtils.sendStatus(MessageUtils.DENIED_STATUS, message);
             return;
         }
-        String username = sessions.get(sessionID);
+        final String username = sessions.get(sessionID);
 
         // In this basic auth manager we don't do any resource specific authorisation
         // The user is always authorised if they are logged in

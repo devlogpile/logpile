@@ -18,6 +18,8 @@ public abstract class AbstractEventMessage implements Handler<Message<JsonObject
      * The result field of the response.
      */
     public static final String RESULT_FIELD = "result";
+
+    protected static final String NEW_LINE = "<br>";
     /**
      * test if the handler is active to treament or not.
      */

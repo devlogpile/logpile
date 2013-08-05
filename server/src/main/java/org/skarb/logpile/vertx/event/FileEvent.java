@@ -37,6 +37,7 @@ public class FileEvent extends AbstractEventMessage {
      * Logger.
      */
     private static final Logger log = LoggerFactory.getLogger(FileEvent.class);
+
     /**
      * Path to the log file.
      */
@@ -252,11 +253,11 @@ public class FileEvent extends AbstractEventMessage {
         final StringBuilder message = new StringBuilder("Export all the Errors in a single file.<br>");
 
         final String absolutePath = Paths.get(createPath()).toAbsolutePath().toString();
-        message.append("Path : ").append(absolutePath).append("<br>");
-        message.append("Rolling option : ").append(rollingOption).append("<br>");
+        message.append("Path : ").append(absolutePath).append(NEW_LINE);
+        message.append("Rolling option : ").append(rollingOption).append(NEW_LINE);
         if (rollingOption) {
-            message.append("Size max : ").append(rollingField).append("<br>");
-            message.append("Number of rolling files created : ").append(numberFile + 1).append("<br>");
+            message.append("Size max : ").append(rollingField).append(NEW_LINE);
+            message.append("Number of rolling files created : ").append(numberFile + 1).append(NEW_LINE);
         }
         return message.toString();
     }
