@@ -88,7 +88,7 @@ public class AbstractAuthManagerTest {
         mock.doAuthorise(message);
         final ArgumentCaptor<JsonObject> argument = ArgumentCaptor.forClass(JsonObject.class);
         verify(message, atLeastOnce()).reply(argument.capture());
-        assertEquals(MessageUtils.ERROR_STATUS, argument.getValue().getString(MessageUtils.STATUS_FIELD));
+        assertEquals(MessageUtils.DENIED_STATUS, argument.getValue().getString(MessageUtils.STATUS_FIELD));
     }
 
     @Test

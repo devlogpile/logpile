@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>mod-couchbase</module>
+        <module>mod-jmx</module>
         <module>client</module>
         <module>server</module>
         <module>client-example</module>
