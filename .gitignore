@@ -7,8 +7,6 @@ client/target/
 mod-couchbase/*.iml
 client/*.iml
 server/*.iml
-server/*.log
 *.iml
 target/
 .idea/
-server/src/main/webapp/wro/

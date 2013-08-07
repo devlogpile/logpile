@@ -8,13 +8,11 @@
     </formats>
     <fileSets>
         <fileSet>
-            <outputDirectory>/classes</outputDirectory>
-            <directory>${basedir}/target/classes</directory>
-
-            <excludes>
-                <exclude>*.conf</exclude>
-                <exclude>*.json</exclude>
-            </excludes>
+            <outputDirectory></outputDirectory>
+            <directory>${basedir}/target</directory>
+            <includes>
+                <include>${project.artifactId}-${project.version}-mod.zip</include>
+            </includes>
         </fileSet>
         <fileSet>
             <outputDirectory>/config</outputDirectory>
@@ -34,11 +32,7 @@
         </fileSet>
         <fileSet>
             <outputDirectory>/webapp</outputDirectory>
-            <directory>${basedir}/webapp</directory>
-            <excludes>
-                <exclude>js/**</exclude>
-                <exclude>css/**</exclude>
-            </excludes>
+            <directory>${basedir}/webapp</directory>            
         </fileSet>
     </fileSets>
     <!--fileSets>

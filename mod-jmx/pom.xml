@@ -23,7 +23,8 @@
         in your mod.json to be automatically pulled in during packaging and added inside your module. Doing this means your
         module won't download and install those dependencies at run-time when they're first requested. -->
         <vertx.pullInDeps>false</vertx.pullInDeps>
-
+        <jacoco.agent.path>..\..\jacoco\jacocoagent.jar</jacoco.agent.path>
+        <jacoco.file.path>target\jacoco.exec</jacoco.file.path>
         <!--Vertx module name-->
         <module.name>${project.groupId}~${project.artifactId}~${project.version}</module.name>
 
@@ -183,6 +184,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
                 <configuration>
+                    <argLine>-javaagent:${jacoco.agent.path}=destfile=${jacoco.file.path}</argLine>
                     <systemProperties>
                         <property>
                             <name>vertx.mods</name>
@@ -239,6 +241,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.5.6.201201232323</version>
+                <configuration>
+                    <!-- <includes>org.skarb.*</includes> -->
+                    <destFile>jacoco-it.exec</destFile>
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

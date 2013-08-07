@@ -1,0 +1,15 @@
+{
+  "name": "logpile-vertx",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "components"
+  ],
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "bootstrap": "latest",
+    "bootstrap-glyphicons": "gh-pages" ,
+    "sockjs":"0.3.4"
+  }
+}

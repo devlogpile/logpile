@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <groups xmlns="http://www.isdc.ro/wro">
     <group name='all'>
-        <css>/css/*.css</css>
-        <js minimize="false" >/js/lib/jquery-1.8.3.min.js</js>
-        <js minimize="false">/js/lib/sockjs-min-0.3.4.js</js>
-        <js >/js/lib/vertxbus.js</js>
-        <js minimize="false">/js/lib/bootstrap.min.js</js>
-        <js minimize="false">/js/lib/angular.min.js</js>
-        <js >/js/app/services.js</js>
-        <js >/js/app/modules.js</js>
-        <js >/js/app/controllers.js</js>
+        <css>/components/bootstrap/dist/css/bootstrap.min.css</css>
+        <css>/components/bootstrap-glyphicons/css/bootstrap-glyphicons.css</css>
+        <css>/css/logpile.css</css>
+        <js minimize="false">/components/jquery/jquery.min.js</js>
+        <js minimize="false">/components/sockjs/*.min.js</js>
+        <js >/js/vertxbus.js</js>
+        <js minimize="false">/components/bootstrap/dist/js/*.min.js</js>
+        <js minimize="false">/components/angular/*.min.js</js>
+        <js >/js/services.js</js>
+        <js >/js/modules.js</js>
+        <js >/js/controllers.js</js>
     </group>
 </groups>

@@ -11,8 +11,7 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.testtools.TestVerticle;
 
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
+import javax.management.*;
 import java.lang.management.ManagementFactory;
 
 import static org.vertx.testtools.VertxAssert.*;
@@ -28,6 +27,15 @@ import static org.vertx.testtools.VertxAssert.*;
 
 public class DoUpdateTest extends TestVerticle {
 
+    private NotificationListener notificationListener = new NotificationListener() {
+
+
+        @Override
+        public void handleNotification(Notification notification, Object handback) {
+            assertEquals("[{\"name\":\"myField\",\"value\":\"one\",\"description\":\" one test\"}]", ((AttributeChangeNotification) notification).getOldValue().toString());
+            assertEquals("[{\"name\":\"myField\",\"value\":\"two\",\"description\":\" one test\"}]", ((AttributeChangeNotification) notification).getNewValue().toString());
+        }
+    };
 
     @Test
     public void testField() {
@@ -60,6 +68,7 @@ public class DoUpdateTest extends TestVerticle {
         // don't have to hardecode it in your tests
         final String property = System.getProperty("vertx.modulename");
         System.err.println(property);
+
         container.deployModule(property, new AsyncResultHandler<String>() {
             @Override
             public void handle(AsyncResult<String> asyncResult) {
@@ -72,7 +81,15 @@ public class DoUpdateTest extends TestVerticle {
                     @Override
                     public void handle(Message<JsonObject> message) {
                         assertEquals("ok", message.body().getString("status"));
-                        startTests();
+                        final MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+                        try {
+                            platformMBeanServer.addNotificationListener(new ObjectName(message.body().getString(JmxManagement.FIELD_OBJECT_NAME)), notificationListener, null, null);
+
+                            startTests();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 

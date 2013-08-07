@@ -1,35 +1,47 @@
 <h1>
     Logpile
 </h1>
-<p id="message">
+<p id="message" class="label label-info">
     {{statusinfos }}
 </p>
-<div class="alert alert-block alert-error fade in" ng-show="error">
+<div class="alert alert-danger fade in" ng-show="error">
     <h4 class="alert-heading">
         The email or the password are wrong.
     </h4>
 </div>
-<form name="myform" class="well form-horizontal">
-    <fieldset id="fieldsetemail" class="control-group">
-        <label class="control-label">
+<form name="myform" class="well form-horizontal ">
+    <div class="form-group">
+        <label for="email" class="col-lg-4 control-label aligner" style="vertical-align: middle;">
             Email
         </label>
-        <div class="input-prepend">
-            <input id="#email" ng-model="email" type="email" required="required">
+        <div class="col-lg-7">
+            <input id="email" name="email" ng-model="email" class="form-control input-lg" type="email"
+            required="required">
         </div>
-    </fieldset>
-    <fieldset id="fieldsetpassword" class="control-group">
-        <label class="control-label">
+    </div>
+    <div class="form-group">
+        <label for="password" class="col-lg-4 control-label">
             Password
         </label>
-        <div class="input-prepend">
-            <input ng-model="password" type="password" required="required">
+        <div class="col-lg-7">
+            <input id="password" name="password" class="form-control input-lg" ng-model="password"
+            type="password" required="required">
         </div>
-    </fieldset>
-    <fieldset class="control-group">
-        <button class="btn btn-primary offset1 span3 " ng-disabled="myform.$invalid"
-        ng-click="login();">
-            Login
-        </button>
-    </fieldset>
+    </div>
+    <div class="form-group">
+        <div class="col-offset-4 col-lg-7">
+            <button class="btn btn-primary btn-lg btn-block" ng-disabled="myform.$invalid" ng-click="login();">
+                Login
+            </button>
+        </div>
+    </div>
 </form>
+<div class="row">
+    <div class="label label-danger col-lg-6" ng-show="!myform.email.$valid && email !=''">
+        The Email is invalid.
+    </div>
+    <div class="label label-danger col-lg-6" ng-show="!myform.password.$valid && email !=''">
+        The Password is required.
+    </div>
+</div>
+

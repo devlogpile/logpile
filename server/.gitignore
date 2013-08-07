@@ -1,0 +1,6 @@
+.idea/
+src/main/webapp/components/
+webapp/components/
+*.log
+target/
+mods/

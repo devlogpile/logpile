@@ -110,6 +110,28 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-fonts-to-webapp</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>webapp/components/bootstrap-glyphicons/fonts</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp/components/bootstrap-glyphicons/fonts</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>${maven.dependency.plugin.version}</version>
@@ -240,7 +262,8 @@
                 </executions>
                 <configuration>
                     <destinationFolder>${basedir}/webapp/wro/</destinationFolder>
-                    <contextFolder>${basedir}/webapp/</contextFolder>
+                    <contextFolder>${basedir}/src/main/webapp/</contextFolder>
+                    <!--contextFolder>${basedir}/src</contextFolder-->
                     <wroFile>${basedir}/src/wro4j/wro.xml</wroFile>
                     <ignoreMissingResources>false</ignoreMissingResources>
                     <minimize>${wro4j.minimize.files}</minimize>
@@ -252,6 +275,7 @@
                 <version>2.4</version>
                 <configuration>
                     <descriptors>
+                        <descriptor>src/assembly/zipmod.xml</descriptor>
                         <descriptor>src/assembly/distribution.xml</descriptor>
                     </descriptors>
                 </configuration>
@@ -315,14 +339,7 @@
             <version>2.0.0-final</version>
             <scope>provided</scope>
         </dependency>
-        <!--dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>lang-js</artifactId>
-            <version>2.0.0-final</version>
-            <scope>provided</scope>
-        </dependency-->
-
-
+   
         <!-- build -->
         <dependency>
             <groupId>ro.isdc.wro4j</groupId>

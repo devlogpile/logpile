@@ -1,13 +1,18 @@
-<html ng-app="logpile-login">
+<!DOCTYPE html>
+<html lang="en" ng-app="logpile-login">
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogPile Login</title>
     <link rel="shortcut icon" href="img/logpile/favicon.ico" >
    <link href="wro/all.css" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
-<div class="span12" style="height: 35px;" >&nbsp;</div>
-<div ng-view  class="hero-unit offset3 span6" style="text-align: center" >
+	<div class="container">
+<div class="col col-lg-12" style="height: 35px;" >&nbsp;</div>
+<div ng-view  class="jumbotron col-offset-3 col-6 col-lg-6" style="text-align: center" >
+</div>
+
 </div>
 <script src="wro/all.js"  type="text/javascript"  ></script>
 </body>

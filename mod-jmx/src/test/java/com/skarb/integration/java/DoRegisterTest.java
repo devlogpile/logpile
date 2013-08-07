@@ -121,7 +121,7 @@ public class DoRegisterTest extends TestVerticle {
                     @Override
                     public void handle(final Message<JsonObject> message) {
                         assertNotNull(message.body());
-
+                        message.reply(new JsonObject());
                         testComplete();
                     }
                 });

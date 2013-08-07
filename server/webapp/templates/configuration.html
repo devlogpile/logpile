@@ -3,9 +3,7 @@
         <thead>
             <tr>
                 <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
-                    <h2>
                         Event Listener : {{addressEvent}}
-                    </h2>
                 </th>
             </tr>
         </thead>
@@ -67,29 +65,27 @@
         <tbody style="text-align: center; vertical-align: middle;">
             <tr ng-repeat="service in datas.services">
                 <td>
-                    <h4>
+                    <strong>
                         <a href="#" rel="tooltip" data-placement="right" data-original-title="{{service.describe}}">{{service.name}}</a>
-                    </h4>
+                    </strong>
                 </td>
                 <td style="text-align:center">
                     <img width="30" height="30" ng-src="img/logpile/{{service.active}}.png">
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn">
-                            <i class="icon-wrench">
-                            </i>
-                        </button>
-                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-wrench">
+                            </i>&nbsp;
                             <span class="caret">
                             </span>
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a ng-show="!service.active" ng-click="modifyActivate(service.name,true)"><i class="icon-play"></i> Start </a>
+                                <a ng-show="!service.active" ng-click="modifyActivate(service.name,true)"><span class="glyphicon glyphicon-play"></span> Start </a>
                             </li>
                             <li>
-                                <a ng-show="service.active" ng-click="modifyActivate(service.name,false)"><i class="icon-remove-sign"></i> Stop </a>
+                                <a ng-show="service.active" ng-click="modifyActivate(service.name,false)"><i class="glyphicon glyphicon-remove-sign"></i> Stop </a>
                             </li>
                         </ul>
                     </div>
@@ -102,67 +98,68 @@
             <tr>
                 <!-- style="text-align: center;background-color: #92A7D1;" -->
                 <th colspan="2" class="titleStatus" style="text-align: center; vertical-align: middle;">
-                    <h2>
+
                         Web
-                    </h2>
+
                 </th>
             </tr>
         </thead>
         <tbody style="text-align: center; vertical-align: middle;">
             <tr>
                 <td class="text-info">
-                    <h4>
+
                         <strong>
                             Port :
                         </strong>
-                    </h4>
+
                 </td>
                 <td>
-                    <h4>
+
                         {{datas.config.web_server.port}}
-                    </h4>
+
                 </td>
             </tr>
             <tr>
                 <td class="text-info">
-                    <h4>
+
                         <strong>
                             Number of instances :
                         </strong>
-                    </h4>
+
                 </td>
                 <td>
-                    <h4>
+
                         {{datas.config.web_server.instance}}
-                    </h4>
+
                 </td>
             </tr>
             <tr>
                 <td class="text-info">
-                    <h4>
+
                         <strong>
                             Root directory :
                         </strong>
-                    </h4>
+
                 </td>
                 <td>
-                    <h4>
+
                         {{datas.config.web_server.web_root}}
-                    </h4>
+
                 </td>
             </tr>
             <tr>
                 <td class="text-info">
-                    <h4>
+
                         <strong>
                             EventBus active :
                         </strong>
-                    </h4>
+
                 </td>
                 <td>
-                    <h4>
+
                         {{datas.config.web_server.bridge}}
-                    </h4>
+
+
                 </td>
             </tr>
         </tbody>
