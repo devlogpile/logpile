@@ -50,7 +50,7 @@ Let's take a look at each field in turn:
 
 The module supports the following operations :
 
-### Store Command
+### Store Commands
 
 #### Add
 
@@ -69,3 +69,72 @@ Where:
 * `key` is the key of the document. Optional parameter. If the key is not set then an key is generated. 
 * `timeout` is the time of the data is store in couchbase. if not set, then the default value of the persistor is used.
 * `document` is the JSON document that you wish to save.
+
+The response contains the following informations :
+
+    {
+        "key": "1234",
+        "count": 1,
+        "message": <message> 
+    }     
+
+Where:
+* `key` The key value which is stored. Optional parameter.
+* `count` the number of the data stored. if the value is equal to 1, then the document is stored in the couchbase server. Otherwise an error occured and the data was not saved to couchbase.
+* `message` The error message.
+
+#### Replace
+
+Replace a  document in the database.
+
+To replace a new document send a JSON message to the module main address:
+
+    {
+        "action": "replace",
+        "key": <key>,
+        "timeout": <timeout>,
+        "document": <document>
+    }     
+
+The datas in input and the response are identical to call the `add` method.
+
+#### Set
+
+set a  document in the database. if the document does not exist, then the document is created. if the document already exists, then the document is replaced
+
+    {
+        "action": "set",
+        "key": <key>,
+        "timeout": <timeout>,
+        "document": <document>
+    }     
+
+The datas in input and the response are identical to call the `add` method.
+
+### Find Commands
+
+#### Get
+
+get a specific document in the database.
+
+To get a new document send a JSON message to the module main address:
+
+    {
+        "action": "get",
+        "key": "1234"
+    }  
+
+Where:
+* `key` is the key of the document to retrieve. Mandatory parameter. 
+
+ The response to this message contains the following informations :
+
+    {
+        "count": 1,
+        "document": <document>
+    }  
+
+Where:
+* `count` The number of document which match to this key. if the document was found, the value is 1. Otherwise, it's equal to 0.
+* `document` The document.
+
