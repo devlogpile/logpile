@@ -48,5 +48,24 @@ Let's take a look at each field in turn:
 
 ## Operations
 
-The module supports the following operations
+The module supports the following operations :
 
+### Store Command
+
+#### Add
+
+create a new document in the database.
+
+To create a new document send a JSON message to the module main address:
+
+    {
+        "action": "add",
+        "key": "1234",
+        "timeout": 0,
+        "document": <document>
+    }     
+    
+Where:
+* `key` is the key of the document. Optional parameter. If the key is not set then an key is generated. 
+* `timeout` is the time of the data is store in couchbase. if not set, then the default value of the persistor is used.
+* `document` is the JSON document that you wish to save.
