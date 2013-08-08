@@ -1,48 +1,38 @@
-<div id="events-tab" class="tab-pane" ng-controller="WebOutput" ng-show="active">
-    <table id="table-server" class="borderRadius table table-striped table-bordered table-condensed ">
+<div ng-controller="WebOutput">
+<div class="row">
+    
+    <div class="col-offset-2 col-lg-1 col-1" style="vertical-align: middle">
+        Search: 
+    </div>
+    <div class="col-lg-4 col-lg-4">
+        <input type="text" class="form-control" ng-model="searchText" ng-disabled="events == null || events.length == 0">
+    </div>
+<div>    
+<div id="events-tab" class="tab-pane"  ng-show="active">
+    <table id="table-server" class="borderRadius table table-hove">
         <thead>
             <tr>
-                <th style="text-align: center; vertical-align: middle;">
-                    <div>
-                        <h5>
+                <th class="alignercell">
                             +
-                        </h5>
-                    </div>
                 </th>
-                <th style="text-align: center; vertical-align: middle;">
-                    <h5>
+                <th class="alignercell">
                         Date
-                    </h5>
                 </th>
-                <th style="text-align: center; vertical-align: middle;">
-                    <h5>
+                <th class="alignercell">
                         Application
-                    </h5>
                 </th>
-                <th style="text-align: center; vertical-align: middle;">
-                    <h5>
+                <th class="alignercell">
                         Message
-                    </h5>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="event in events">
-                <td id="{{$index}}">
+            <tr ng-repeat="event in events | filter:searchText">
+                <td id="{{$index}}" class="alignercell">
                     <div class="btn-group">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-
-
-
-                                                        <li class="icon-asterisk"></li> Actions
-
-
-
-                                                        <span class="caret"></span>
-
-
-
-                                                      </a>
+                       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <!--li class="glyphicon glyphicon-asterisk"></li--> Actions <span class="glyphicon glyphicon-cog"></span>
+                        </button>
                         <ul class="dropdown-menu">
                             <!-- dropdown menu links -->
                             <li>
@@ -52,20 +42,24 @@
                                 <a ng-click="remove($index);">Delete</a>
                             </li>
                         </ul>
-                    </div>
+                    </div>    
                 </td>
-                <td>
+                <td class="alignercell">
                     {{event.formattedDate}}
                 </td>
-                <td>
+                <td class="alignercell">
                     {{event.application}}
                 </td>
-                <td>
+                <td class="alignercell">
                     {{event.message}}
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="alert alert-info alignercell" ng-show="events == null || events.length == 0">
+       <h2> No activities</h2>
+    </div>
+</div>    
     <div class="modal hide" id="detailModal">
         <div class="modal-header">
             <button class="close" data-dismiss="modal">

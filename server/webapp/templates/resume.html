@@ -8,6 +8,20 @@
         </h4>
         Wait a few minutes for the update.
     </div>
+     <div class="alert alert-info" ng-show="newdatas.totalError >=0">
+        <button type="button" class="close" data-dismiss="alert">
+            &times;
+        </button>
+        <strong>
+            Warning !
+        </strong>
+        New datas received from server. click on the button to refresh the datas.
+        <button class="btn btn-default" type="button" ng-click="refresh();">
+            <i class="glyphicon glyphicon-refresh">
+            </i>
+            Refresh
+        </button>
+    </div>
     <div class="alert  alert-success" ng-show="notinitialized == false && datas.totalError ==0">
         <h4>
             No Errors detected
@@ -28,20 +42,7 @@
             The list of the applications in error is below.
         </p>
     </div>
-    <div class="alert alert-block" ng-show="newdatas.totalError >=0">
-        <button type="button" class="close" data-dismiss="alert">
-            &times;
-        </button>
-        <h4>
-            Warning!
-        </h4>
-        New datas received from server. click on the button to refresh the datas.
-        <button class="btn btn-danger" type="button" ng-click="refresh();">
-            <i class="icon-refresh icon-white">
-            </i>
-            Refresh
-        </button>
-    </div>
+   
     <div class="accordion" id="accordionApplications">
         <div ng-repeat="application in datas.applications" class="accordion-group ">
             <!-- titleStatus -->

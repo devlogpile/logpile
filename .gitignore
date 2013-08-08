@@ -5,8 +5,7 @@ mod-couchbase/target/
 server/target/
 client/target/
 mod-couchbase/*.iml
-client/*.iml
-server/*.iml
+bin/logpile-dist/
 *.iml
 target/
 .idea/

@@ -30,12 +30,5 @@
                 <include>run_server.bat</include>
             </includes>
         </fileSet>
-        <fileSet>
-            <outputDirectory>/webapp</outputDirectory>
-            <directory>${basedir}/webapp</directory>            
-        </fileSet>
     </fileSets>
-    <!--fileSets>
-
-    </fileSets-->
 </assembly>

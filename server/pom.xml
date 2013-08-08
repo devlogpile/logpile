@@ -91,6 +91,22 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven.resources.plugin.version}</version>
                 <executions>
+                     <execution>
+                        <id>copy-fonts-to-webapp</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>webapp/components/bootstrap-glyphicons/fonts</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp/components/bootstrap-glyphicons/fonts</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>copy-mod-to-target</id>
                         <phase>process-classes</phase>
@@ -109,28 +125,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-fonts-to-webapp</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <overwrite>true</overwrite>
-                            <outputDirectory>webapp/components/bootstrap-glyphicons/fonts</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/webapp/components/bootstrap-glyphicons/fonts</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+          
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -206,24 +201,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/mod.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>assemble</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.6.3.201306030806</version>
@@ -263,7 +240,6 @@
                 <configuration>
                     <destinationFolder>${basedir}/webapp/wro/</destinationFolder>
                     <contextFolder>${basedir}/src/main/webapp/</contextFolder>
-                    <!--contextFolder>${basedir}/src</contextFolder-->
                     <wroFile>${basedir}/src/wro4j/wro.xml</wroFile>
                     <ignoreMissingResources>false</ignoreMissingResources>
                     <minimize>${wro4j.minimize.files}</minimize>
@@ -275,11 +251,13 @@
                 <version>2.4</version>
                 <configuration>
                     <descriptors>
+                         <descriptor>src/assembly/mod.xml</descriptor>
                         <descriptor>src/assembly/zipmod.xml</descriptor>
                         <descriptor>src/assembly/distribution.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
+                    
                     <execution>
                         <id>make-assembly</id> <!-- this is used for inheritance merges -->
                         <phase>package</phase> <!-- append to the packaging phase. -->

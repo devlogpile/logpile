@@ -50,7 +50,7 @@ var eventBus = new function() {
                 return eb != null;
             },
             connect: function() {
-                eb = new vertx.EventBus("http://localhost:8081/eventbus");
+                eb = new vertx.EventBus("http://" + window.location.host + "/eventbus");
                 eb.onopen = function() {
                     open = true;
                     for (var i = 0; i < onopen.length; i++) {
@@ -82,7 +82,7 @@ var eventBus = new function() {
                 }
             },
 
-          
+
 
             sendEventBus: function(address, jsonObject, handler) {
                 privatesendEventBus(address, jsonObject, handler);

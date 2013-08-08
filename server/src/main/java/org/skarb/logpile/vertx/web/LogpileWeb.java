@@ -4,10 +4,20 @@ import org.skarb.logpile.vertx.EventManager;
 import org.skarb.logpile.vertx.MainVerticle;
 import org.skarb.logpile.vertx.handler.HandlerUtils;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.eventbus.Message;
+import org.vertx.java.core.file.impl.PathAdjuster;
+import org.vertx.java.core.http.HttpServer;
+import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.core.http.RouteMatcher;
+import org.vertx.java.core.impl.VertxInternal;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 /**
@@ -31,6 +41,15 @@ public class LogpileWeb extends Verticle implements Handler<Message<JsonObject>>
     public void start() {
         // launch web server.
         final JsonObject configWebServer = getContainer().config().getObject(WEB_SERVER);
+      /*  try{
+        final Path adjust = PathAdjuster.adjust((VertxInternal) vertx, Paths.get("webapp/eventBus.json"));
+            System.err.println("json file :"+adjust);
+        }catch(Throwable t){
+            t.printStackTrace();
+        }
+        getVertx().fileSystem().writeFileSync("webapp/eventBus.json",new Buffer(new JsonObject().putString("address","localhost:8082/events").encode()));
+       */
+
         getContainer().deployModule("io.vertx~mod-web-server~2.0.0-final", configWebServer, configWebServer.getInteger(MainVerticle.INSTANCE_FIELD));
         // Authorization manager.
         getContainer().deployVerticle(AuthManagerJSonFile.class.getName(), getContainer().config(), configWebServer.getInteger(MainVerticle.INSTANCE_FIELD),

@@ -144,7 +144,7 @@ Resume.$inject = ['$scope', 'connection'];
  **/
 
 var WebOutput = function($scope, connection, weboutput) {
-
+        
         $scope.selectedItem = {};
 
         $scope.showDetail = function(pIndex) {

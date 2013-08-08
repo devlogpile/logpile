@@ -1,6 +1,7 @@
 package org.skarb.logpile.vertx.web;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.skarb.logpile.vertx.MainVerticle;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.EventBus;
@@ -39,7 +40,8 @@ public class LogpileWebTest {
 
         public MockLogPileWeb() {
             super();
-            vertx = mock(Vertx.class);
+            vertx = mock(Vertx.class, Mockito.RETURNS_MOCKS);
+
             final EventBus eventbus = mock(EventBus.class);
 
             when(vertx.eventBus()).thenReturn(eventbus);
@@ -47,6 +49,7 @@ public class LogpileWebTest {
             container = mock(Container.class);
             final JsonObject returnValue = new JsonObject();
             JsonObject value = new JsonObject();
+            value.putNumber(MainVerticle.INSTANCE_FIELD, 1);
             value.putNumber(MainVerticle.INSTANCE_FIELD, 1);
             returnValue.putObject(LogpileWeb.WEB_SERVER, value);
             when(container.config()).thenReturn(returnValue);
