@@ -149,6 +149,8 @@ var WebOutput = function($scope, connection, weboutput) {
 
         $scope.showDetail = function(pIndex) {
             $scope.selectedItem = weboutput.getEvents()[pIndex];
+            $("#collapseOne").collapse("show");
+            $("#collapseTwo").collapse("hide");
             $('#detailModal').modal();
         };
 
