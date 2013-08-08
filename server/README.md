@@ -30,9 +30,12 @@ This implementation provides also a web console which manage the server treatmen
 ###How to build this module
 =======
 
-1. Install the jdk 1.7
-2. Install maven.
-3. Go to the root directory and execute the command : `mvn clean install`. 
+1. Install the jdk 1.7.
+2. Install maven. Maven is use to build the java and create the packaging of this module.
+3. Install the bower tools. Bower get the js and css libraries for the client part from the net. The installation description is available on [the Bower site](http://bower.io/).
+4. Go to the root directory.
+5. Execute the command : `bower install`. This command copy the css and jss libraries in the "src/main/webapp/components".
+6. Execute the command : `mvn clean install`.
 
 The default profile is the *dev* profile. This profile does not minify the js files. For releasing this module, add the  `-P release` to the command line.
 
@@ -50,16 +53,20 @@ There is a jacoco plugin in the `pom.xml`. This plugin provide the coverage of t
 =======
 This implementaion use the open source projects :
 
-* [Vertx](http://vertx.io/)
-* [JQuery](http://jquery.com/)
-* [Twitter bootstrap](http://twitter.github.com/bootstrap/index.html)
-* [Angular Js](http://angularjs.org/)
+* [Vertx](http://vertx.io/)  - 2.0.0 final version.
+* [JQuery](http://jquery.com/) - latest version.
+* [Twitter bootstrap](http://twitter.github.com/bootstrap/index.html) - 3.0 RC1 version.
+* [Angular Js](http://angularjs.org/) - latest version.
+* [Bower](http://bower.io/) - latest version.
+
 
 ##Version
 =======
 
 ###__0.3.0__ :
 * Migration of the vertx 1.3.0 to 2.0.0-final.
+* Migration bootstrap 3.0 RC1.
+* Add a event couchbase persistor which use the mod-couchbase module.
 
 
 ###__0.2.0__ :
