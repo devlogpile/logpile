@@ -28,7 +28,6 @@ public class CouchBasePersistor extends BusModBase implements Handler<Message<Js
     public String bucket;
     protected String address;
     protected String host;
-    protected String user;
     protected String password;
 
     @Override
@@ -39,7 +38,6 @@ public class CouchBasePersistor extends BusModBase implements Handler<Message<Js
         host = getOptionalStringConfig("host", DEFAULT_HOST);
         queryLimit = getOptionalIntConfig("query-limit", 200);
         timeout = getOptionalIntConfig("store-timeout", 0);
-        user = getOptionalStringConfig("user", null);
         password = getOptionalStringConfig("password", null);
         bucket = getOptionalStringConfig("bucket", "default");
         try {
