@@ -42,7 +42,7 @@ The file must be named : 'logpile.client.xml'.
 ###The Properties file.
 
 The file must be named : 'logpile.client.properties'.
-
+    log.pile.server.id=My Server
     log.pile.application=application.name
     log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
     log.pile.url=http://localhost:8082/event 
@@ -116,6 +116,10 @@ Use case :
 
 ##Version 
 =======
+
+###__0.3.0__ :
+* Delete the Guava depency.
+
 
 ###__0.2.0__ :
 * Adding Java Logging Handler which do console output and file logging.

@@ -151,7 +151,7 @@ public class HttpConnector {
                 urlConnection.setRequestMethod(Method.POST.toString());
                 urlConnection.setDoOutput(true);
 
-                //urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + CHARSET);
+
                 if (!params.isEmpty()) {
                     OutputStream output = null;
                     try {

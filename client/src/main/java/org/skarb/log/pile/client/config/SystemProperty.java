@@ -8,7 +8,7 @@ import org.skarb.log.pile.client.util.NameOfConfigurationParameters;
  * User: skarb
  * Date: 17/01/13
  */
-class SystemProperty implements Configuration {
+class SystemProperty extends AbstractConfiguration implements Configuration {
 
     /**
      * Constructor.
@@ -35,6 +35,14 @@ class SystemProperty implements Configuration {
      */
     public String getUrl() {
         return System.getProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String serverId() {
+        return System.getProperty(NameOfConfigurationParameters.PROPERTIES_SERVER_ID);
     }
 
     /**

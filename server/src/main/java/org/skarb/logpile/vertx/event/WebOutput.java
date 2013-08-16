@@ -39,7 +39,7 @@ public class WebOutput extends AbstractEventMessage {
     @Override
     public boolean handle(final Event event) {
         final JsonObject message = event.toJson();
-        final JsonObject returnValue = new JsonObject(message.toString()).putString("formattedDate",
+        final JsonObject returnValue = new JsonObject(message.encode()).putString("formattedDate",
                 FormatterUtils.formatDate(FormatterUtils.DEFAULT_FORMAT, event.toDate()));
         getVertx().eventBus().send(SERVICE_NEW, returnValue);
         return true;

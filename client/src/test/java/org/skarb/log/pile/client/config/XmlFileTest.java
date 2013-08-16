@@ -38,11 +38,21 @@ public class XmlFileTest {
     }
 
     @Test
+    public void testretrieveServerId() {
+        Assert.assertEquals("tyty", XmlFile.retrieveServerId("<root><log.pile.server.id>tyty</log.pile.server.id></root>"));
+        Assert.assertEquals("tyty", XmlFile.retrieveServerId("<root>   <log.pile.server.id >tyty</log.pile.server.id></root>"));
+        Assert.assertEquals("", XmlFile.retrieveServerId("<root>   <log.pile.server.id></log.pile.server.id></root>"));
+        Assert.assertNull(XmlFile.retrieveServerId("<root>   <log.pile.server.id.a >sss</log.pile.server.id.a></root>"));
+
+    }
+
+    @Test
     public void testFile(){
         final XmlFile xmlFile = new XmlFile("/test.xml");
         Assert.assertTrue(xmlFile.configured());
         Assert.assertEquals("APP1",xmlFile.getApplication());
         Assert.assertEquals("engine.class",xmlFile.getEngineClass());
         Assert.assertEquals("http://www.gogole.fr",xmlFile.getUrl());
+        Assert.assertEquals("MyId",xmlFile.getServerId());
     }
 }

@@ -18,8 +18,9 @@ public class FormatterUtils {
 
     /**
      * Method for formatting a date object.
+     *
      * @param format the format string
-     * @param date the date to format.
+     * @param date   the date to format.
      * @return the formatted date or an empty string.
      */
     public static String formatDate(final String format, final Date date) {
@@ -34,19 +35,26 @@ public class FormatterUtils {
     /**
      * Method for formatting an event.
      * <p>Transform an event to line</p>
-     * @param separator  the separator string
+     *
+     * @param separator the separator string
      * @param format    the format of the date.
-     * @param event   the event to format
-     * @return  a new string line.
+     * @param event     the event to format
+     * @return a new string line.
      */
     static StringBuilder format(final String separator, final String format, final Event event) {
         final String application = Objects.toString(event.getApplication(), "");
         final String component = Objects.toString(event.getComponent(), "");
         final String message = Objects.toString(event.getMessage(), "");
         final String stackTrace = Objects.toString(event.getStackTrace(), "");
+        final String serverId = Objects.toString(event.getServerId(), "");
 
 
-        final StringBuilder line = new StringBuilder(formatDate(format, event.toDate())).append(separator).append(application)
+        final StringBuilder line = new StringBuilder(formatDate(format, event.toDate()));
+        if (!"".equals(serverId)) {
+            line.append(separator).append(serverId);
+        }
+
+        line.append(separator).append(application)
                 .append(separator).append(component).append(separator).append(message);
         if (!"".equals(stackTrace)) {
             line.append("\n").append(stackTrace);

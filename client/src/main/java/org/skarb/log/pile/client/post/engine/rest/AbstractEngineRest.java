@@ -30,7 +30,7 @@ abstract class AbstractEngineRest implements Engine {
     /**
      * Visible for Test
      */
-    AbstractEngineRest(final HttpConnector connector, final HttpConnector.Method method) {
+    protected AbstractEngineRest(final HttpConnector connector, final HttpConnector.Method method) {
         this.connector = connector;
         this.method = method;
     }
@@ -101,6 +101,7 @@ abstract class AbstractEngineRest implements Engine {
         map.put(PROP_MESSAGE, encode(event.getMessage()));
         map.put(PROP_STACK, encode(event.getStacktrace()));
         map.put(PROP_DATE, encode(event.getDate()));
+        map.put(PROP_SERVER_ID, encode(event.getServerId()));
 
 
         if (connector != null ) {

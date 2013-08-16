@@ -10,7 +10,7 @@ import java.util.Properties;
  * User: skarb
  * Date: 17/01/13
  */
-class PropertiesFile implements Configuration {
+class PropertiesFile extends AbstractConfiguration implements Configuration {
     /**
      * The path of the properties file.
      */
@@ -72,5 +72,9 @@ class PropertiesFile implements Configuration {
      */
     public String getUrl() {
         return properties.getProperty(NameOfConfigurationParameters.PROPERTIES_URL_REST);
+    }
+
+    public String serverId(){
+        return properties.getProperty(NameOfConfigurationParameters.PROPERTIES_SERVER_ID);
     }
 }

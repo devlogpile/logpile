@@ -34,6 +34,7 @@ public class Event {
      * the property for the "date of the error".
      */
     public static final String PROP_DATE = "date";
+    private static final String PROP_SERVER_ID = "serverid";
     /**
      * the current object.
      */
@@ -102,6 +103,15 @@ public class Event {
      */
     public String getComponent() {
         return jsonObject.getString(PROP_COMPONENT);
+    }
+
+    /**
+     * Getter on component value.
+     *
+     * @return component value.
+     */
+    public String getServerId() {
+        return jsonObject.getString(PROP_SERVER_ID);
     }
 
     /**

@@ -31,7 +31,7 @@ public final class LogbackUtils {
      * @param contextAware  the appender which do the treatment.
      */
     public static void doCallLogPile(final ILoggingEvent eventObject, final ContextAware contextAware) {
-        doCallLogPile(eventObject, application(), engine(), contextAware);
+        doCallLogPile(eventObject,serverId(), application(), engine(), contextAware);
     }
 
     /**
@@ -41,9 +41,10 @@ public final class LogbackUtils {
      * @param engine        the current engine implementation.
      * @param contextAware  the appender which do the treatment.
      */
-    public static void doCallLogPile(final ILoggingEvent eventObject, final String application, final Engine engine, ContextAware contextAware) {
+    public static void doCallLogPile(final ILoggingEvent eventObject,final String serverId,  final String application, final Engine engine, ContextAware contextAware) {
         try {
             final Event event = new Event();
+            event.setServerId(serverId);
             event.setApplication(application);
             event.setComponent(eventObject.getLoggerName());
 
@@ -99,6 +100,16 @@ public final class LogbackUtils {
     public static String application() {
         final JavaUtilLogData logData = JavaUtilLogData.getInstance();
         return logData.getApplication();
+
+    }
+
+    /**
+     * Getter on the  current application name.
+     * @return   the  current application name.
+     */
+    public static String serverId() {
+        final JavaUtilLogData logData = JavaUtilLogData.getInstance();
+        return logData.getServerId();
 
     }
 }

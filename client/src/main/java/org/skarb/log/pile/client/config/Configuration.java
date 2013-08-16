@@ -15,6 +15,13 @@ public interface Configuration {
     public boolean configured();
 
     /**
+     * Get the server Id.
+     *
+     * @return the name of the server.
+     */
+    public String getServerId();
+
+    /**
      * Get the application Name.
      *
      * @return the name.

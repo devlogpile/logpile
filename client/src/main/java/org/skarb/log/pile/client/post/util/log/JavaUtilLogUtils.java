@@ -77,6 +77,7 @@ public final class JavaUtilLogUtils {
 
         final Engine engine = logData.getEngine();
         final Event event = new Event();
+        event.setApplication(logData.getServerId());
         event.setApplication(logData.getApplication());
         event.setDate(new Date(record.getMillis()));
         event.setComponent(formatService(record));

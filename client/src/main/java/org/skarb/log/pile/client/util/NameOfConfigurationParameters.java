@@ -19,4 +19,9 @@ public final class NameOfConfigurationParameters {
      */
     public static final String PROPERTIES_URL_REST = "log.pile.url";
 
+    /**
+     * The property for the identifier of the server.
+     */
+    public static final String PROPERTIES_SERVER_ID= "log.pile.server.id";
+
 }

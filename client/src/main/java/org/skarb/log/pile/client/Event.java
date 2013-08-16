@@ -9,8 +9,10 @@ import java.util.Date;
  */
 public class Event {
 
+    private String serverId;
     private String application;
     private String component;
+
     private String stacktrace;
     private String message;
     private Date date;
@@ -54,4 +56,13 @@ public class Event {
     public void setDate(final Date date) {
         this.date = date;
     }
+
+    public String getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+
 }

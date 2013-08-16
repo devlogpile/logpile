@@ -11,7 +11,7 @@
         <dependency>
             <groupId>org.skarb.logpile</groupId>
             <artifactId>client</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

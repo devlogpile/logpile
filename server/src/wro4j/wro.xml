@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <groups xmlns="http://www.isdc.ro/wro">
     <group name='all'>
-        <css>/components/bootstrap/dist/css/bootstrap.min.css</css>
-        <css>/components/bootstrap-glyphicons/css/bootstrap-glyphicons.css</css>
-        <css>/css/logpile.css</css>
+    <css>/components/bootstrap/dist/css/bootstrap.min.css</css>
+    <css>/components/bootstrap-glyphicons/css/bootstrap-glyphicons.css</css>
+    <css>/css/logpile.css</css>
+    </group>
+    <group name='login'>
         <js minimize="false">/components/jquery/jquery.min.js</js>
         <js minimize="false">/components/sockjs/*.min.js</js>
         <js >/js/vertxbus.js</js>
         <js minimize="false">/components/bootstrap/dist/js/*.min.js</js>
         <js minimize="false">/components/angular/*.min.js</js>
         <js >/js/services.js</js>
-        <js >/js/modules.js</js>
-        <js >/js/controllers.js</js>
+        <js >/js/login/modules.js</js>
+        <js >/js/login/controllers.js</js>
+    </group>
+    <group name='main'>
+        <js minimize="false">/components/jquery/jquery.min.js</js>
+        <js minimize="false">/components/sockjs/*.min.js</js>
+        <js >/js/vertxbus.js</js>
+        <js minimize="false">/components/bootstrap/dist/js/*.min.js</js>
+        <js minimize="false">/components/angular/*.min.js</js>
+        <js >/js/services.js</js>
+        <js >/js/main/modules.js</js>
+        <js >/js/main/controllers.js</js>
     </group>
 </groups>

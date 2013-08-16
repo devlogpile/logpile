@@ -120,3 +120,82 @@ var eventBus = new function() {
             }
         };
     };
+
+/**************************************************/
+/* Angular JS Modules                             */
+/**************************************************/
+var sharedConnection = ['$rootScope', function(root) {
+    root.statusinfos = "Wait ...";
+
+    var modify = {};
+
+    modify.checkConnect = function() {
+        //  console.log(message);
+        root.$apply(function() {
+            root.statusinfos = "Not Connected";
+        });
+        $(".connected").hide();
+        $(".notconnected").show();
+    };
+
+    modify.init = function() {
+        if (!eventBus.isConnected()) {
+            eventBus.addOnOpen(function() {
+                root.$apply(function() {
+                    root.statusinfos = "Server available - open ...";
+                });
+            });
+            eventBus.addOnClose(function() {
+                root.$apply(function() {
+                    root.statusinfos = "Server unavailable - closed";
+                    eb = null;
+
+                });
+                $(".connected").hide();
+                $(".notconnected").show();
+            });
+
+
+
+
+            eventBus.addIf(function(message) {
+                if (message.result) {
+                    root.$apply(function() {
+                        console.log(message);
+                        root.statusinfos = "Connected";
+                    });
+                    $(".connected").show();
+                    $(".notconnected").hide();
+                } else {
+                    modify.checkConnect();
+                }
+            });
+            eventBus.connect();
+            modify.checkConnect();
+        }
+    };
+    modify.addSession = function(session) {
+        createCookie('sessionID',session);
+    },
+
+    modify.logout = function() {
+
+        eventBus.sendEventBus('auth-logpile.logout', {
+            "tmp": "test"
+        }, function(message) {
+            console.log(message);
+        });
+        createCookie('sessionID', "");
+        document.location = "/index.html";
+        return false;
+    };
+    eventBus.registerHandler("logpile.weboutput.new.event", function(messageNE) {
+        root.$apply(function() {
+            root.events.push(messageNE);
+        });
+    });
+
+    root.logout = modify.logout;
+
+    return modify;
+}];

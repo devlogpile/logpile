@@ -1,6 +1,7 @@
 .idea/
 src/main/webapp/components/
 webapp/components/
+webapp/wro/
 *.log
 target/
 mods/

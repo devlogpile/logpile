@@ -1,11 +1,44 @@
 <div ng-controller="WebOutput">
     <div class="row">
-        <div class="col-offset-2 col-lg-1 col-1" style="vertical-align: middle">
-            Search:
-        </div>
-        <div class="col-lg-4 col-lg-4">
-            <input type="text" class="form-control" ng-model="searchText" ng-disabled="events == null || events.length == 0">
-        </div>
+        <form class="form-inline" role="form">
+            <fieldset >
+            <div class="form-group">
+                <label for="searchText" class="col-lg-2 col-2 control-label inline-label" >
+                    Filter search :
+                </label>
+                <div class="col-lg-6 col-lg-6">
+                    <input type="text" class="form-control input-sm" name="searchText" ng-model="searchText"
+                    ng-disabled="events == null || events.length == 0">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm col-lg-2 col-2 " ng-click="advanced = !advanced" data-toggle="button">Advanced</button>
+        </fieldset>
+        </form>
+        
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+    <div ng-show="advanced">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 col-2 control-label" for="selectException">
+                   Show :
+                </label>
+                <div class="col-lg-3 col-lg-3" >
+                    <select class="form-control input-sm" name="selectException" ng-model="filterException" ng-disabled="events == null || events.length == 0" placeholder="Password">
+                        <option value="" selected="selected">
+                        </option>
+                        <option value="Exc">
+                            With exception
+                        </option>
+                        <option value="NoneExc">
+                            Without exception
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
     </div>
     <div id="events-tab" class="tab-pane" ng-show="active">
         <table id="table-server" class="borderRadius table table-hove">
@@ -13,6 +46,9 @@
                 <tr>
                     <th class="alignercell">
                         +
+                    </th>
+                    <th class="alignercell">
+                        Server Id
                     </th>
                     <th class="alignercell">
                         Date
@@ -26,7 +62,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="event in events | filter:searchText">
+                <tr ng-repeat="event in events | filter:searchText | filter:filterExceptionFct">
                     <td id="{{$index}}" class="alignercell">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -45,6 +81,9 @@
                                 </li>
                             </ul>
                         </div>
+                    </td>
+                    <td class="alignercell">
+                        {{event.serverid}}
                     </td>
                     <td class="alignercell">
                         {{event.formattedDate}}

@@ -19,6 +19,8 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
      */
     private String application;
 
+    private String serverId;
+
     /**
      * Default constructor.
      */
@@ -49,6 +51,10 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         if (application == null) {
             application = LogbackUtils.application();
         }
+
+
+        serverId = LogbackUtils.serverId();
+
     }
 
     /**
@@ -57,7 +63,7 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
     @Override
     protected void append(final ILoggingEvent eventObject) {
 
-        LogbackUtils.doCallLogPile(eventObject, application, engine, this);
+        LogbackUtils.doCallLogPile(eventObject,serverId, application, engine, this);
     }
 
     /**

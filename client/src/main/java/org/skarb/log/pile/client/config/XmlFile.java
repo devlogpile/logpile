@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * User: skarb
  * Date: 17/01/13
  */
-class XmlFile implements Configuration {
+class XmlFile extends AbstractConfiguration implements Configuration {
 
     /**
      * The path of the properties file.
@@ -34,6 +34,10 @@ class XmlFile implements Configuration {
      */
     private static final Pattern URL_PATTERN = Pattern.compile("<" + NameOfConfigurationParameters.PROPERTIES_URL_REST + "[\\s\\t]*>(.*?)</" + NameOfConfigurationParameters.PROPERTIES_URL_REST + ">");
 
+    /**
+     * The pattern for retrieving application name.
+     */
+    private static final Pattern SERVER_ID_PATTERN = Pattern.compile("<" + NameOfConfigurationParameters.PROPERTIES_SERVER_ID + "[\\s\\t]*>(.*?)</" + NameOfConfigurationParameters.PROPERTIES_SERVER_ID + ">");
 
     /**
      * Parse the file and retrieve the application name.
@@ -62,6 +66,21 @@ class XmlFile implements Configuration {
         }
         return null;
     }
+
+    /**
+     * Parse the file and retrieve the url.
+     * @param content the file content.
+     * @return  null if not found.
+     */
+    static String retrieveServerId(String content) {
+        final Matcher matcher = SERVER_ID_PATTERN.matcher(content);
+        if(matcher.find()){
+            final String application = matcher.group(1);
+            return application.trim();
+        }
+        return null;
+    }
+
 
     /**
      * Parse the file and retrieve the url.
@@ -142,5 +161,9 @@ class XmlFile implements Configuration {
      */
     public String getUrl() {
         return retrieveUrl(content);
+    }
+
+    public String serverId(){
+        return retrieveServerId(content);
     }
 }

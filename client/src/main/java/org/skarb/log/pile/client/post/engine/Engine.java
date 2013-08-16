@@ -31,6 +31,11 @@ public interface Engine {
     public static final String PROP_DATE = "date";
 
     /**
+     * the property for the "SERVER ID".
+     */
+    public static final String PROP_SERVER_ID = "serverid";
+
+    /**
      * send the error to logpile server.
      *
      * @param event the event

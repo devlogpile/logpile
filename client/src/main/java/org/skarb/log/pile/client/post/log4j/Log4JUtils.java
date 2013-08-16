@@ -42,6 +42,7 @@ public class Log4JUtils {
         try {
             final Engine engine = logData.getEngine();
             final Event event = new Event();
+            event.setServerId(logData.getServerId());
             event.setApplication(logData.getApplication());
             event.setDate(new Date(loggingEvent.timeStamp));
             if (loggingEvent.getMessage() != null) {

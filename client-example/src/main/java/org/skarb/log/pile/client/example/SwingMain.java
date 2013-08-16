@@ -9,7 +9,7 @@ import javax.swing.*;
 public class SwingMain {
 
 
-    public static final String NO_PARAMETERS = "Parameter value must be set : LOG4J,JAVA_LOGGING";
+    public static final String NO_PARAMETERS = "Parameter value must be set : LOG4J,JAVA_LOGGING,LOGBACK";
 
     public static void main(final String[] args) {
         if (args == null || args.length == 0) {

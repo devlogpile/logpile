@@ -34,6 +34,8 @@ public class JavaUtilLogData implements Serializable {
      */
     private Configuration configuration;
 
+    private String serverId;
+
     /**
      * Constructor.
      */
@@ -135,5 +137,9 @@ public class JavaUtilLogData implements Serializable {
         this.engine = engine;
     }
 
+
+    public String getServerId() {
+        return configuration.getServerId();
+    }
 
 }

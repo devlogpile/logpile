@@ -13,7 +13,7 @@
             <outputDirectory>/</outputDirectory>
             <directory>${basedir}/server/target</directory>
             <includes>
-                <include>server-*.zip</include>
+                <include>server-*-distribution.zip</include>
             </includes>
         </fileSet>
         <fileSet>
