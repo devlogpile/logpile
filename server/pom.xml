@@ -92,17 +92,36 @@
                 <version>${maven.resources.plugin.version}</version>
                 <executions>
                      <execution>
-                        <id>copy-fonts-to-webapp</id>
+                    <id>copy-fonts-to-webapp</id>
+                    <phase>process-classes</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <overwrite>true</overwrite>
+                        <outputDirectory>webapp/components/components-font-awesome/font</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>src/main/webapp/components/components-font-awesome/font</directory>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+                    <execution>
+                        <id>copy-jquery-resources-to-webapp</id>
                         <phase>process-classes</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
                             <overwrite>true</overwrite>
-                            <outputDirectory>webapp/components/bootstrap-glyphicons/fonts</outputDirectory>
+                            <outputDirectory>webapp/wro</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/webapp/components/bootstrap-glyphicons/fonts</directory>
+                                    <directory>src/main/webapp/components/jquery/</directory>
+                                    <includes>
+                                    <include>jquery.min.map</include>
+                                    </includes>
                                 </resource>
                             </resources>
                         </configuration>

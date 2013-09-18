@@ -9,7 +9,7 @@
     "jquery": "latest",
     "angular": "latest",
     "bootstrap": "latest",
-    "bootstrap-glyphicons": "gh-pages" ,
+    "font-awesome": "latest" ,
     "sockjs":"0.3.4"
   }
 }

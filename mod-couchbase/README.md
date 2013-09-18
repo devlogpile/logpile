@@ -100,7 +100,7 @@ The datas in input and the response are identical to call the `add` method.
 
 #### Set
 
-set a  document in the database. if the document does not exist, then the document is created. if the document already exists, then the document is replaced
+set a document in the database. if the document does not exist, then the document is created. if the document already exists, then the document is replaced
 
     {
         "action": "set",
@@ -117,7 +117,7 @@ The datas in input and the response are identical to call the `add` method.
 
 get a specific document in the database.
 
-To get a new document send a JSON message to the module main address:
+To get a document send a JSON message to the module main address:
 
     {
         "action": "get",
@@ -138,3 +138,21 @@ Where:
 * `count` The number of document which match to this key. if the document was found, the value is 1. Otherwise, it's equal to 0.
 * `document` The document.
 
+#### View
+
+Call a view for retreiving a list of documents.
+
+To call a view send a JSON message to the module main address:
+
+    {
+        "action": "view",
+        "documentName": "beer",
+        "view": "brewery_beers"
+    }  
+
+ The response to this message contains the following informations :
+
+    {
+        "total_rows": 8,
+        "rows": <results>
+    }  

@@ -129,11 +129,18 @@ var sharedConnection = ['$rootScope', function(root) {
 
     var modify = {};
 
+    var setMessage = function(message){
+        if(root.$$phase) {
+            root.statusinfos = message;
+        } else {
+            root.$apply(function() {
+                root.statusinfos = message;
+            });
+        }
+    };
+
     modify.checkConnect = function() {
-        //  console.log(message);
-        root.$apply(function() {
-            root.statusinfos = "Not Connected";
-        });
+        setMessage("Not Connected");
         $(".connected").hide();
         $(".notconnected").show();
     };
@@ -141,16 +148,11 @@ var sharedConnection = ['$rootScope', function(root) {
     modify.init = function() {
         if (!eventBus.isConnected()) {
             eventBus.addOnOpen(function() {
-                root.$apply(function() {
-                    root.statusinfos = "Server available - open ...";
-                });
+                setMessage( "Server available - open ...");
             });
             eventBus.addOnClose(function() {
-                root.$apply(function() {
-                    root.statusinfos = "Server unavailable - closed";
-                    eb = null;
-
-                });
+               setMessage("Server unavailable - closed");
+                eb = null;
                 $(".connected").hide();
                 $(".notconnected").show();
             });
@@ -160,10 +162,7 @@ var sharedConnection = ['$rootScope', function(root) {
 
             eventBus.addIf(function(message) {
                 if (message.result) {
-                    root.$apply(function() {
-                        console.log(message);
-                        root.statusinfos = "Connected";
-                    });
+                    setMessage( "Connected");
                     $(".connected").show();
                     $(".notconnected").hide();
                 } else {

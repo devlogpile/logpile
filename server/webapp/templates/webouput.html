@@ -1,8 +1,7 @@
 <div ng-controller="WebOutput">
     <div class="row">
-        <form class="form-inline" role="form">
-            <fieldset >
-            <div class="form-group">
+        <form class="form-horizontal " role="form">
+            <div class="form-group ">
                 <label for="searchText" class="col-lg-2 col-2 control-label inline-label" >
                     Filter search :
                 </label>
@@ -10,11 +9,9 @@
                     <input type="text" class="form-control input-sm" name="searchText" ng-model="searchText"
                     ng-disabled="events == null || events.length == 0">
                 </div>
+                  <button type="button" class="btn btn-primary btn-sm col-lg-2 col-2 " ng-click="advanced = !advanced" data-toggle="button">Advanced</button>
             </div>
-            <button type="button" class="btn btn-primary btn-sm col-lg-2 col-2 " ng-click="advanced = !advanced" data-toggle="button">Advanced</button>
-        </fieldset>
         </form>
-        
     </div>
     <div class="row">
         &nbsp;
@@ -66,15 +63,15 @@
                     <td id="{{$index}}" class="alignercell">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <!--li class="glyphicon glyphicon-asterisk"></li-->
+                                <!--li class="glyphicon icon-asterisk"></li-->
                                 Actions
-                                <span class="glyphicon glyphicon-cog">
+                                <span class="glyphicon icon-cog">
                                 </span>
                             </button>
                             <ul class="dropdown-menu">
                                 <!-- dropdown menu links -->
                                 <li>
-                                    <a ng-click="showDetail($index);">Detail</a>
+                                    <a ng-click="showDetail(event);">Detail</a>
                                 </li>
                                 <li>
                                     <a ng-click="remove($index);">Delete</a>

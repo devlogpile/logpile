@@ -2,7 +2,7 @@
 <groups xmlns="http://www.isdc.ro/wro">
     <group name='all'>
     <css>/components/bootstrap/dist/css/bootstrap.min.css</css>
-    <css>/components/bootstrap-glyphicons/css/bootstrap-glyphicons.css</css>
+    <css>/components/components-font-awesome/css/font-awesome.min.css</css>
     <css>/css/logpile.css</css>
     </group>
     <group name='login'>
