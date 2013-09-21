@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
+     <link rel="shortcut icon" href="/favicon.ico" >
+    <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="css/logpile.css">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Logpile</title>
+    <title>Logpile - My Listener of errors</title>
   </head>
 
   <body>
@@ -18,51 +18,70 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
 
-          <h1 id="project_title">Logpile</h1>
-          <h2 id="project_tagline">The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. </h2>
+          <div id="logo-div" > <img class="logo-image" src="images/logo-logpile.png"></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
+              <!--https://github.com/devlogpile/logpile/zipball/master-->
+              <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
+            </section></div>
+      
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/devlogpile/logpile/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+           
         </header>
     </div>
-
-    <!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+            <h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to Logpile web project.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>The purpose of this projects is to in only one repository collect all the errors of your application java and treat them : grouping all your applications in one and only log, store them, email them, etc  ....</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h3>Why this framework ?</h3>
+<p>
+	Bescause :
+	<ul>
+		<li>The majority of other solution is complex to install.</li>
+		<li>The majority of your enterprise application are written in java. Your developpers know the java language. You  want a little product for spying the state of your applications in production. This project must be an good start for inspiration.</li>
+		<li>It's fun to developp applications with the latest technology : bootstrap, vertx, couchbase, etc ...</li>
+	</ul>
+</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3>Description</h3>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<p>The purpose of this project is to have one for monitoring application. the api aggregate all errors from the application to one instance. This instance can do treatment on error reception. Example : create an unique console log.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<img src="images/general_description.png">
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<p>The workflow is very simple :</p>
+<ol>
+<li> One application produce an error.</li>
+<li> The connector of the logpile client catch the error.</li>
+<li> The connector send the information on the error to a Logpile server.</li>
+<li> This server receives the 'event' and do a configured work on it.</li>
+   <u> Example :</u> send an email for warning the developpement team, write to a single file the error, etc</li>
+</ol>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h3>Structure</h3>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<p>This project is composed of three sub project :</p>
+<ul>
+<li>the client : It's a small jar which provide appenders for log framework in java. The implementation is in <a href="https://github.com/devlogpile/logpile/tree/master/client">client directory</a></li>
+<li>the server : it's a tiny application which collects errors provided by the appenders. The implementation is in <a href="https://github.com/devlogpile/logpile/tree/master/server"> server directory</a></li>
+</ul>
+<p>An example client project is available in the <a  href="https://github.com/devlogpile/logpile/tree/master/client-example" >client-example directory</a>. Two vertx mods were created for the server side management :
+</p>
+<ul>
+<li><a href="https://github.com/devlogpile/logpile/tree/master/mod-couchbase">A mod for couchbase database.</a></li>
+<li><a href="https://github.com/devlogpile/logpile/tree/master/mod-jmx">A mod for exporting jmx data via the vertx eventbus.</a></li>
+</ul>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<h2>For more explanation go to <a href="https://github.com/devlogpile/logpile">my github repository</a>.</h2>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+
+
+
+          </section>
     </div>
 
     <!-- FOOTER  -->
