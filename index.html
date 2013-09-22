@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
      <link rel="shortcut icon" href="/favicon.ico" >
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/logpile/css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="/logpile/css/logpile.css">
 
     <title>Logpile - My Listener of errors</title>
   </head>
@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
 
-          <div id="logo-div" ><a href="/"><img class="logo-image" src="/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+          <div id="logo-div" ><a href="/logpile"><img class="logo-image" src="/logpile/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
               <a title="Download the latest stable version." class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
               <!--https://github.com/devlogpile/logpile/zipball/master-->
               <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
@@ -35,9 +35,9 @@
               <tr>
                  <td class="menu_brand">Features : </td>
                 <td class="menu_cell"><a href="/"> Main</a></td>
-                <td class="menu_cell"><a href="/server"> Server</a></td>
-                <td class="menu_cell"><a href="/client"> Client</a></td>
-                <td class="menu_cell"><a href="/modvertx"> Vertx mods</a></td>
+                <td class="menu_cell"><a href="/logpile/server"> Server</a></td>
+                <td class="menu_cell"><a href="/logpile/client"> Client</a></td>
+                <td class="menu_cell"><a href="/logpile/modvertx"> Vertx mods</a></td>
                 <td>&nbsp;</td>
               </tr>
             </table>
@@ -75,15 +75,15 @@
 
 <p>This project is composed of three sub project :</p>
 <ul>
-<li>the client : It's a small jar which provide appenders for log framework in java. The documentation is in <a href="/client">client section</a></li>
-<li>the server : it's a tiny application which collects errors provided by the appenders. The documentation is in <a href="/server"> Server section</a></li>
+<li>the client : It's a small jar which provide appenders for log framework in java. The documentation is in <a href="/logpile/client">client section</a></li>
+<li>the server : it's a tiny application which collects errors provided by the appenders. The documentation is in <a href="/logpile/server"> Server section</a></li>
 </ul>
 <p>An example client project is available ( Doc in <a  href="client/example.html" >client/Example section</a>).</p>
 <p> Two vertx mods were created for the server side management :
 </p>
 <ul>
-<li><a href="modvertx/mod-couchbase.html">A module for couchbase database.</a></li>
-<li><a href="modvertx/mod-jmx.html">A mod for exporting jmx data via the vertx eventbus.</a></li>
+<li><a href="/logpile/modvertx/mod-couchbase.html">A module for couchbase database.</a></li>
+<li><a href="/logpile/modvertx/mod-jmx.html">A mod for exporting jmx data via the vertx eventbus.</a></li>
 </ul>
 
 <h2>All source are availables in <a href="https://github.com/devlogpile/logpile">my github repository</a>.</h2>
