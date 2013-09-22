@@ -1,48 +1,24 @@
 #Logpile project
 =======
-##Description 
-=======
-The purpose of this project is to have one for monitoring application. the api aggregate all errors from the application to one instance. This instance can do treatment on error reception. Example : create an unique console log.
 
-![General description](https://raw.github.com/devlogpile/logpile/master/doc/image/general_description.png)
-
-The workflow is very simple :
-
-1. One application produce an error.
-2. The connector of the logpile client catch the error.
-3. The connector send the information on the error to a Logpile server.
-4. This server receives the 'event' and do a configured work on it.
-    Example : send an email for warning the developpement team, write to a single file the error, etc ...
-
-##Structure
+##Documentation
 =======
 
-This project is composed of two sub project :
-* the client : It's a small jar which provide appenders for log framework in java. The implementation is in [client directory](/client)
-* the server : it's a tiny application which collects errors provided by the appenders. The implementation is in [server directory](/server)
-
-An example client project is available in the [client-example directory](/client-example).
-
-The bin directory store the installation package distribution and the /doc contains images for the online documentation.
-
-##Installation Instruction
-=======
-
-The installation for the server is available in the [server directory](/server).
-
-And the configuration of the appenders are describe in the [client directory](/client).
-
-##How to build the project
-=======
-
-1. Install the jdk 1.7
-2. Install maven.
-2. Download or fork the project.
-3. Go to the root directory and execute the command : `mvn clean install -P release`.
+The documentation is available in at [http://devlogpile.github.io/logpile](http://devlogpile.github.io/logpile).
 
 
 ##Version
 =======
+
+__0.3.0__ :
+
+* see the different  sub folders for the change log description.
+
+__0.2.0__ :
+
+* see the different  sub folders for the change log description.
+
+
 __0.1.0__ : 
 
 * skeleton implementation of the server and the client.

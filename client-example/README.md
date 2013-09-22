@@ -1,12 +1,21 @@
 #Logpile - client example
 =======
-##Description 
+
+##Documentation
 =======
-This a test application. The application is just a swing application whichh allow to call the registration server.
+
+The documentation is available in at [http://devlogpile.github.io/logpile](http://devlogpile.github.io/logpile).
+
 
 ##Version
 =======
+
+__0.3.0__ :
+
+* update of the client library.
+
+
 __0.2.0__ :
 
-* creation of java logging and log4j test.
+* creation of the application.
  

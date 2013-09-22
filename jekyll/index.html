@@ -1,0 +1,56 @@
+---
+layout: default
+title: My Listener of errors 
+---
+
+  
+        <h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to Logpile web project.</h3>
+
+<p>The purpose of this projects is to in only one repository collect all the errors of your application java and treat them : grouping all your applications in one and only log, store them, email them, etc  ....</p>
+
+<h3>Why this framework ?</h3>
+<p>
+	Bescause :
+	<ul>
+		<li>The majority of other solution is complex to install.</li>
+		<li>The majority of your enterprise application are written in java. Your developpers know the java language. You  want a little product for spying the state of your applications in production. This project must be an good start for inspiration.</li>
+		<li>It's fun to developp applications with the latest technology : bootstrap, vertx, couchbase, etc ...</li>
+	</ul>
+</p>
+
+<h3>Description</h3>
+
+<p>The purpose of this project is to have one for monitoring application. the api aggregate all errors from the application to one instance. This instance can do treatment on error reception. Example : create an unique console log.</p>
+
+<img src="images/general_description.png">
+
+<p>The workflow is very simple :</p>
+<ol>
+<li> One application produce an error.</li>
+<li> The connector of the logpile client catch the error.</li>
+<li> The connector send the information on the error to a Logpile server.</li>
+<li> This server receives the 'event' and do a configured work on it.</li>
+   <u> Example :</u> send an email for warning the developpement team, write to a single file the error, etc</li>
+</ol>
+
+<h3>Structure</h3>
+
+<p>This project is composed of three sub project :</p>
+<ul>
+<li>the client : It's a small jar which provide appenders for log framework in java. The documentation is in <a href="{{site.baseurl}}/client">client section</a></li>
+<li>the server : it's a tiny application which collects errors provided by the appenders. The documentation is in <a href="{{site.baseurl}}/server"> Server section</a></li>
+</ul>
+<p>An example client project is available ( Doc in <a  href="client/example.html" >client/Example section</a>).</p>
+<p> Two vertx mods were created for the server side management :
+</p>
+<ul>
+<li><a href="{{site.baseurl}}/modvertx/mod-couchbase.html">A module for couchbase database.</a></li>
+<li><a href="{{site.baseurl}}/modvertx/mod-jmx.html">A mod for exporting jmx data via the vertx eventbus.</a></li>
+</ul>
+
+<h2>All source are availables in <a href="https://github.com/devlogpile/logpile">my github repository</a>.</h2>
+
+
+
+

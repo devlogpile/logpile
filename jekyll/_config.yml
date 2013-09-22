@@ -1,0 +1,5 @@
+name: Logpile
+markdown: redcarpet
+pygments: true
+destination: logpile
+baseurl: /logpile
