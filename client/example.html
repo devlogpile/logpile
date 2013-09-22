@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
+     <link rel="shortcut icon" href="/favicon.ico" >
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
+
+    <title>Logpile - Client Log API - example application</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
+
+          <div id="logo-div" ><a href="/"><img class="logo-image" src="/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+              <a title="Download the latest stable version." class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
+              <!--https://github.com/devlogpile/logpile/zipball/master-->
+              <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
+            </section></div>
+      
+
+           
+        </header>
+    </div>
+  <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+            <table id="main_menu" class="inner">
+              <tr>
+                 <td class="menu_brand">Features : </td>
+                <td class="menu_cell"><a href="/"> Main</a></td>
+                <td class="menu_cell"><a href="/server"> Server</a></td>
+                <td class="menu_cell"><a href="/client"> Client</a></td>
+                <td class="menu_cell"><a href="/modvertx"> Vertx mods</a></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+           <h1>
+    Logpile - Client Log API for java application
+</h1>
+
+<div class="inner">
+    <table id="sub_menu">
+        <tr>
+            <td>
+                <strong>
+                    Client :
+                </strong>
+            </td>
+            <td>
+                <a href="/client"><li>Main</li></a>
+            </td>
+            <td>
+                <a href="/client/configuration.html"><li>Configuration</li></a>
+            </td>
+            <td>
+                <a href="/client/handlers.html"><li>The handlers</li></a>
+            </td>
+            <td>
+                <a href="/client/example.html"><li>Example</li></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>Example application</h2>
+
+<h3>Description</h3>
+
+<h1></h1>
+
+<p>This a test application. The application is just a swing application whichh allow to call the logpile server.
+This application is a swing application. The logger which is configured for logpile is the <em>ERROR</em> scope.</p>
+
+<h3>Where to retrieve the binaries ?</h3>
+
+<h1></h1>
+
+<p>The example application is available in the distribution package in the <code>example</code> directory. </p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">total 10
+d---------+ 1 skarb None   0 10 août  09:11 classes
+d---------+ 1 skarb None   0 10 août  09:11 lib
+----------+ 1 skarb None 131 10 févr.  2013 run_java_logging
+----------+ 1 skarb None 131 10 févr.  2013 run_java_logging.bat
+----------+ 1 skarb None 124 10 févr.  2013 run_log4j
+----------+ 1 skarb None 124 10 févr.  2013 run_log4j.bat
+----------+ 1 skarb None 126 10 févr.  2013 run_logback
+----------+ 1 skarb None 126 10 févr.  2013 run_logback.bat
+</code></pre></div>
+<h4>Structure</h4>
+
+<h1></h1>
+
+<ul>
+<li><code>run_java_logging</code> / <code>run_java_logging.bat</code> : Run the application with the java logging logger.</li>
+<li><code>run_log4j</code> / <code>run_log4j.bat</code> : Run the application with the log4j logger.</li>
+<li><code>run_logback</code> / <code>run_logback.bat</code> : Run the application with the log4j logger. </li>
+<li><code>classes</code> : This directory contains the configurations files for the loggers and for logpile client (<code>logpile.client.xml</code>).</li>
+<li><code>lib</code> : This directory contains the jar of the application.</li>
+</ul>
+
+<p>Example for launching the application :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">java -cp &quot;./lib/client-example-0.2.0-jar-with-dependencies.jar;./classes&quot; org.skarb.log.pile.client.example.SwingMain  JAVA_LOGGING
+</code></pre></div>
+<h3>The application</h3>
+
+<h1></h1>
+
+<p><img src="/images/client/example_application.png" alt="The application"></p>
+
+<h4>Call  logpile with a message.</h4>
+
+<h1></h1>
+
+<ol>
+<li>Tips text in the <code>Message</code> input.</li>
+<li>Click on the <code>Call logger</code> button and your message is send. :))</li>
+</ol>
+
+<p>This action simulate :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">LOGGER.error(&quot;My message&quot;);
+</code></pre></div>
+<h4>Call  logpile with a message.</h4>
+
+<h1></h1>
+
+<ol>
+<li>Select an exception in the <code>Exception</code> list.</li>
+<li>Tips a message for your exception in the <code>Message of Exception</code> textbox.</li>
+<li>Click on the <code>Call logger</code> button. </li>
+</ol>
+
+<p>This action simulate :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">LOGGER.error(exception);
+</code></pre></div>
+<h2>Source code</h2>
+
+<h1></h1>
+
+<p>The source code is available <a href="https://github.com/devlogpile/logpile/tree/master/client-example">here</a>.</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Logpile maintained by <a href="https://github.com/devlogpile">devlogpile</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

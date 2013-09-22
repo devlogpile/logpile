@@ -21,3 +21,31 @@
 	float: right;
 	width: 70%;	
 }
+
+#main_menu,#sub_menu {
+	border: 0px;
+	width: 640px;
+}
+
+#main_menu {
+	border-top: 2px solid  #339966;
+	border-bottom: 2px solid  #339966;
+}
+
+#sub_menu {
+	border-top: 2px dotted  #339966;
+	border-bottom: 2px dotted  #339966;
+}
+
+.menu_brand {
+	width: 70px;
+}
+
+.menu_cell {
+	/*width: 28px;*/
+}
+
+#main_menu td, #sub_menu td {
+	border: 0px;	
+}
+

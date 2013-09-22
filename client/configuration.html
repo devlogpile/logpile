@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
+     <link rel="shortcut icon" href="/favicon.ico" >
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
+
+    <title>Logpile - Client Log API - configuration</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
+
+          <div id="logo-div" ><a href="/"><img class="logo-image" src="/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+              <a title="Download the latest stable version." class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
+              <!--https://github.com/devlogpile/logpile/zipball/master-->
+              <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
+            </section></div>
+      
+
+           
+        </header>
+    </div>
+  <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+            <table id="main_menu" class="inner">
+              <tr>
+                 <td class="menu_brand">Features : </td>
+                <td class="menu_cell"><a href="/"> Main</a></td>
+                <td class="menu_cell"><a href="/server"> Server</a></td>
+                <td class="menu_cell"><a href="/client"> Client</a></td>
+                <td class="menu_cell"><a href="/modvertx"> Vertx mods</a></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+           <h1>
+    Logpile - Client Log API for java application
+</h1>
+
+<div class="inner">
+    <table id="sub_menu">
+        <tr>
+            <td>
+                <strong>
+                    Client :
+                </strong>
+            </td>
+            <td>
+                <a href="/client"><li>Main</li></a>
+            </td>
+            <td>
+                <a href="/client/configuration.html"><li>Configuration</li></a>
+            </td>
+            <td>
+                <a href="/client/handlers.html"><li>The handlers</li></a>
+            </td>
+            <td>
+                <a href="/client/example.html"><li>Example</li></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>How to setup ?</h2>
+
+<h1></h1>
+
+<p>This client api require some data to be used. There is 3 ways to pass data to the logger api :</p>
+
+<ul>
+<li>by an xml file.</li>
+<li>by an properties file.</li>
+<li>by the System properties of the JVM.</li>
+</ul>
+
+<p>There is an order for datas loading : first the xml file, the properties and the System properties. All files must be in the root of the classpath.</p>
+
+<p>The datas which are used by the loggers are :</p>
+
+<ul>
+<li><em>the application name</em> : An identifier that indicates which server is or what the application. This parameter is optional. if not set, then an identifer is generated.</li>
+<li><em>the engine type class</em> : The type of communication used for the server. This parameter is required for the good functioner of the logpile. If not set, then an null implementation is used.</li>
+<li><em>the url of the server</em> : The address of the logpile server. This parameter is required. If not set, then no error registration is run.</li>
+</ul>
+
+<h3>The xml configuration file.</h3>
+
+<p>The file must be named : &#39;logpile.client.xml&#39;.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;log.pile&gt;
+    &lt;log.pile.application&gt;Mon application&lt;/log.pile.application&gt;
+    &lt;log.pile.engine &gt;org.skarb.log.pile.client.post.engine.rest.EngineRestPost&lt;/log.pile.engine&gt;
+    &lt;log.pile.url&gt;http://localhost:8082/event&lt;/log.pile.url&gt;
+&lt;/log.pile&gt;
+</code></pre></div>
+<h3>The Properties file.</h3>
+
+<p>The file must be named : &#39;logpile.client.properties&#39;.
+    log.pile.server.id=My Server
+    log.pile.application=application.name
+    log.pile.engine=org.skarb.log.pile.client.post.engine.rest.EngineRestPost
+    log.pile.url=http://localhost:8082/event </p>
+
+<h3>The System properties.</h3>
+
+<p>You can set the same properties than with a file directly in the System properties of the jvm.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">java -Dlog.pile.url=http://localhost:8082/event ... org.tyty.MyApp
+</code></pre></div>
+<p>or with the code</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">System.setProperty(&quot;log.pile.url&quot;,&quot;http://localhost:8082/event&quot;);
+System.setProperty(&quot;log.pile.application&quot;,&quot;application.name&quot;);
+// My code
+Logger.error(&quot;my error&quot;);
+</code></pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Logpile maintained by <a href="https://github.com/devlogpile">devlogpile</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

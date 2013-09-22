@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
       <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
 
-    <title>Logpile - My Listener of errors</title>
+    <title>Logpile - Server</title>
   </head>
 
   <body>
@@ -41,56 +41,71 @@
                 <td>&nbsp;</td>
               </tr>
             </table>
-                   <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to Logpile web project.</h3>
+           <h1>The Logpile server</h1>
 
-<p>The purpose of this projects is to in only one repository collect all the errors of your application java and treat them : grouping all your applications in one and only log, store them, email them, etc  ....</p>
+<div class="inner">
+<table id="sub_menu" >
+<tr>
+    <td><strong>Server : </strong></td>
+    <td><a href="/server"><li>Main</li></a></td>
+    <td><a href="/server/server-configuration.html"><li>Server configuration</li></a></td>
+</tr>
+</table>
+</div>
 
-<h3>Why this framework ?</h3>
-<p>
-	Bescause :
-	<ul>
-		<li>The majority of other solution is complex to install.</li>
-		<li>The majority of your enterprise application are written in java. Your developpers know the java language. You  want a little product for spying the state of your applications in production. This project must be an good start for inspiration.</li>
-		<li>It's fun to developp applications with the latest technology : bootstrap, vertx, couchbase, etc ...</li>
-	</ul>
-</p>
+<h2>What does it do?</h2>
 
-<h3>Description</h3>
+<h1></h1>
 
-<p>The purpose of this project is to have one for monitoring application. the api aggregate all errors from the application to one instance. This instance can do treatment on error reception. Example : create an unique console log.</p>
+<p>This projects provide an server implementation for the errors event registering. </p>
 
-<img src="images/general_description.png">
+<p>The clients send event call an ws rest service to register new errors. This server can be configure to treat the errors event ( Example : aggregate all the errors of differents servers to one log file or send an email to warn someone).</p>
 
-<p>The workflow is very simple :</p>
+<p>This implementation provides also a web console which manage the server treatment or view the current errors.</p>
+
+<h2>Description of the project</h2>
+
+<h1></h1>
+
+<h2>How to install the server</h2>
+
+<h1></h1>
+
 <ol>
-<li> One application produce an error.</li>
-<li> The connector of the logpile client catch the error.</li>
-<li> The connector send the information on the error to a Logpile server.</li>
-<li> This server receives the 'event' and do a configured work on it.</li>
-   <u> Example :</u> send an email for warning the developpement team, write to a single file the error, etc</li>
+<li>Install the Jdkl 1.7.</li>
+<li>Download and install <a href="http://vertx.io/">Vertx</a>.</li>
+<li>Download the zip file which is in <a href="../bin">bin directory</a>.</li>
+<li>unzip the file.</li>
+<li>In the distribution, run the &quot;run_server&quot; file depending of your operating system.</li>
+<li>Try to connect at <a href="http://localhost:8081/">http://localhost:8081/</a></li>
+<li>Log with the email <code>root@logpile.org</code> and with the password <code>gtn</code>. <img src="/images/server/login.png" alt="Web console"> </li>
+<li>That&#39;s it. Your server is runnning and functionnal.</li>
 </ol>
 
-<h3>Structure</h3>
-
-<p>This project is composed of three sub project :</p>
 <ul>
-<li>the client : It's a small jar which provide appenders for log framework in java. The documentation is in <a href="/client">client section</a></li>
-<li>the server : it's a tiny application which collects errors provided by the appenders. The documentation is in <a href="/server"> Server section</a></li>
-</ul>
-<p>An example client project is available ( Doc in <a  href="client/example.html" >client/Example section</a>).</p>
-<p> Two vertx mods were created for the server side management :
-</p>
-<ul>
-<li><a href="modvertx/mod-couchbase.html">A module for couchbase database.</a></li>
-<li><a href="modvertx/mod-jmx.html">A mod for exporting jmx data via the vertx eventbus.</a></li>
+<li>You can customize the parameters in the  <a href="/server/server-configuration.html">Server configuration section</a>.</li>
 </ul>
 
-<h2>All source are availables in <a href="https://github.com/devlogpile/logpile">my github repository</a>.</h2>
+<h2>Source code</h2>
 
+<h1></h1>
 
+<p>The source code is available <a href="https://github.com/devlogpile/logpile/tree/master/server">here</a>.</p>
 
+<h2>Library</h2>
 
+<h1></h1>
+
+<p>This implementaion use the open source projects :</p>
+
+<ul>
+<li><a href="http://vertx.io/">Vertx</a>  - 2.0.0 final version.</li>
+<li><a href="http://jquery.com/">JQuery</a> - latest version.</li>
+<li><a href="http://twitter.github.com/bootstrap/index.html">Twitter bootstrap</a> - 3.0 version.</li>
+<li><a href="http://fortawesome.github.io/Font-Awesome/">Font awesome</a> - latest.</li>
+<li><a href="http://angularjs.org/">Angular Js</a> - latest version.</li>
+<li><a href="http://bower.io/">Bower</a> - latest version.</li>
+</ul>
 
       </section>
     </div>

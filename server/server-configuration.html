@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
+     <link rel="shortcut icon" href="/favicon.ico" >
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
+
+    <title>Logpile - Server - configuration</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
+
+          <div id="logo-div" ><a href="/"><img class="logo-image" src="/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+              <a title="Download the latest stable version." class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
+              <!--https://github.com/devlogpile/logpile/zipball/master-->
+              <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
+            </section></div>
+      
+
+           
+        </header>
+    </div>
+  <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+            <table id="main_menu" class="inner">
+              <tr>
+                 <td class="menu_brand">Features : </td>
+                <td class="menu_cell"><a href="/"> Main</a></td>
+                <td class="menu_cell"><a href="/server"> Server</a></td>
+                <td class="menu_cell"><a href="/client"> Client</a></td>
+                <td class="menu_cell"><a href="/modvertx"> Vertx mods</a></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+           <h1>The Logpile server</h1>
+
+<div class="inner">
+<table id="sub_menu" >
+<tr>
+    <td><strong>Server : </strong></td>
+    <td><a href="/server"><li>Main</li></a></td>
+    <td><a href="/server/server-configuration.html"><li>Server configuration</li></a></td>
+</tr>
+</table>
+</div>
+
+<h2>The server configuration</h2>
+
+<p>The server is configured with a json file. The Vertx api is used to read the file.</p>
+
+<p>The configuration is decomposed in 4 objects :</p>
+
+<ul>
+<li><code>event_json</code> : This object contains the configuration for the Web service which registers the events.</li>
+<li><code>log_pile_web</code> : This object contains the configuration for the Web Console.</li>
+<li><code>org.skarb.logpile.vertx.web.AuthManagerJSonFile</code> : The datas in this object allows to used json file to login to the web console.</li>
+<li><code>web_server</code> : The configuration of the web server module. This module is used by the web console.</li>
+</ul>
+
+<p>The default configuration is available in the config directory of the server.</p>
+
+<h2>The configuration of event web service</h2>
+
+<p>The datas used by the web service are :</p>
+
+<ul>
+<li><code>context</code> : The name of the context used by the web service. </li>
+<li><code>port</code> : The port used by the service. This port should not be the same as the web server module.</li>
+<li><code>instance</code> :  The number of instances of the web service available.</li>
+<li><code>services</code> : the list of the service used to treat the events. The name used in this configuration is the name of the java class.</li>
+</ul>
+
+<p>Example :</p>
+
+<p><code>&quot;event_json&quot; : {
+            &quot;context&quot;:&quot;event&quot;,
+            &quot;port&quot;: 8082,
+            &quot;instance&quot;:1,
+            &quot;services&quot;:[&quot;org.skarb.logpile.vertx.event.ConsoleOutEvent&quot;],
+        }</code></p>
+
+<h2>The configuration of the web console</h2>
+
+<p>The datas used by the web console are :</p>
+
+<ul>
+<li><code>active</code> : Active the web console if this value is equal to true. </li>
+<li><code>instance</code> :  The number of instances of the web console.</li>
+<li><code>refresh_server_state</code> : the number in milliseconds of the web console refreshment. The information which are refreshed are the datas in the <em>resume tabs</em>. </li>
+</ul>
+
+<p>Example :</p>
+
+<p><code>&quot;log_pile_web&quot; : { &quot;active&quot;:true, &quot;instance&quot;:1, &quot;refresh_server_state&quot;: 60000 }</code></p>
+
+<h2>The configuration of AuthManager</h2>
+
+<p>For accessing to the web console, the user must be logged. The first available implementation store the users in a Json file. The path of the file is configured with this object :</p>
+
+<p><code>&quot;org.skarb.logpile.vertx.web.AuthManagerJSonFile&quot;:{ &quot;path&quot; : &quot;config/users.json&quot; }</code></p>
+
+<h2>The configuration of the web server module</h2>
+
+<p>The description of the configuration is available by this <a href="https://github.com/vert-x/mod-web-server">link</a>. </p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Logpile maintained by <a href="https://github.com/devlogpile">devlogpile</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

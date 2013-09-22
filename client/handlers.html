@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Logpile : The purpose of this projects is to in only one repository all the errors of your application. This project provides api for the java application. " />
+     <link rel="shortcut icon" href="/favicon.ico" >
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/logpile.css">
+
+    <title>Logpile - Client Log API - handlers</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devlogpile/logpile">View on GitHub</a>
+
+          <div id="logo-div" ><a href="/"><img class="logo-image" src="/images/logo-logpile.png"></a></div><div id="logo-text"><h1 id="project_title">Logpile</h1>    <h2 id="project_tagline">Another framework for spying the errors of your application.</h2> <section id="downloads">
+              <a title="Download the latest stable version." class="zip_download_link" href="https://github.com/devlogpile/logpile/raw/master/bin/logpile-dist.zip" >Download this project as a .zip file</a>
+              <!--https://github.com/devlogpile/logpile/zipball/master-->
+              <!--a class="tar_download_link" href="https://github.com/devlogpile/logpile/tarball/master">Download this project as a tar.gz file</a-->
+            </section></div>
+      
+
+           
+        </header>
+    </div>
+  <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+            <table id="main_menu" class="inner">
+              <tr>
+                 <td class="menu_brand">Features : </td>
+                <td class="menu_cell"><a href="/"> Main</a></td>
+                <td class="menu_cell"><a href="/server"> Server</a></td>
+                <td class="menu_cell"><a href="/client"> Client</a></td>
+                <td class="menu_cell"><a href="/modvertx"> Vertx mods</a></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+           <h1>
+    Logpile - Client Log API for java application
+</h1>
+
+<div class="inner">
+    <table id="sub_menu">
+        <tr>
+            <td>
+                <strong>
+                    Client :
+                </strong>
+            </td>
+            <td>
+                <a href="/client"><li>Main</li></a>
+            </td>
+            <td>
+                <a href="/client/configuration.html"><li>Configuration</li></a>
+            </td>
+            <td>
+                <a href="/client/handlers.html"><li>The handlers</li></a>
+            </td>
+            <td>
+                <a href="/client/example.html"><li>Example</li></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>The available handlers</h2>
+
+<h3>For java Logging</h3>
+
+<p>3 implementations ara availables :</p>
+
+<ul>
+<li><strong>org.skarb.log.pile.client.post.util.log.JavaUtilLogHandler</strong> : An handler which do only the error registration on the server. </li>
+<li><strong>org.skarb.log.pile.client.post.util.log.ConsoleHandler</strong> : An handler which do the error registration on the server and the output console. The parameters of the console output are identicals of the class <em>java.util.logging.ConsoleHandler</em>.</li>
+<li><strong>org.skarb.log.pile.client.post.util.log.FileHandler</strong> : An handler which do the error registration on the server and write into a file. The parameters of the file parameters are identicals of the class <em>java.util.logging.FileHandler</em>.</li>
+</ul>
+
+<p>Use case :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">handlers=org.skarb.log.pile.client.post.util.log.ConsoleHandler
+java.util.logging.SimpleFormatter.format=%5$s %6$s\n
+org.skarb.log.pile.client.post.util.log.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+org.skarb.log.pile.client.post.util.log.ConsoleHandler.level=INFO
+.level=INFO
+org.skarb.log.pile.tyty.level=SEVERE
+</code></pre></div>
+<h3>For log4J</h3>
+
+<p>3 implementations ara availables :</p>
+
+<ul>
+<li><strong>org.skarb.log.pile.client.post.log4j.Log4JAppender</strong> : An handler which do only the error registration on the server.</li>
+<li><strong>org.skarb.log.pile.client.post.log4j.ConsoleAppender</strong> : An handler which do the error registration on the server and the output console. The parameters of the console output are identicals of the class <em>java.util.logging.ConsoleHandler</em>.</li>
+<li><strong>org.skarb.log.pile.client.post.log4j.FileAppender</strong> : An handler which do the error registration on the server and write into a file. The parameters of the file parameters are identicals of the class <em>java.util.logging.FileHandler</em>.</li>
+</ul>
+
+<p>Use case :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">log4j.rootLogger=ERROR, CA
+log4j.appender.CA=org.skarb.log.pile.client.post.log4j.ConsoleAppender
+log4j.appender.CA.layout=org.apache.log4j.PatternLayout
+log4j.appender.CA.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+</code></pre></div>
+<h3>For LogBack</h3>
+
+<p>4 implementations ara availables :</p>
+
+<ul>
+<li><strong>org.skarb.log.pile.client.post.logback.LogbackAppender</strong> : An handler which do only the error registration on the server.</li>
+<li><strong>org.skarb.log.pile.client.post.logback.ConsoleAppender</strong> : An handler which do the error registration on the server and the output console. The parameters of the console output are identicals of the class <em>java.util.logging.ConsoleHandler</em>.</li>
+<li><strong>org.skarb.log.pile.client.post.logback.FileAppender</strong> : An handler which do the error registration on the server and write into a file. The parameters of the file parameters are identicals of the class <em>java.util.logging.FileHandler</em>.</li>
+<li><strong>org.skarb.log.pile.client.post.logback.RollingFileAppender</strong> : An handler which do the error registration on the server and write into a file with rolling file policy. The parameters of the file parameters are identicals of the class <em>java.util.logging.FileHandler</em>.</li>
+</ul>
+
+<p>Use case :</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;configuration&gt;
+    &lt;appender name=&quot;STDOUT&quot; class=&quot;org.skarb.log.pile.client.post.logback.ConsoleAppender&quot;&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+    &lt;root level=&quot;debug&quot;&gt;
+        &lt;appender-ref ref=&quot;STDOUT&quot; /&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Logpile maintained by <a href="https://github.com/devlogpile">devlogpile</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
